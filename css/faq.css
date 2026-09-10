@@ -1,0 +1,209 @@
+/* =========================================================================
+   FAQ SECTION STYLES — ASYMMETRIC TWO-COLUMN ACCORDION
+   Clean Architectural Minimalist Presentation
+   ========================================================================= */
+
+.faq-section {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  padding: 110px 24px 130px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.faq-container {
+  width: 100%;
+  max-width: 1120px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1.6fr;
+  gap: clamp(36px, 6vw, 84px);
+  align-items: start;
+}
+
+/* -------------------------------------------------------------------------
+   Left Column: Bold Asymmetric Heading
+   ------------------------------------------------------------------------- */
+.faq-heading-col {
+  position: sticky;
+  top: 110px;
+  align-self: start;
+}
+
+.faq-title {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: clamp(2.4rem, 4.2vw, 3.8rem);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -1px;
+  color: #FFFFFF;
+  margin: 0;
+  text-align: left;
+}
+
+/* -------------------------------------------------------------------------
+   Right Column: Hairline Accordion List
+   ------------------------------------------------------------------------- */
+.faq-list-col {
+  width: 100%;
+}
+
+.faq-accordion {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.faq-item {
+  width: 100%;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+  transition: border-color 0.2s ease;
+}
+
+.faq-item:first-child {
+  border-top: 1px solid rgba(255, 255, 255, 0.09);
+}
+
+.faq-item:hover {
+  border-bottom-color: rgba(255, 255, 255, 0.18);
+}
+
+/* Question Trigger Button */
+.faq-question-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: none;
+  border: none;
+  outline: none;
+  padding: 22px 0;
+  cursor: pointer;
+  text-align: left;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Left Plus Icon */
+.faq-icon {
+  width: 20px;
+  height: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 21px;
+  font-weight: 400;
+  line-height: 1;
+  color: var(--cyan-electric, #00E5FF);
+  flex-shrink: 0;
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s ease;
+  will-change: transform;
+}
+
+.faq-item.open .faq-icon {
+  transform: rotate(45deg);
+  color: var(--gold-pure, #F5C518);
+}
+
+/* Question Text */
+.faq-question-text {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: clamp(15.5px, 1.15vw, 17.5px);
+  font-weight: 600;
+  color: #E2E8F0;
+  letter-spacing: 0.1px;
+  line-height: 1.45;
+  transition: color 0.2s ease;
+}
+
+.faq-question-btn:hover .faq-question-text {
+  color: #FFFFFF;
+}
+
+.faq-item.open .faq-question-text {
+  color: #FFFFFF;
+}
+
+/* Smooth Height Accordion Answer */
+.faq-answer-wrap {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.32s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
+  opacity: 0;
+}
+
+.faq-item.open .faq-answer-wrap {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+
+.faq-answer-inner {
+  overflow: hidden;
+}
+
+.faq-answer-text {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 15px;
+  line-height: 1.75;
+  color: #94A3B8;
+  margin: 0;
+  padding: 2px 0 24px 36px;
+  letter-spacing: 0.1px;
+}
+
+/* -------------------------------------------------------------------------
+   Responsive Viewport Adaptations
+   ------------------------------------------------------------------------- */
+@media (max-width: 900px) {
+  .faq-container {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+
+  .faq-heading-col {
+    position: static;
+  }
+
+  .faq-title {
+    font-size: 2.4rem;
+  }
+
+  .faq-question-btn {
+    padding: 18px 0;
+    gap: 14px;
+  }
+
+  .faq-answer-text {
+    padding: 0 0 20px 34px;
+  }
+}
+
+@media (max-width: 480px) {
+  .faq-section {
+    padding: 72px 18px 100px 18px;
+  }
+
+  .faq-title {
+    font-size: 2rem;
+  }
+
+  .faq-question-btn {
+    padding: 16px 0;
+    gap: 12px;
+  }
+
+  .faq-icon {
+    font-size: 19px;
+  }
+
+  .faq-question-text {
+    font-size: 15px;
+  }
+
+  .faq-answer-text {
+    font-size: 14px;
+    padding: 0 0 18px 30px;
+  }
+}

@@ -1,0 +1,466 @@
+/* =========================================================================
+   VENUE SECTION & THEME-ADAPTED SHINY PILL COMPONENT
+   SRM IST Vadapalani Campus · 100 Feet Road, Chennai
+   ========================================================================= */
+
+@property --gradient-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@property --gradient-angle-offset {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@property --gradient-percent {
+  syntax: "<percentage>";
+  initial-value: 5%;
+  inherits: false;
+}
+
+@property --gradient-shine {
+  syntax: "<color>";
+  initial-value: white;
+  inherits: false;
+}
+
+/* -------------------------------------------------------------------------
+   1. Venue Section Container
+   ------------------------------------------------------------------------- */
+.venue-section {
+  position: relative;
+  z-index: 10;
+  padding: 110px 32px 100px;
+  max-width: 1240px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.venue-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+}
+
+/* -------------------------------------------------------------------------
+   2. Editorial Header Lockup (Pure Typography, Zero Double Slashes, No Yellow Dot)
+   ------------------------------------------------------------------------- */
+.venue-header-lockup {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 28px;
+  max-width: 860px;
+}
+
+.venue-eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  color: #F5C518;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+
+.venue-title {
+  font-family: 'Outfit', 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: clamp(2.1rem, 4.2vw, 3.4rem);
+  line-height: 1.14;
+  letter-spacing: -0.5px;
+  color: #F8FAFC;
+  margin: 0 0 16px 0;
+}
+
+.venue-subtitle {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: clamp(1.05rem, 1.35vw, 1.25rem);
+  font-weight: 500;
+  color: #94A3B8;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* -------------------------------------------------------------------------
+   3. Theme-Adapted Shiny Pill Toggle Component
+   Adapted from React ShinyButton with 24K Gold & Quantum Cyan Shimmer
+   (Zero rectangular box artifacts on hover)
+   ------------------------------------------------------------------------- */
+.venue-pill-wrapper {
+  margin: 8px 0 24px 0;
+  display: flex;
+  align-items: center;
+}
+
+.shiny-cta {
+  --shiny-cta-bg: #030714;
+  --shiny-cta-bg-subtle: #0f1a30;
+  --shiny-cta-fg: #FFFFFF;
+  --shiny-cta-highlight: #F5C518;
+  --shiny-cta-highlight-subtle: #FFE57F;
+  --shiny-cta-shine: #00E5FF;
+  --animation: gradient-angle linear infinite;
+  --duration: 3.2s;
+  --shadow-size: 2px;
+  --transition: 800ms cubic-bezier(0.25, 1, 0.5, 1);
+
+  isolation: isolate;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  outline: none;
+  padding: 0.95rem 2.2rem;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 0.98rem;
+  line-height: 1.2;
+  font-weight: 600;
+  border: 1px solid rgba(245, 197, 24, 0.35);
+  border-radius: 999px;
+  color: var(--shiny-cta-fg);
+  background: linear-gradient(var(--shiny-cta-bg), var(--shiny-cta-bg)) padding-box,
+    conic-gradient(
+      from calc(var(--gradient-angle) - var(--gradient-angle-offset)),
+      transparent,
+      var(--shiny-cta-highlight) var(--gradient-percent),
+      var(--shiny-cta-shine) calc(var(--gradient-percent) * 2),
+      var(--shiny-cta-highlight) calc(var(--gradient-percent) * 3),
+      transparent calc(var(--gradient-percent) * 4)
+    ) border-box;
+  box-shadow: inset 0 0 0 1px var(--shiny-cta-bg-subtle), 0 4px 18px rgba(0, 0, 0, 0.45);
+  transition: var(--transition);
+  transition-property: --gradient-angle-offset, --gradient-percent, --gradient-shine, border-color, box-shadow, transform;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.shiny-cta::before,
+.shiny-cta::after {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset-inline-start: 50%;
+  inset-block-start: 50%;
+  translate: -50% -50%;
+  border-radius: inherit;
+  z-index: -1;
+}
+
+.shiny-cta:active {
+  transform: translateY(1px);
+}
+
+/* Micro dots pattern — Strictly constrained within pill boundary */
+.shiny-cta::before {
+  --size: calc(100% - var(--shadow-size) * 3);
+  --position: 2px;
+  --space: calc(var(--position) * 2);
+  width: var(--size);
+  height: var(--size);
+  background: radial-gradient(
+    circle at var(--position) var(--position),
+    rgba(255, 255, 255, 0.75) calc(var(--position) / 4),
+    transparent 0
+  ) padding-box;
+  background-size: var(--space) var(--space);
+  background-repeat: space;
+  mask-image: conic-gradient(
+    from calc(var(--gradient-angle) + 45deg),
+    black,
+    transparent 10% 90%,
+    black
+  );
+  -webkit-mask-image: conic-gradient(
+    from calc(var(--gradient-angle) + 45deg),
+    black,
+    transparent 10% 90%,
+    black
+  );
+  border-radius: inherit;
+  opacity: 0.3;
+  z-index: -1;
+}
+
+/* Inner shimmer wash */
+.shiny-cta::after {
+  --animation: shimmer linear infinite;
+  width: 100%;
+  aspect-ratio: 1;
+  background: linear-gradient(
+    -50deg,
+    transparent,
+    rgba(245, 197, 24, 0.2),
+    transparent
+  );
+  mask-image: radial-gradient(circle at bottom, transparent 40%, black);
+  -webkit-mask-image: radial-gradient(circle at bottom, transparent 40%, black);
+  opacity: 0.55;
+}
+
+.shiny-cta .shiny-pill-content {
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  position: relative;
+}
+
+.venue-arrow-icon {
+  color: #94A3B8;
+  flex-shrink: 0;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), color 0.3s ease;
+}
+
+.shiny-cta.is-expanded .venue-arrow-icon {
+  transform: rotate(180deg);
+  color: #F5C518;
+}
+
+/* Animations */
+.shiny-cta,
+.shiny-cta::before,
+.shiny-cta::after {
+  animation: var(--animation) var(--duration),
+    var(--animation) calc(var(--duration) / 0.4) reverse paused;
+  animation-composition: add;
+}
+
+.shiny-cta:is(:hover, :focus-visible, .is-expanded) {
+  --gradient-percent: 22%;
+  --gradient-angle-offset: 95deg;
+  --gradient-shine: var(--shiny-cta-highlight-subtle);
+  border-color: rgba(245, 197, 24, 0.7);
+  box-shadow: inset 0 0 0 1px rgba(245, 197, 24, 0.2), 0 8px 26px rgba(245, 197, 24, 0.22);
+}
+
+.shiny-cta:is(:hover, :focus-visible, .is-expanded)::before,
+.shiny-cta:is(:hover, :focus-visible, .is-expanded)::after {
+  animation-play-state: running;
+}
+
+@keyframes gradient-angle {
+  to {
+    --gradient-angle: 360deg;
+  }
+}
+
+@keyframes shimmer {
+  to {
+    rotate: 360deg;
+  }
+}
+
+/* -------------------------------------------------------------------------
+   4. Expandable Detailed Editorial Fact-List (No Boxed Cards)
+   Fact-list typographic architecture with gold hairline dividers
+   ------------------------------------------------------------------------- */
+.venue-details-drawer {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease;
+  overflow: hidden;
+  min-height: 0;
+  opacity: 0;
+  visibility: hidden;
+  width: 100%;
+  max-width: 860px;
+  margin: 12px 0 32px 0;
+}
+
+.venue-details-drawer.is-expanded {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  visibility: visible;
+}
+
+.venue-details-inner {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.venue-fact-list {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.venue-fact-row {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 20px 0;
+  position: relative;
+}
+
+.venue-fact-divider {
+  height: 1px;
+  width: 100%;
+  background: linear-gradient(90deg, rgba(245, 197, 24, 0.42) 0%, rgba(245, 197, 24, 0.1) 65%, transparent 100%);
+}
+
+.venue-fact-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #F5C518;
+}
+
+.venue-fact-value {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.venue-val-primary {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: clamp(1.06rem, 1.3vw, 1.22rem);
+  font-weight: 700;
+  color: #FFFFFF;
+  line-height: 1.45;
+}
+
+.venue-val-secondary {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 0.95rem;
+  color: #94A3B8;
+  line-height: 1.6;
+}
+
+.venue-val-stage {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #00E5FF;
+  display: inline-block;
+  margin-top: 2px;
+}
+
+.venue-coord-code {
+  font-family: 'JetBrains Mono', monospace;
+  color: #F5C518;
+  font-weight: 600;
+}
+
+.venue-fact-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 0 16px 0;
+}
+
+.btn-copy-address {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  color: #94A3B8;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 8px 18px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-copy-address:hover {
+  background: rgba(245, 197, 24, 0.08);
+  color: #FFFFFF;
+  border-color: rgba(245, 197, 24, 0.55);
+}
+
+.copy-feedback {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: #10B981;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.copy-feedback.show {
+  opacity: 1;
+}
+
+/* -------------------------------------------------------------------------
+   5. Lower Direct Google Maps Action Button
+   ------------------------------------------------------------------------- */
+.venue-action-row {
+  display: flex;
+  align-items: center;
+  margin-top: 8px;
+}
+
+.venue-btn-map {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: #FFFFFF;
+  color: #020814;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 14.5px;
+  font-weight: 800;
+  letter-spacing: 0.2px;
+  height: 50px;
+  padding: 0 28px;
+  border-radius: 999px;
+  text-decoration: none;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4), 0 0 16px rgba(255, 255, 255, 0.18);
+  transition: transform 0.25s cubic-bezier(0.2, 1, 0.3, 1), box-shadow 0.25s ease, background 0.2s ease;
+  cursor: pointer;
+}
+
+.venue-btn-map:hover {
+  transform: translateY(-2px);
+  background: #F8FAFC;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.55), 0 0 24px rgba(255, 255, 255, 0.3);
+}
+
+.venue-btn-map:active {
+  transform: translateY(0);
+}
+
+.venue-btn-map svg {
+  transition: transform 0.25s ease;
+}
+
+.venue-btn-map:hover svg {
+  transform: translate(2px, -2px);
+}
+
+/* -------------------------------------------------------------------------
+   6. Responsive Breakpoints (<= 768px, <= 480px)
+   ------------------------------------------------------------------------- */
+@media (max-width: 768px) {
+  .venue-section {
+    padding: 80px 20px 70px;
+  }
+
+  .shiny-cta {
+    width: 100%;
+    justify-content: center;
+    padding: 1rem 1.6rem;
+    font-size: 0.95rem;
+  }
+
+  .venue-btn-map {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .venue-title {
+    font-size: 1.85rem;
+  }
+
+  .venue-subtitle {
+    font-size: 0.98rem;
+  }
+}

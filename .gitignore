@@ -1,0 +1,11 @@
+﻿# Dependencies
+node_modules/
+
+# OS / System
+.DS_Store
+Thumbs.db
+*.log
+
+# Temporary test captures
+mobile_test*.png
+mobile_390_settled.png

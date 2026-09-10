@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Abhigyan '26 | Quantum Bharat • SRM IST Vadapalani</title>
+  
+  <!-- Fonts: Syne & Outfit (Luxury Polished Gold), Instrument Serif (Literary Warmth), Plus Jakarta Sans & Inter (Modern, Legible), Syncopate (Wide Tech) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&family=Outfit:wght@800;900&family=Plus+Jakarta+Sans:wght@500;600;700;800;900&family=Space+Grotesk:wght@600;700;800&family=Syncopate:wght@700&family=Syne:wght@800&display=swap" rel="stylesheet">
+
+  <!-- Modular Master Stylesheet -->
+  <link rel="stylesheet" href="/css/main.css" />
+
+</head>
+<body>
+
+  <!-- Main Viewport Container -->
+  <div id="viewport-wrapper">
+
+    <!-- Flash Shutter Effect -->
+    <div id="flash-overlay" aria-hidden="true"></div>
+
+    <!-- Cosmic Backdrop (Attenuated for strong typography contrast) -->
+    <div class="cosmic-backdrop" aria-hidden="true"></div>
+
+    <!-- Ambient Earth with India Backdrop (Master Symposium Artwork Layer) -->
+    <div class="hero-earth-backdrop" aria-hidden="true"></div>
+
+    <!-- Subtle Celestial Shooting Stars -->
+    <div id="shootingStarsContainer" class="shooting-stars-container" aria-hidden="true"></div>
+
+    <!-- DotField Interactive Background (React Bits Component) -->
+    <div id="dotFieldContainer" aria-hidden="true"></div>
+
+    <!-- Blurred Silicon IC & PCB Layer (Attenuated) -->
+    <div class="blurred-chips-layer" id="blurredChipsLayer" aria-hidden="true">
+      <svg width="100%" height="100%" viewBox="0 0 1440 900" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="goldTraceGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#F5C518" stop-opacity="0.7" />
+            <stop offset="100%" stop-color="#E5A93C" stop-opacity="0.15" />
+          </linearGradient>
+          <linearGradient id="cyanTraceGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#00E5FF" stop-opacity="0.7" />
+            <stop offset="100%" stop-color="#007799" stop-opacity="0.15" />
+          </linearGradient>
+        </defs>
+
+        <g stroke="url(#goldTraceGrad)" stroke-width="2" fill="none" opacity="0.6">
+          <path d="M 0,180 L 180,180 L 260,260 L 420,260" />
+          <path d="M 0,220 L 150,220 L 220,290 L 380,290" />
+          <path d="M 120,0 L 120,120 L 200,200 L 200,340" />
+          <path d="M 1440,160 L 1280,160 L 1200,240 L 1020,240" />
+          <path d="M 1440,210 L 1310,210 L 1240,280 L 1080,280" />
+          <path d="M 1340,0 L 1340,110 L 1260,190 L 1260,320" />
+        </g>
+
+        <g stroke="url(#cyanTraceGrad)" stroke-width="1.8" fill="none" opacity="0.5">
+          <path d="M 60,0 L 60,200 L 180,320 L 180,500 L 320,640" />
+          <path d="M 1380,0 L 1380,220 L 1250,350 L 1250,540 L 1120,670" />
+        </g>
+
+        <!-- Semiconductor Chip Dies -->
+        <g transform="translate(140, 110)">
+          <rect x="0" y="0" width="110" height="110" rx="10" fill="#0c1427" stroke="#1e293b" stroke-width="2" />
+          <rect x="22" y="22" width="66" height="66" rx="6" fill="#070c18" stroke="#00E5FF" stroke-width="1.5" stroke-opacity="0.6" />
+          <text x="55" y="52" fill="#E5A93C" font-family="'JetBrains Mono', monospace" font-size="10" font-weight="700" text-anchor="middle">SRM_ECE</text>
+          <text x="55" y="68" fill="#00E5FF" font-family="'JetBrains Mono', monospace" font-size="9" text-anchor="middle">Q_CORE</text>
+        </g>
+
+        <g transform="translate(1180, 130)">
+          <rect x="0" y="0" width="130" height="75" rx="8" fill="#0b1224" stroke="#1e293b" stroke-width="2" />
+          <text x="65" y="44" fill="#00E5FF" font-family="'JetBrains Mono', monospace" font-size="10" font-weight="700" text-anchor="middle">QUANTUM // 2026</text>
+        </g>
+      </svg>
+    </div>
+
+    <!-- Global Desktop Navigation Bar (Sleek Dark Glass Ribbon) -->
+    <header class="global-navbar" id="globalNavbar">
+      <div class="nav-container">
+        <!-- Brand Lockup with Official SRM Seal Logo -->
+        <a href="#home" class="nav-brand">
+          <img src="/assets/srm_seal_logo.png" alt="SRM Institute of Science and Technology" class="nav-brand-logo">
+          <div class="nav-brand-text">
+            <span class="brand-title">SRM <span class="brand-accent">VADAPALANI</span></span>
+          </div>
+        </a>
+
+        <!-- Desktop Navigation Links -->
+        <nav class="nav-links" id="mainNavLinks" aria-label="Main Navigation">
+          <a href="#home" class="nav-link active">Home</a>
+          <a href="#about" class="nav-link">About</a>
+          <a href="#events" class="nav-link">Events</a>
+          <a href="#venue" class="nav-link">Venue</a>
+          <a href="#faq" class="nav-link">FAQ</a>
+          <span class="nav-active-glider" id="navActiveGlider" aria-hidden="true"></span>
+        </nav>
+
+        <!-- Right Quick Actions: Hamburger (Mobile) + Replay (Desktop) + Register -->
+        <div class="nav-actions">
+          <!-- Mobile Hamburger Toggle (Positioned between Logo and Register on Mobile) -->
+          <button class="nav-hamburger-btn" id="navHamburgerBtn" type="button" aria-label="Open Navigation Menu" onclick="toggleNavMobileMenu(true)">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+          </button>
+          <button class="nav-btn-reg" type="button" onclick="openRegistrationModal()">
+            Register
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Dimmed Backdrop Overlay (Closes menu on tap) -->
+    <div class="curved-menu-backdrop" id="curvedMenuBackdrop" onclick="toggleNavMobileMenu(false)" aria-hidden="true"></div>
+
+    <!-- Curved Mobile Navigation Drawer (Right-aligned, organic SVG curve, High-Fashion Editorial) -->
+    <aside class="curved-menu-drawer" id="mobileNavOverlay" role="dialog" aria-modal="true" aria-label="Mobile Navigation Menu">
+      
+      <!-- Organic SVG Curve Attached to Drawer Left Edge -->
+      <svg class="curved-svg-edge" viewBox="0 0 100 800" preserveAspectRatio="none" aria-hidden="true">
+        <path id="curvedSvgPath" d="M100 0 L100 800 Q 100 400 100 0" fill="#050a18"></path>
+      </svg>
+
+      <div class="curved-menu-content">
+        
+        <!-- Header: Navigation label + Close button -->
+        <div class="curved-menu-header">
+          <span class="curved-nav-label">Navigation</span>
+          <button class="curved-close-btn" id="mobileNavCloseBtn" type="button" aria-label="Close navigation" onclick="toggleNavMobileMenu(false)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Numbered Editorial Navigation Links with Hairline Dividers -->
+        <nav class="curved-nav-list" id="curvedNavList" aria-label="Mobile Menu Links">
+          <a href="#home" class="curved-nav-link" onclick="handleMobileNavClick(event, '#home')">
+            <span class="curved-nav-index">1.</span>
+            <span class="curved-nav-heading">Home</span>
+          </a>
+          <a href="#about" class="curved-nav-link" onclick="handleMobileNavClick(event, '#about')">
+            <span class="curved-nav-index">2.</span>
+            <span class="curved-nav-heading">About</span>
+          </a>
+          <a href="#events" class="curved-nav-link" onclick="handleMobileNavClick(event, '#events')">
+            <span class="curved-nav-index">3.</span>
+            <span class="curved-nav-heading">Events</span>
+          </a>
+          <a href="#venue" class="curved-nav-link" onclick="handleMobileNavClick(event, '#venue')">
+            <span class="curved-nav-index">4.</span>
+            <span class="curved-nav-heading">Venue</span>
+          </a>
+          <a href="#faq" class="curved-nav-link" onclick="handleMobileNavClick(event, '#faq')">
+            <span class="curved-nav-index">5.</span>
+            <span class="curved-nav-heading">FAQ</span>
+          </a>
+        </nav>
+
+        <!-- Footer Action: Register Button + Replay Intro -->
+        <div class="curved-menu-footer">
+          <button class="curved-reg-btn" type="button" onclick="toggleNavMobileMenu(false); openRegistrationModal();">
+            Register
+          </button>
+        </div>
+
+      </div>
+    </aside>
+
+    <!-- Main Hero Stage: Asymmetric Editorial Layout -->
+    <main class="hero-stage" id="home">
+      <div class="hero-grid-container">
+        
+        <!-- Left Flank: High-Contrast Editorial Typography & Actions (~50% width) -->
+        <div class="hero-content-col" id="masterTitleUnit">
+
+          <!-- Main Title Lockup -->
+          <div class="hero-title-lockup">
+            <h1 class="hero-title-abhigyan" id="wordAbhigyan26">
+              <img 
+                src="/assets/abhigyan_signature_cropped.png" 
+                alt="Abhigyan '26" 
+                class="hero-signature-img"
+                id="heroSignatureImg"
+              />
+              <span class="sr-only">Abhigyan '26</span>
+            </h1>
+            <div class="hero-title-quantum" id="wordQuantumBharat">QUANTUM BHARAT</div>
+          </div>
+
+          <!-- Literary Humanist Italic Tagline -->
+          <p class="hero-tagline-literary" id="taglineGlimpse">Quantum Leap to Viksit Bharat</p>
+
+          <!-- Settled Metadata & Actions -->
+          <div class="settled-content" id="settledContent">
+            <!-- Architectural Hairline Date & Venue Line -->
+            <div class="hero-meta-structural">
+              <div class="meta-gold-hairline" aria-hidden="true"></div>
+              <div class="meta-content-line">
+                <span class="meta-date">24 September 2026</span>
+                <span class="meta-sep" aria-hidden="true">—</span>
+                <span class="meta-venue">Auditorium, SRM IST Vadapalani Campus, Chennai</span>
+              </div>
+            </div>
+
+            <!-- Action CTAs with Distinct Hierarchy: Explore, Register, and Team -->
+            <div class="hero-action-cluster">
+              <a href="#events" class="btn-primary-explore" id="btnExploreArenas" role="button" aria-label="Explore 11 Arenas">
+                <span>Explore 11 Arenas</span>
+                <span class="btn-arrow-disk" aria-hidden="true">
+                  <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
+                    <path d="M1.5 12.5L12.5 1.5M12.5 1.5H3.5M12.5 1.5V10.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+              </a>
+
+              <button class="btn-secondary-reg" id="btnRegisterTeam" type="button" onclick="openRegistrationModal()">
+                Register Team
+              </button>
+            </div>
+
+
+          </div>
+
+        </div>
+
+        <!-- Right Flank: Floating Rotating Quantum Ashoka Chakra with Celestial Starfield -->
+        <div class="hero-chakra-col" id="heroChakraCol">
+          <div class="chakra-stage" id="chakraStage">
+            <!-- Celestial Backdrop Behind Chakra: Nebula Wash, Orbital Rings & Twinkling Starfield -->
+            <div class="chakra-celestial-backdrop" aria-hidden="true">
+              <div class="chakra-nebula-glow"></div>
+              
+              <div class="chakra-orbital-system">
+                <div class="chakra-orbital-ring ring-outer">
+                  <span class="orbit-node node-cyan-1"></span>
+                  <span class="orbit-node node-gold-1"></span>
+                  <span class="orbit-node node-cyan-2"></span>
+                </div>
+                <div class="chakra-orbital-ring ring-inner">
+                  <span class="orbit-node node-gold-2"></span>
+                  <span class="orbit-node node-cyan-3"></span>
+                </div>
+              </div>
+
+              <div class="chakra-star-cluster" id="chakraStarCluster"></div>
+            </div>
+
+            <!-- The Spinning Quantum Ashoka Chakra Wheel (Transparent PNG, No Frame) -->
+            <div class="chakra-rotator-wrapper" id="chakraRotator">
+              <img 
+                src="/assets/quantum_chakra_transparent.png" 
+                alt="Quantum Ashoka Chakra - 24 Superconducting Quantum Spokes & Bloch Qubit Core" 
+                class="chakra-wheel-img"
+                id="chakraWheelImg"
+              />
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+
+    <!-- =========================================================================
+         SECTION: ABOUT ABHIGYAN '26
+         Where Ideas Take the Quantum Leap & Quantum Leap to Viksit Bharat
+         ========================================================================= -->
+    <section class="about-section" id="about" aria-labelledby="aboutTitle">
+      <div class="about-container">
+        
+        <!-- Section Heading: Left-aligned, confident -->
+        <div class="about-header-lockup">
+          <h2 class="about-title" id="aboutTitle">
+            Where Ideas Take the Quantum Leap
+          </h2>
+        </div>
+
+        <!-- Editorial Split: Left Column (60% Narrative) / Right Column (40% Facts) -->
+        <div class="about-content-split">
+          
+          <!-- Left Column (60%): The Flowing Narrative (Two Continuous Authored Paragraphs) -->
+          <div class="about-narrative-col">
+            <p class="about-prose">
+              ABHIGYAN’26 is the 15th National Level Technical Symposium hosted by the Department of Electronics and Communication Engineering, SRM Institute of Science and Technology, Vadapalani Campus. Centered around the theme “Quantum Bharat”, this year’s symposium explores the evolving landscape of quantum technologies and their role in shaping the technological future of India.
+            </p>
+            <p class="about-prose">
+              ABHIGYAN brings together young innovators, researchers, and technology enthusiasts on a common platform to exchange ideas, challenge conventional thinking, and showcase their skills through a diverse range of technical and non-technical events. From research and problem-solving to creativity, strategy, and innovation, the symposium celebrates the spirit of engineering while looking ahead to a future driven by emerging technologies.
+            </p>
+          </div>
+
+          <!-- Right Column (40%): Lighter Flowing Fact List with Gold Vertical Rule -->
+          <aside class="about-facts-col" aria-label="Key Symposium Facts">
+            <div class="about-facts-list">
+              <div class="about-fact-line">
+                <span class="about-fact-bold">15th Edition</span>
+                <span class="about-fact-sep" aria-hidden="true">·</span>
+                <span class="about-fact-note">National-level symposium</span>
+              </div>
+              <div class="about-fact-line">
+                <span class="about-fact-bold">Dept. of ECE</span>
+                <span class="about-fact-sep" aria-hidden="true">·</span>
+                <span class="about-fact-note">SRM IST Vadapalani</span>
+              </div>
+              <div class="about-fact-line">
+                <span class="about-fact-bold">24 September 2026</span>
+                <span class="about-fact-sep" aria-hidden="true">·</span>
+                <span class="about-fact-note">Auditorium, Chennai</span>
+              </div>
+              <div class="about-fact-line">
+                <span class="about-fact-bold">Quantum Bharat</span>
+                <span class="about-fact-sep" aria-hidden="true">·</span>
+                <span class="about-fact-note">Symposium Theme</span>
+              </div>
+            </div>
+          </aside>
+
+        </div>
+
+        <!-- Typographic Moment: Vision Thesis Closing Statement Set Apart on Its Own Line -->
+        <div class="about-closing-statement">
+          <p class="about-vision-thesis">Quantum Leap to Viksit Bharat</p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         SECTION: EVENTS (11 ARENAS: 5 TECHNICAL + 6 NON-TECHNICAL)
+         Restructured Layout: Overview + Stat Row + Sequential Category Grids
+         ========================================================================= -->
+    <section class="events-section" id="events" aria-labelledby="eventsTitle">
+      <div class="events-container">
+
+        <!-- Overview Block: Heading, Supporting Text & Stat Row -->
+        <header class="events-overview">
+          <div class="events-overview-text">
+            <h2 class="events-title" id="eventsTitle">The Arenas</h2>
+            <p class="events-subtitle">
+              Compete, innovate, and claim victory across 11 national-level arenas designed to challenge your technical rigor and creative strategy.
+            </p>
+          </div>
+
+          <!-- Small Stat Row: Label Above Bold Value & Gold Hairline Divider -->
+          <div class="events-stat-row" role="region" aria-label="Events Statistics">
+            <div class="events-stat-block">
+              <span class="events-stat-label">Events</span>
+              <span class="events-stat-value">11</span>
+            </div>
+            <div class="events-stat-divider" aria-hidden="true"></div>
+            <div class="events-stat-block">
+              <span class="events-stat-label">Technical</span>
+              <span class="events-stat-value">5</span>
+            </div>
+            <div class="events-stat-divider" aria-hidden="true"></div>
+            <div class="events-stat-block">
+              <span class="events-stat-label">Non-Technical</span>
+              <span class="events-stat-value">6</span>
+            </div>
+          </div>
+        </header>
+
+        <!-- Plain Text Filter Control (No Container, No Background, No Border-Radius) -->
+        <div class="events-filter-row" role="tablist" aria-label="Events Filter">
+          <button class="events-filter-tab active" data-filter="all" type="button" role="tab" aria-selected="true">
+            All
+          </button>
+          <button class="events-filter-tab" data-filter="technical" type="button" role="tab" aria-selected="false">
+            Technical
+          </button>
+          <button class="events-filter-tab" data-filter="non-technical" type="button" role="tab" aria-selected="false">
+            Non-technical
+          </button>
+        </div>
+
+        <!-- Sequential Single-Line Event Roster Container -->
+        <div class="events-roster-container" id="eventsRosterContainer">
+
+          <!-- 1. Technical Arenas Group -->
+          <div class="events-group" id="techEventsGroup" data-category="technical">
+            <div class="events-group-header">
+              <span class="group-color-bar tech-indicator" aria-hidden="true"></span>
+              <h3 class="events-group-title">Technical</h3>
+              <span class="events-group-count">(5)</span>
+            </div>
+            <div class="events-group-list" id="techRosterList" role="list">
+              <!-- Rendered dynamically by events.js -->
+            </div>
+          </div>
+
+          <!-- 2. Non-Technical Arenas Group (Follows directly in a single line) -->
+          <div class="events-group" id="nonTechEventsGroup" data-category="non-technical">
+            <div class="events-group-header">
+              <span class="group-color-bar nontech-indicator" aria-hidden="true"></span>
+              <h3 class="events-group-title">Non-technical</h3>
+              <span class="events-group-count">(6)</span>
+            </div>
+            <div class="events-group-list" id="nonTechRosterList" role="list">
+              <!-- Rendered dynamically by events.js -->
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         SECTION: VENUE & TRANSIT
+         Clean, Dignified Location Presentation with Theme-Adapted Shiny Pill
+         ========================================================================= -->
+    <section class="venue-section" id="venue" aria-labelledby="venueTitle">
+      <div class="venue-container">
+        
+        <!-- Section Header: Clean, dignified, zero double slashes, no yellow dot -->
+        <div class="venue-header-lockup">
+          <span class="venue-eyebrow">Location</span>
+          <h2 class="venue-title" id="venueTitle">
+            At the heart of Chennai, steps from the Metro.
+          </h2>
+          <p class="venue-subtitle">
+            SRM Institute of Science and Technology, Vadapalani Campus · 100 Feet Road, Chennai
+          </p>
+        </div>
+
+        <!-- Theme-Adapted Interactive Shiny Pill Button -->
+        <div class="venue-pill-wrapper">
+          <button class="shiny-cta venue-shiny-pill" id="venuePillBtn" type="button" aria-expanded="false" aria-controls="venueDetailsDrawer">
+            <span class="shiny-pill-content">
+              <span id="venuePillLabel">View Detailed Address &amp; Transit Info</span>
+              <svg class="venue-arrow-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </span>
+          </button>
+        </div>
+
+        <!-- Expandable Detailed Editorial Drawer (No Boxed Cards) -->
+        <div class="venue-details-drawer" id="venueDetailsDrawer" role="region" aria-label="Detailed Campus Address and Transit Information">
+          <div class="venue-details-inner">
+            <div class="venue-fact-list">
+              
+              <!-- Fact Row 1: Postal Address -->
+              <div class="venue-fact-row">
+                <div class="venue-fact-divider" aria-hidden="true"></div>
+                <div class="venue-fact-label">Postal Address</div>
+                <div class="venue-fact-value">
+                  <div class="venue-val-primary">SRM Institute of Science and Technology, Vadapalani Campus</div>
+                  <div class="venue-val-secondary">No. 1, Jawaharlal Nehru Salai (100 Feet Road), Vadapalani, Chennai, Tamil Nadu — 600026</div>
+                  <div class="venue-val-stage">Main Auditorium &amp; Department of ECE (4th Floor)</div>
+                </div>
+              </div>
+
+              <!-- Fact Row 2: Metro Connectivity -->
+              <div class="venue-fact-row">
+                <div class="venue-fact-divider" aria-hidden="true"></div>
+                <div class="venue-fact-label">Metro Connectivity</div>
+                <div class="venue-fact-value">
+                  <div class="venue-val-primary">Vadapalani Metro Station — 200 meters (2 min walk)</div>
+                  <div class="venue-val-secondary">Direct Green Line access from Chennai Central (Puratchi Thalaivar Dr. MGR Central), Koyambedu CMBT, and Chennai International Airport.</div>
+                </div>
+              </div>
+
+              <!-- Fact Row 3: Campus Arrival & Coordinates -->
+              <div class="venue-fact-row">
+                <div class="venue-fact-divider" aria-hidden="true"></div>
+                <div class="venue-fact-label">Arrival &amp; Coordinates</div>
+                <div class="venue-fact-value">
+                  <div class="venue-val-primary">Participant Check-in via Gate 1 on 100 Feet Road</div>
+                  <div class="venue-val-secondary">Designated on-campus parking available · Coordinates: <span class="venue-coord-code">13.0524° N, 80.2104° E</span></div>
+                </div>
+              </div>
+
+              <!-- Quick Action: Copy Address -->
+              <div class="venue-fact-actions">
+                <button class="btn-copy-address" id="btnCopyVenueAddress" type="button" aria-label="Copy Campus Address to Clipboard">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                  </svg>
+                  <span>Copy Address</span>
+                </button>
+                <span class="copy-feedback" id="venueCopyFeedback" role="status" aria-live="polite">Copied to Clipboard ✓</span>
+              </div>
+
+              <div class="venue-fact-divider" aria-hidden="true"></div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Direct Google Maps Navigation Button -->
+        <div class="venue-action-row">
+          <a href="https://www.google.com/maps/dir/?api=1&destination=SRM+Institute+of+Science+and+Technology,+Vadapalani+Campus,+Chennai" target="_blank" rel="noopener noreferrer" class="venue-btn-map" id="venueBtnMap" aria-label="Get Directions on Google Maps">
+            <span>Get Directions on Google Maps</span>
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <path d="M1.5 12.5L12.5 1.5M12.5 1.5H3.5M12.5 1.5V10.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         SECTION: FAQ (FREQUENTLY ASKED QUESTIONS)
+         Two-Column Asymmetric Minimalist Presentation
+         ========================================================================= -->
+    <section class="faq-section" id="faq" aria-labelledby="faqTitle">
+      <div class="faq-container">
+        
+        <!-- Left Column: Bold Asymmetric Heading -->
+        <div class="faq-heading-col">
+          <h2 class="faq-title" id="faqTitle">
+            Frequently asked<br>questions
+          </h2>
+        </div>
+
+        <!-- Right Column: Hairline Accordion List -->
+        <div class="faq-list-col">
+          <div class="faq-accordion" id="faqAccordion">
+
+            <!-- Item 1 -->
+            <div class="faq-item">
+              <button class="faq-question-btn" type="button" aria-expanded="false" id="faqBtn1" aria-controls="faqAns1">
+                <span class="faq-icon" aria-hidden="true">+</span>
+                <span class="faq-question-text">What is ABHIGYAN’26?</span>
+              </button>
+              <div class="faq-answer-wrap" id="faqAns1" role="region" aria-labelledby="faqBtn1">
+                <div class="faq-answer-inner">
+                  <p class="faq-answer-text">
+                    ABHIGYAN’26 is the 15th National Level Technical Symposium hosted by the Department of Electronics and Communication Engineering at SRMIST, Vadapalani Campus.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Item 2 -->
+            <div class="faq-item">
+              <button class="faq-question-btn" type="button" aria-expanded="false" id="faqBtn2" aria-controls="faqAns2">
+                <span class="faq-icon" aria-hidden="true">+</span>
+                <span class="faq-question-text">What is the theme of ABHIGYAN’26?</span>
+              </button>
+              <div class="faq-answer-wrap" id="faqAns2" role="region" aria-labelledby="faqBtn2">
+                <div class="faq-answer-inner">
+                  <p class="faq-answer-text">
+                    The theme for this edition is “Quantum Bharat”, with the vision “Quantum Leap to Viksit Bharat.”
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Item 3 -->
+            <div class="faq-item">
+              <button class="faq-question-btn" type="button" aria-expanded="false" id="faqBtn3" aria-controls="faqAns3">
+                <span class="faq-icon" aria-hidden="true">+</span>
+                <span class="faq-question-text">When is ABHIGYAN’26 happening?</span>
+              </button>
+              <div class="faq-answer-wrap" id="faqAns3" role="region" aria-labelledby="faqBtn3">
+                <div class="faq-answer-inner">
+                  <p class="faq-answer-text">
+                    24 September 2026.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Item 4 -->
+            <div class="faq-item">
+              <button class="faq-question-btn" type="button" aria-expanded="false" id="faqBtn4" aria-controls="faqAns4">
+                <span class="faq-icon" aria-hidden="true">+</span>
+                <span class="faq-question-text">Where is ABHIGYAN’26 being conducted?</span>
+              </button>
+              <div class="faq-answer-wrap" id="faqAns4" role="region" aria-labelledby="faqBtn4">
+                <div class="faq-answer-inner">
+                  <p class="faq-answer-text">
+                    At SRM Institute of Science and Technology, Vadapalani Campus, Chennai.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Item 5 -->
+            <div class="faq-item">
+              <button class="faq-question-btn" type="button" aria-expanded="false" id="faqBtn5" aria-controls="faqAns5">
+                <span class="faq-icon" aria-hidden="true">+</span>
+                <span class="faq-question-text">Who can participate?</span>
+              </button>
+              <div class="faq-answer-wrap" id="faqAns5" role="region" aria-labelledby="faqBtn5">
+                <div class="faq-answer-inner">
+                  <p class="faq-answer-text">
+                    ABHIGYAN’26 is open to college students and student teams. Eligibility may vary depending on the event.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Item 6 -->
+            <div class="faq-item">
+              <button class="faq-question-btn" type="button" aria-expanded="false" id="faqBtn6" aria-controls="faqAns6">
+                <span class="faq-icon" aria-hidden="true">+</span>
+                <span class="faq-question-text">Do I need to be an ECE student?</span>
+              </button>
+              <div class="faq-answer-wrap" id="faqAns6" role="region" aria-labelledby="faqBtn6">
+                <div class="faq-answer-inner">
+                  <p class="faq-answer-text">
+                    No. Participants from different engineering and academic backgrounds can take part in events suited to their interests.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Item 7 -->
+            <div class="faq-item">
+              <button class="faq-question-btn" type="button" aria-expanded="false" id="faqBtn7" aria-controls="faqAns7">
+                <span class="faq-icon" aria-hidden="true">+</span>
+                <span class="faq-question-text">What kind of events are conducted?</span>
+              </button>
+              <div class="faq-answer-wrap" id="faqAns7" role="region" aria-labelledby="faqBtn7">
+                <div class="faq-answer-inner">
+                  <p class="faq-answer-text">
+                    ABHIGYAN’26 features a mix of technical and non-technical events, including research, creative, gaming, strategy, and knowledge-based challenges.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Item 8 -->
+            <div class="faq-item">
+              <button class="faq-question-btn" type="button" aria-expanded="false" id="faqBtn8" aria-controls="faqAns8">
+                <span class="faq-icon" aria-hidden="true">+</span>
+                <span class="faq-question-text">Do I need prior knowledge of quantum technology?</span>
+              </button>
+              <div class="faq-answer-wrap" id="faqAns8" role="region" aria-labelledby="faqBtn8">
+                <div class="faq-answer-inner">
+                  <p class="faq-answer-text">
+                    Not necessarily. While the symposium follows the Quantum Bharat theme, individual events may have different requirements. Check the respective event details before registering.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Item 9 -->
+            <div class="faq-item">
+              <button class="faq-question-btn" type="button" aria-expanded="false" id="faqBtn9" aria-controls="faqAns9">
+                <span class="faq-icon" aria-hidden="true">+</span>
+                <span class="faq-question-text">Can I participate in multiple events?</span>
+              </button>
+              <div class="faq-answer-wrap" id="faqAns9" role="region" aria-labelledby="faqBtn9">
+                <div class="faq-answer-inner">
+                  <p class="faq-answer-text">
+                    Yes, subject to event schedules and individual event rules.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Item 10 -->
+            <div class="faq-item">
+              <button class="faq-question-btn" type="button" aria-expanded="false" id="faqBtn10" aria-controls="faqAns10">
+                <span class="faq-icon" aria-hidden="true">+</span>
+                <span class="faq-question-text">Will participants receive certificates?</span>
+              </button>
+              <div class="faq-answer-wrap" id="faqAns10" role="region" aria-labelledby="faqBtn10">
+                <div class="faq-answer-inner">
+                  <p class="faq-answer-text">
+                    Yes. Participation and/or achievement certificates will be provided as applicable to the event.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Item 11 -->
+            <div class="faq-item">
+              <button class="faq-question-btn" type="button" aria-expanded="false" id="faqBtn11" aria-controls="faqAns11">
+                <span class="faq-icon" aria-hidden="true">+</span>
+                <span class="faq-question-text">How do I register?</span>
+              </button>
+              <div class="faq-answer-wrap" id="faqAns11" role="region" aria-labelledby="faqBtn11">
+                <div class="faq-answer-inner">
+                  <p class="faq-answer-text">
+                    Registration details, event rules, and participation information will be available through the official ABHIGYAN’26 registration platform.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Item 12 -->
+            <div class="faq-item">
+              <button class="faq-question-btn" type="button" aria-expanded="false" id="faqBtn12" aria-controls="faqAns12">
+                <span class="faq-icon" aria-hidden="true">+</span>
+                <span class="faq-question-text">Where can I find event rules and updates?</span>
+              </button>
+              <div class="faq-answer-wrap" id="faqAns12" role="region" aria-labelledby="faqBtn12">
+                <div class="faq-answer-inner">
+                  <p class="faq-answer-text">
+                    Follow the official ABHIGYAN’26 social media pages and website for event-wise rules, schedules, announcements, and updates.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Continuous 4K White Rankings Banner Footer (Left to Right) -->
+    <footer class="bottom-rankings-banner-footer" id="bottomRankingsFooter" aria-label="SRM University Accreditations and Rankings">
+      <div class="bottom-rankings-banner-track" id="bottomRankingsTrack">
+        <!-- Sequence Group A -->
+        <div class="bottom-banner-group" id="bottomBannerGroupA">
+          <div class="bottom-banner-slide">
+            <picture>
+              <source srcset="/assets/srm_rankings_banner_4k.webp" type="image/webp" />
+              <img src="/assets/srm_rankings_banner_4k.png" alt="SRM Accreditations and Rankings: NAAC A++, Category 1, NIRF 11th, QS, THE, Shanghai, Nature Index, UI GreenMetric" class="bottom-rankings-img" width="4072" height="292" loading="eager" decoding="async" />
+            </picture>
+          </div>
+          <div class="bottom-banner-slide" aria-hidden="true">
+            <picture>
+              <source srcset="/assets/srm_rankings_banner_4k.webp" type="image/webp" />
+              <img src="/assets/srm_rankings_banner_4k.png" alt="" class="bottom-rankings-img" width="4072" height="292" loading="eager" decoding="async" />
+            </picture>
+          </div>
+          <div class="bottom-banner-slide" aria-hidden="true">
+            <picture>
+              <source srcset="/assets/srm_rankings_banner_4k.webp" type="image/webp" />
+              <img src="/assets/srm_rankings_banner_4k.png" alt="" class="bottom-rankings-img" width="4072" height="292" loading="eager" decoding="async" />
+            </picture>
+          </div>
+          <div class="bottom-banner-slide" aria-hidden="true">
+            <picture>
+              <source srcset="/assets/srm_rankings_banner_4k.webp" type="image/webp" />
+              <img src="/assets/srm_rankings_banner_4k.png" alt="" class="bottom-rankings-img" width="4072" height="292" loading="eager" decoding="async" />
+            </picture>
+          </div>
+          <div class="bottom-banner-slide" aria-hidden="true">
+            <picture>
+              <source srcset="/assets/srm_rankings_banner_4k.webp" type="image/webp" />
+              <img src="/assets/srm_rankings_banner_4k.png" alt="" class="bottom-rankings-img" width="4072" height="292" loading="eager" decoding="async" />
+            </picture>
+          </div>
+          <div class="bottom-banner-slide" aria-hidden="true">
+            <picture>
+              <source srcset="/assets/srm_rankings_banner_4k.webp" type="image/webp" />
+              <img src="/assets/srm_rankings_banner_4k.png" alt="" class="bottom-rankings-img" width="4072" height="292" loading="eager" decoding="async" />
+            </picture>
+          </div>
+        </div>
+        <!-- Sequence Group B (Exact Twin for Infinite Continuous Loop) -->
+        <div class="bottom-banner-group" id="bottomBannerGroupB" aria-hidden="true">
+          <div class="bottom-banner-slide">
+            <picture>
+              <source srcset="/assets/srm_rankings_banner_4k.webp" type="image/webp" />
+              <img src="/assets/srm_rankings_banner_4k.png" alt="" class="bottom-rankings-img" width="4072" height="292" loading="eager" decoding="async" />
+            </picture>
+          </div>
+          <div class="bottom-banner-slide">
+            <picture>
+              <source srcset="/assets/srm_rankings_banner_4k.webp" type="image/webp" />
+              <img src="/assets/srm_rankings_banner_4k.png" alt="" class="bottom-rankings-img" width="4072" height="292" loading="eager" decoding="async" />
+            </picture>
+          </div>
+          <div class="bottom-banner-slide">
+            <picture>
+              <source srcset="/assets/srm_rankings_banner_4k.webp" type="image/webp" />
+              <img src="/assets/srm_rankings_banner_4k.png" alt="" class="bottom-rankings-img" width="4072" height="292" loading="eager" decoding="async" />
+            </picture>
+          </div>
+          <div class="bottom-banner-slide">
+            <picture>
+              <source srcset="/assets/srm_rankings_banner_4k.webp" type="image/webp" />
+              <img src="/assets/srm_rankings_banner_4k.png" alt="" class="bottom-rankings-img" width="4072" height="292" loading="eager" decoding="async" />
+            </picture>
+          </div>
+          <div class="bottom-banner-slide">
+            <picture>
+              <source srcset="/assets/srm_rankings_banner_4k.webp" type="image/webp" />
+              <img src="/assets/srm_rankings_banner_4k.png" alt="" class="bottom-rankings-img" width="4072" height="292" loading="eager" decoding="async" />
+            </picture>
+          </div>
+          <div class="bottom-banner-slide">
+            <picture>
+              <source srcset="/assets/srm_rankings_banner_4k.webp" type="image/webp" />
+              <img src="/assets/srm_rankings_banner_4k.png" alt="" class="bottom-rankings-img" width="4072" height="292" loading="eager" decoding="async" />
+            </picture>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Sleek Registration Modal -->
+    <div class="reg-modal-overlay" id="regModalOverlay" role="dialog" aria-modal="true" aria-labelledby="regModalTitle" onclick="closeRegistrationModal(event)">
+      <div class="reg-modal-card" onclick="event.stopPropagation()">
+        
+        <div class="reg-modal-header">
+          <div>
+            <div class="reg-modal-tag">ABHIGYAN '26 • REGISTRATION</div>
+            <h3 class="reg-modal-title" id="regModalTitle">Team Registration</h3>
+            <div class="reg-modal-sub">National Level Technical Symposium • September 24, 2026</div>
+          </div>
+          <button class="reg-close-btn" onclick="closeRegistrationModal()" aria-label="Close modal">✕</button>
+        </div>
+
+        <form class="reg-form-body" id="registrationForm" onsubmit="handleRegistrationSubmit(event)">
+          <div class="reg-input-group">
+            <label class="reg-label" for="regTeamName">Team / Lead Name</label>
+            <input class="reg-input" id="regTeamName" type="text" placeholder="e.g. Quantum Pioneers / Karthik R" required />
+          </div>
+
+          <div class="reg-input-group">
+            <label class="reg-label" for="regCollege">College / Institution</label>
+            <input class="reg-input" id="regCollege" type="text" placeholder="e.g. SRM Institute of Science &amp; Technology" required />
+          </div>
+
+          <div class="reg-input-group">
+            <label class="reg-label" for="regPhone">WhatsApp Phone Number</label>
+            <input class="reg-input" id="regPhone" type="tel" placeholder="e.g. +91 98765 43210 (For group link &amp; updates)" required />
+          </div>
+
+          <div class="reg-input-group">
+            <label class="reg-label" for="regEvent">Select Preferred Arena / Event</label>
+            <select class="reg-input" id="regEvent" required style="cursor: pointer;">
+              <option value="" disabled selected>Choose an arena from 11 events...</option>
+              <optgroup label="Technical Arenas (5)">
+                <option value="research-quest">Research Quest (Paper Presentation) — ₹250</option>
+                <option value="quantum-imprint">Quantum Imprint (Poster Making) — ₹140</option>
+                <option value="binary-bingo">Binary Bingo (Bit &amp; Brain) — ₹150</option>
+                <option value="data-heist">Data Heist (Digital Forensics) — ₹160</option>
+                <option value="quantum-bits">Quantum Bits (Tech Quiz) — ₹120</option>
+              </optgroup>
+              <optgroup label="Non-Technical Arenas (6)">
+                <option value="byte-hunt">Byte Hunt (Cryptic Treasure Hunt) — ₹155</option>
+                <option value="electro-scribble">Electro Scribble (Tech Pictionary) — ₹110</option>
+                <option value="ipl-auction">IPL Auction (Strategy &amp; Bidding) — ₹200</option>
+                <option value="free-fire">Free Fire (Mobile Esports) — ₹190</option>
+                <option value="muted-mayhem">Muted Mayhem (Lip-Reading Battle) — ₹135</option>
+                <option value="connections-movie-mastermind">Connections / Movie Mastermind — ₹170</option>
+              </optgroup>
+            </select>
+          </div>
+
+          <button class="reg-submit-btn" type="submit">
+            <span>Complete Registration</span>
+            <span aria-hidden="true">→</span>
+          </button>
+
+          <div class="reg-direct-link-row">
+            Prefer an external form? <a href="https://forms.google.com" target="_blank" rel="noopener noreferrer" class="reg-direct-link">Open Official Google Form</a>
+          </div>
+        </form>
+
+        <div class="reg-success-msg" id="regSuccessMsg">
+          <div class="success-icon" aria-hidden="true">✓</div>
+          <div class="success-title">Registration Recorded!</div>
+          <div class="success-sub">Thank you for registering for Abhigyan '26. The official event coordinators will contact you via WhatsApp with the arena guidelines.</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Poster Lightbox Modal Dialog -->
+    <div class="poster-lightbox-overlay" id="posterLightboxModal" role="dialog" aria-modal="true" aria-labelledby="posterLightboxTitle" onclick="if(event.target === this) closePosterLightbox()">
+      <div class="poster-lightbox-card" onclick="event.stopPropagation()">
+        <button class="poster-lightbox-close" onclick="closePosterLightbox()" aria-label="Close poster" type="button">✕</button>
+        
+        <div class="poster-lightbox-header">
+          <span class="poster-lightbox-tag">OFFICIAL ARENA POSTER</span>
+          <h3 class="poster-lightbox-title" id="posterLightboxTitle">Event Name</h3>
+        </div>
+
+        <div class="poster-lightbox-image-wrap">
+          <img src="" alt="Event Poster" class="poster-lightbox-img" id="posterLightboxImg" />
+        </div>
+
+        <div class="poster-lightbox-actions">
+          <a href="" target="_blank" download class="poster-lightbox-action-btn view-full" id="posterLightboxFullLink">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+              <polyline points="15 3 21 3 21 9"></polyline>
+              <line x1="10" y1="14" x2="21" y2="3"></line>
+            </svg>
+            <span>Open High-Res</span>
+          </a>
+          <button class="poster-lightbox-action-btn reg-now" id="posterLightboxRegBtn" type="button">
+            <span>Register for this Arena →</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Modular Application Controller -->
+  <script type="module" src="/js/main.js"></script>
+</body>
+</html>

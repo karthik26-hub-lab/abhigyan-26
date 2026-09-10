@@ -1,0 +1,882 @@
+/* =========================================================================
+   EVENTS SECTION STYLES
+   Department of ECE • SRM IST Vadapalani • Abhigyan '26
+   Site-Wide Design System Tokens:
+   Teal (Technical): #00E5FF
+   Saffron (Non-Technical): #FF9933
+   Gold (Hairlines, Numbers, CTA): #F5C518
+   Clean Minimal Editorial Stylesheet
+   ========================================================================= */
+
+.events-section {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  padding: 96px 24px 140px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: transparent;
+}
+
+.events-container {
+  width: 100%;
+  max-width: 1120px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 44px;
+}
+
+/* -------------------------------------------------------------------------
+   1. Overview Block: Heading, Subtitle & Stat Row
+   Matches About Section Fact List Typographic Architecture
+   ------------------------------------------------------------------------- */
+.events-overview {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 28px;
+  width: 100%;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 36px;
+}
+
+.events-overview-text {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 840px;
+}
+
+.events-title {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: clamp(2.1rem, 3.6vw, 3rem);
+  font-weight: 800;
+  line-height: 1.18;
+  letter-spacing: -0.6px;
+  color: #F8FAFC;
+  margin: 0;
+  text-align: left;
+}
+
+.events-subtitle {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: clamp(15.5px, 1.12vw, 17px);
+  line-height: 1.65;
+  color: #94A3B8;
+  margin: 0;
+  font-weight: 400;
+}
+
+/* Small Stat Row: Label Above Value with Solid Gold Hairline Divider */
+.events-stat-row {
+  display: flex;
+  align-items: center;
+  gap: clamp(20px, 3vw, 36px);
+  padding: 12px 0;
+  background: transparent;
+  width: fit-content;
+}
+
+.events-stat-block {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.events-stat-label {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: #94A3B8;
+  font-weight: 600;
+}
+
+.events-stat-value {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: clamp(1.45rem, 2.2vw, 1.95rem);
+  font-weight: 800;
+  color: #F8FAFC;
+  line-height: 1.1;
+  letter-spacing: -0.3px;
+}
+
+.events-stat-divider {
+  width: 1.5px;
+  height: 36px;
+  background: #F5C518;
+  border-radius: 1px;
+}
+
+/* -------------------------------------------------------------------------
+   2. Filter Control: Plain Text Tabs
+   No container, no background, no border-radius.
+   Active tab gets a solid gold underline matching navbar active underline.
+   ------------------------------------------------------------------------- */
+.events-filter-row {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  width: 100%;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 2px;
+  background: transparent;
+}
+
+.events-filter-tab {
+  background: transparent;
+  border: none;
+  padding: 10px 0 12px 0;
+  margin: 0;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: #94A3B8;
+  cursor: pointer;
+  position: relative;
+  letter-spacing: 0.2px;
+  transition: color 0.2s ease;
+  white-space: nowrap;
+}
+
+.events-filter-tab:hover {
+  color: #F8FAFC;
+}
+
+.events-filter-tab.active {
+  color: #FFFFFF;
+}
+
+.events-filter-tab.active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: #F5C518;
+  border-radius: 2px;
+}
+
+/* -------------------------------------------------------------------------
+   3. Sequential Single-Line Event Roster Container
+   ------------------------------------------------------------------------- */
+.events-roster-container {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  width: 100%;
+}
+
+.events-group {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  scroll-margin-top: 100px;
+}
+
+.events-group-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  margin-bottom: 2px;
+}
+
+.group-color-bar {
+  width: 4px;
+  height: 18px;
+  border-radius: 2px;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.tech-indicator {
+  background: #00E5FF;
+}
+
+.nontech-indicator {
+  background: #FF9933;
+}
+
+.events-group-title {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: #F8FAFC;
+  margin: 0;
+}
+
+.events-group-count {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #94A3B8;
+}
+
+.events-group-list {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+/* -------------------------------------------------------------------------
+   4. Single Event Row Item
+   Left-edge 4px solid color bar (teal or saffron, full opacity, no glow).
+   Hairline divider between rows, no background fill.
+   Minimum tap height: 56px.
+   ------------------------------------------------------------------------- */
+.event-row-item {
+  width: 100%;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background: transparent;
+  position: relative;
+  transition: border-color 0.2s ease;
+}
+
+.event-row-trigger {
+  width: 100%;
+  min-height: 56px;
+  padding: 16px 10px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.event-color-bar {
+  width: 4px;
+  min-height: 38px;
+  align-self: stretch;
+  border-radius: 2px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.item-tech .event-color-bar {
+  background: #00E5FF;
+}
+
+.item-nontech .event-color-bar {
+  background: #FF9933;
+}
+
+.event-num {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+  color: #F5C518;
+  min-width: 26px;
+  flex-shrink: 0;
+  padding-top: 1px;
+}
+
+.event-info {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.event-name {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-weight: 700;
+  font-size: clamp(1.08rem, 1.35vw, 1.28rem);
+  line-height: 1.38;
+  color: #F8FAFC;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  display: block;
+  margin: 0;
+}
+
+.event-meta {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-weight: 500;
+  font-size: 0.86rem;
+  color: #94A3B8;
+  line-height: 1.4;
+  display: block;
+  margin: 0;
+}
+
+.event-expand-icon {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #94A3B8;
+  flex-shrink: 0;
+  margin-top: 2px;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s ease;
+}
+
+.event-row-item:hover .event-expand-icon {
+  color: #F8FAFC;
+}
+
+.event-row-item.active .event-expand-icon {
+  transform: rotate(45deg);
+  color: #F5C518;
+}
+
+/* -------------------------------------------------------------------------
+   5. In-Place Detail Drawer (Hardware-Accelerated CSS Grid 0fr -> 1fr)
+   Zero height, hidden overflow, and hidden visibility when closed to avoid bleeding
+   ------------------------------------------------------------------------- */
+.event-detail-drawer {
+  display: grid;
+  grid-template-rows: 0fr;
+  min-height: 0;
+  overflow: hidden;
+  visibility: hidden;
+  opacity: 0;
+  transition: grid-template-rows 0.32s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.22s ease, visibility 0.32s ease;
+  will-change: grid-template-rows, opacity;
+}
+
+.event-row-item.active .event-detail-drawer {
+  grid-template-rows: 1fr;
+  visibility: visible;
+  opacity: 1;
+}
+
+.event-detail-inner {
+  min-height: 0;
+  overflow: hidden;
+  padding: 10px 16px 28px 46px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Clean Horizontal Value Strip (Wrap-safe items with 4px gold circular dots) */
+.event-data-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px 18px;
+  padding: 14px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.event-data-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.data-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #F5C518;
+  flex-shrink: 0;
+}
+
+.event-data-val {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 14.5px;
+  font-weight: 700;
+  color: #F8FAFC;
+  line-height: 1.4;
+}
+
+/* Description */
+.event-description {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 15px;
+  line-height: 1.7;
+  color: #CBD5E1;
+  margin: 0;
+}
+
+/* Coordinators with structured column/row layout and tel: links */
+.event-coordinators {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-size: 14px;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.coord-entry {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+@media (min-width: 680px) {
+  .coord-entry {
+    flex-direction: row;
+    align-items: baseline;
+    gap: 10px;
+  }
+  .coord-label {
+    min-width: 165px;
+    flex-shrink: 0;
+  }
+}
+
+.coord-label {
+  color: #94A3B8;
+  font-weight: 600;
+  font-size: 13.5px;
+  line-height: 1.4;
+}
+
+.coord-val {
+  color: #F8FAFC;
+  font-size: 14px;
+  line-height: 1.6;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+.coord-tel-link {
+  color: #F5C518;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.18s ease;
+}
+
+.coord-tel-link:hover {
+  color: #FFFFFF;
+}
+
+/* Flat Gold CTA Register Button & Uiverse.io Monochromatic Poster Button */
+.event-action-wrap {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  padding-top: 6px;
+}
+
+/* =========================================================================
+   UIVERSE.IO REGISTER BUTTON (Adapted by himanshu9682 for Abhigyan '26)
+   Option A: 24K Quantum Gold Rotating Lattice / Diamond Aperture
+   ========================================================================= */
+.event-btn-register {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  height: 44px;
+  padding: 0 26px;
+  min-width: 220px;
+  width: fit-content;
+  cursor: pointer;
+  border-radius: 999px;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  color: #F5C518;
+  background-color: rgba(245, 197, 24, 0.08);
+  border: 1px solid rgba(245, 197, 24, 0.38);
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+  transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1),
+              box-shadow 0.35s cubic-bezier(0.25, 1, 0.5, 1),
+              color 0.3s ease,
+              border-color 0.3s ease,
+              background-color 0.3s ease;
+  user-select: none;
+  -webkit-user-select: none;
+  text-decoration: none;
+}
+
+.event-btn-register .btn-reg-text {
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+  transition: transform 0.3s ease;
+}
+
+.event-btn-register::before,
+.event-btn-register::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+  border: 1px solid rgba(245, 197, 24, 0.35);
+  background-color: rgba(245, 197, 24, 0.06);
+  border-radius: 999px;
+  box-sizing: border-box;
+  transform: rotate(0deg);
+}
+
+.event-btn-register:hover {
+  transform: translateY(-4px);
+  color: #FFFFFF;
+  border-color: rgba(245, 197, 24, 0.85);
+  background-color: rgba(245, 197, 24, 0.16);
+  box-shadow: 0 8px 24px rgba(245, 197, 24, 0.32), 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+.event-btn-register:hover::before {
+  transform: rotate(-45deg) scale(1.08);
+  background-color: transparent;
+  border-color: rgba(0, 229, 255, 0.55); /* Technical cyan flash on cross-plane */
+}
+
+.event-btn-register:hover::after {
+  transform: rotate(45deg) scale(1.08);
+  background-color: transparent;
+  border-color: rgba(245, 197, 24, 0.75); /* 24K Gold plane */
+}
+
+.event-btn-register:active {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(245, 197, 24, 0.2);
+}
+
+/* =========================================================================
+   UIVERSE.IO POSTER BUTTON (Adapted for Abhigyan '26)
+   Original by kennyotsu-monochromia • Monochromatic Fill Sweep
+   ========================================================================= */
+.event-btn-poster {
+  --black: #000000;
+  --ch-black: #141414;
+  --night-rider: #1e293b;
+  --white: #ffffff;
+  --af-white: #f1f5f9;
+  --ch-white: rgba(255, 255, 255, 0.28);
+  position: relative;
+  height: 44px;
+  padding: 0 22px;
+  border-radius: 999px;
+  color: var(--night-rider);
+  font-weight: 700;
+  font-size: 13.5px;
+  letter-spacing: 0px;
+  background-color: var(--white);
+  border: 1px solid var(--ch-white);
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.event-btn-poster .button-text {
+  position: relative;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.event-btn-poster .fill-container {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 100%;
+  padding-bottom: 100%;
+  transform: translateY(-50%) rotate(180deg);
+  pointer-events: none;
+}
+
+.event-btn-poster .fill-container::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--af-white);
+  border-radius: 50px;
+  transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+  transform: translateY(-100%);
+}
+
+.event-btn-poster:hover {
+  transform: translateY(-2px);
+  color: var(--black);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+}
+
+.event-btn-poster:hover .fill-container {
+  transform: translateY(-50%) rotate(0);
+}
+
+.event-btn-poster:hover .fill-container::after {
+  transform: translateY(0);
+}
+
+.event-btn-poster:active {
+  transform: translateY(0);
+}
+
+/* =========================================================================
+   POSTER LIGHTBOX MODAL DIALOG
+   ========================================================================= */
+.poster-lightbox-overlay {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  background: rgba(2, 4, 9, 0.94);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.25s;
+}
+
+.poster-lightbox-overlay.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.poster-lightbox-card {
+  position: relative;
+  max-width: 920px;
+  width: 100%;
+  max-height: 94vh;
+  display: flex;
+  flex-direction: column;
+  background: #060B18;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.92);
+  transform: scale(0.96) translateY(10px);
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.poster-lightbox-overlay.active .poster-lightbox-card {
+  transform: scale(1) translateY(0);
+}
+
+.poster-lightbox-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: #CBD5E1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  cursor: pointer;
+  z-index: 10;
+  transition: background 0.18s ease, color 0.18s ease, transform 0.18s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.poster-lightbox-close:hover {
+  background: rgba(255, 255, 255, 0.22);
+  color: #FFFFFF;
+  transform: scale(1.06);
+}
+
+.poster-lightbox-header {
+  padding: 16px 22px 14px 22px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  background: rgba(6, 11, 24, 0.9);
+}
+
+.poster-lightbox-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #F5C518;
+}
+
+.poster-lightbox-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 19px;
+  font-weight: 800;
+  color: #F8FAFC;
+  margin: 0;
+  letter-spacing: -0.2px;
+}
+
+.poster-lightbox-image-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #020409;
+  overflow: auto;
+  padding: 14px;
+  max-height: calc(94vh - 150px);
+}
+
+.poster-lightbox-img {
+  max-width: 100%;
+  max-height: calc(94vh - 170px);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 10px 36px rgba(0, 0, 0, 0.85);
+  display: block;
+}
+
+.poster-lightbox-actions {
+  padding: 14px 22px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  background: rgba(6, 11, 24, 0.9);
+}
+
+.poster-lightbox-action-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 42px;
+  padding: 0 20px;
+  border-radius: 999px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 13.5px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.poster-lightbox-action-btn.view-full {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  color: #F8FAFC;
+}
+
+.poster-lightbox-action-btn.view-full:hover {
+  background: rgba(255, 255, 255, 0.18);
+  border-color: rgba(255, 255, 255, 0.45);
+}
+
+.poster-lightbox-action-btn.reg-now {
+  background: #F5C518;
+  border: none;
+  color: #020814;
+}
+
+.poster-lightbox-action-btn.reg-now:hover {
+  background: #E5A93C;
+  transform: translateY(-1px);
+}
+
+/* -------------------------------------------------------------------------
+   6. Accessibility: Reduced Motion
+   ------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .event-detail-drawer {
+    transition: none !important;
+  }
+}
+
+/* -------------------------------------------------------------------------
+   7. Responsive Breakpoints
+   Single-column at all widths. Longest title wraps cleanly.
+   ------------------------------------------------------------------------- */
+@media (max-width: 768px) {
+  .events-section {
+    padding: 64px 16px 100px 16px;
+  }
+
+  .events-container {
+    gap: 36px;
+  }
+
+  .events-filter-row {
+    gap: 20px;
+  }
+
+  .event-row-trigger {
+    padding: 14px 4px;
+    gap: 12px;
+  }
+
+  .event-detail-inner {
+    padding: 6px 4px 24px 18px;
+  }
+
+  .event-data-row {
+    gap: 8px 12px;
+  }
+
+  .event-action-wrap {
+    flex-direction: column;
+    width: 100%;
+    align-items: stretch;
+  }
+
+  .event-btn-register,
+  .event-btn-poster {
+    width: 100%;
+  }
+
+  .poster-lightbox-card {
+    max-height: 96vh;
+    border-radius: 14px;
+  }
+
+  .poster-lightbox-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .poster-lightbox-action-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .event-name {
+    font-size: 1.1rem;
+  }
+
+  .event-meta {
+    font-size: 0.82rem;
+  }
+}

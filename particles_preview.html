@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WebGL Particle Simulation - Quantum Bharat Review</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Outfit:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg-dark: #07090e;
+      --teal: #00f5d4;
+      --saffron: #ffb703;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Review Toolbar */
+    .toolbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: rgba(7, 9, 14, 0.92);
+      border-bottom: 1px solid rgba(0, 245, 212, 0.2);
+      backdrop-filter: blur(12px);
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .toolbar-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--teal);
+    }
+
+    .toolbar-brand .badge {
+      background: rgba(255, 183, 3, 0.15);
+      color: var(--saffron);
+      border: 1px solid rgba(255, 183, 3, 0.3);
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .ctrl-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    select, button {
+      background: rgba(30, 41, 59, 0.8);
+      color: #fff;
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      padding: 5px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-family: 'JetBrains Mono', monospace;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    select:hover, button:hover {
+      border-color: var(--teal);
+      color: var(--teal);
+    }
+
+    /* Simulation Canvas */
+    #canvas-container {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      cursor: crosshair;
+    }
+
+    canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* Overlay Hero Content */
+    .hero-overlay {
+      position: relative;
+      z-index: 10;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 100px 20px 40px;
+      pointer-events: none; /* Mouse passes through to canvas */
+    }
+
+    .hero-card {
+      background: rgba(7, 9, 14, 0.65);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      padding: 40px 30px;
+      border-radius: 20px;
+      backdrop-filter: blur(16px);
+      max-width: 680px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(0, 245, 212, 0.1);
+      pointer-events: auto; /* Buttons & links clickable */
+    }
+
+    .badge-tag {
+      display: inline-block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--teal);
+      background: rgba(0, 245, 212, 0.1);
+      border: 1px solid rgba(0, 245, 212, 0.25);
+      padding: 4px 12px;
+      border-radius: 999px;
+      letter-spacing: 1px;
+      margin-bottom: 16px;
+    }
+
+    .hero-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 12px;
+      background: linear-gradient(135deg, #ffffff 40%, #94a3b8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-theme {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--saffron);
+      letter-spacing: 2px;
+      margin-bottom: 16px;
+    }
+
+    .hero-desc {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-glow {
+      background: linear-gradient(135deg, #00f5d4, #00b4d8);
+      color: #07090e;
+      font-weight: 700;
+      padding: 12px 24px;
+      border-radius: 8px;
+      border: none;
+      box-shadow: 0 0 20px rgba(0, 245, 212, 0.35);
+      cursor: pointer;
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1px solid rgba(255, 183, 3, 0.5);
+      color: var(--saffron);
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    /* FPS Meter */
+    #fps-counter {
+      font-family: 'JetBrains Mono', monospace;
+      color: #10b981;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Review Toolbar -->
+  <header class="toolbar">
+    <div class="toolbar-brand">
+      <span>WEBGL PARTICLE LAB</span>
+      <span class="badge">Quantum Bharat Edition</span>
+    </div>
+
+    <div class="controls">
+      <!-- Shape Selector -->
+      <div class="ctrl-item">
+        <span>Shape:</span>
+        <select id="shapeSelect" onchange="changeShape(this.value)">
+          <option value="quantum" selected>⚛️ Quantum Atom (Custom ECE)</option>
+          <option value="ring">⭕ Quantum Ring</option>
+          <option value="infinity">♾️ Infinity</option>
+          <option value="spiral">🌀 Spiral Galaxy</option>
+          <option value="saturn">🪐 Saturn</option>
+          <option value="star">⭐ Star</option>
+          <option value="random">✨ Ambient Flow</option>
+        </select>
+      </div>
+
+      <!-- Palette Selector -->
+      <div class="ctrl-item">
+        <span>Palette:</span>
+        <select id="paletteSelect" onchange="changePalette(this.value)">
+          <option value="quantum" selected>Teal + Saffron (Quantum Bharat)</option>
+          <option value="azure">Azure Cyan</option>
+          <option value="solar">Solar Amber</option>
+          <option value="aurora">Aurora Green</option>
+        </select>
+      </div>
+
+      <!-- Particle Count -->
+      <div class="ctrl-item">
+        <span>Count:</span>
+        <select id="countSelect" onchange="changeCount(this.value)">
+          <option value="8000">8,000 (Mobile Safe 🚀)</option>
+          <option value="15000" selected>15,000 (Smooth Desktop ✨)</option>
+          <option value="35000">35,000 (Heavy Density 🔥)</option>
+        </select>
+      </div>
+
+      <!-- Cursor Mode -->
+      <div class="ctrl-item">
+        <span>Mouse:</span>
+        <select id="cursorSelect" onchange="changeCursor(this.value)">
+          <option value="swirl" selected>Swirl</option>
+          <option value="disperse">Disperse</option>
+          <option value="attract">Attract</option>
+        </select>
+      </div>
+
+      <!-- Live FPS -->
+      <div class="ctrl-item">
+        <span>FPS: <span id="fps-counter">60</span></span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Interactive WebGL Canvas -->
+  <div id="canvas-container">
+    <canvas id="glcanvas"></canvas>
+  </div>
+
+  <!-- Hero Content Layer -->
+  <div class="hero-overlay">
+    <div class="hero-card">
+      <span class="badge-tag">DEPARTMENT OF ECE • 500 STUDENTS</span>
+      <h1 class="hero-title">ABHIGYAN '26</h1>
+      <div class="hero-theme">⚡ THEME: QUANTUM BHARAT ⚡</div>
+      <p class="hero-desc">
+        Try moving your cursor over the particles. 
+        Notice how <strong>"Quantum Atom"</strong> assembles thousands of glowing WebGL points into the 3 angled orbits with a central qubit nucleus!
+      </p>
+      <div class="btn-row">
+        <button class="btn-glow">Explore 11 Events</button>
+        <button class="btn-outline">Download Brochure</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // =========================================================================
+    // WebGL Engine adapted directly from your AnimatedParticles component
+    // =========================================================================
+    const canvas = document.getElementById('glcanvas');
+    const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+
+    let currentShape = "quantum";
+    let currentPalette = "quantum";
+    let particleCount = 15000;
+    let cursorMode = "swirl";
+    let interactive = true;
+    const cursorRadius = 160;
+    const cursorStrength = 0.18;
+    const noiseScale = 0.0035;
+    const noiseStrength = 0.05;
+    const springStiffness = 0.045;
+    const damping = 0.94;
+    const lifespan = 240;
+
+    const PALETTES = {
+      quantum: ["#00F5D4", "#FFB703", "#38BDF8", "#FF9E00"],
+      azure: ["#00F2FE", "#4FACFE", "#38BDF8", "#BAE6FD"],
+      solar: ["#F97316", "#FDE047", "#FED7AA", "#FFEDD5"],
+      aurora: ["#2DD4BF", "#818CF8", "#C084FC", "#E0E7FF"]
+    };
+
+    function hexToRgb(hex) {
+      let c = hex.replace("#", "").trim();
+      if (c.length === 3) c = c.split("").map(x => x + x).join("");
+      const num = parseInt(c, 16);
+      return [((num >> 16) & 255) / 255, ((num >> 8) & 255) / 255, (num & 255) / 255];
+    }
+
+    // Target Shape Computation (Added "quantum" for Quantum Bharat!)
+    function computeShapeTarget(targetShape, i, total, w, h) {
+      const minDim = Math.min(w, h);
+      const cx = w * 0.5;
+      const cy = h * 0.5;
+
+      if (targetShape === "quantum") {
+        // Quantum Bharat: 3 Angled Orbits (-30°, +30°, 90°) + Glowing Nucleus
+        const pRatio = i / total;
+        if (pRatio < 0.12) {
+          // Central Quantum Nucleus / Qubit Singularity
+          const r = Math.sqrt(Math.random()) * minDim * 0.055;
+          const theta = Math.random() * Math.PI * 2;
+          return [cx + Math.cos(theta) * r, cy + Math.sin(theta) * r];
+        }
+
+        let orbitAngle = 0;
+        if (pRatio < 0.41) orbitAngle = -Math.PI / 6; // -30 deg
+        else if (pRatio < 0.70) orbitAngle = Math.PI / 6; // +30 deg
+        else orbitAngle = Math.PI / 2; // 90 deg (vertical)
+
+        const t = Math.random() * Math.PI * 2;
+        const a = minDim * (0.34 + (Math.random() - 0.5) * 0.04);
+        const b = a * 0.35;
+        const ex = Math.cos(t) * a;
+        const ey = Math.sin(t) * b;
+
+        const rx = ex * Math.cos(orbitAngle) - ey * Math.sin(orbitAngle);
+        const ry = ex * Math.sin(orbitAngle) + ey * Math.cos(orbitAngle);
+        return [cx + rx, cy + ry];
+      }
+
+      if (targetShape === "ring") {
+        const angle = Math.random() * Math.PI * 2;
+        const r = minDim * (0.32 + (Math.random() - 0.5) * 0.05);
+        return [cx + Math.cos(angle) * r, cy + Math.sin(angle) * r];
+      }
+
+      if (targetShape === "infinity") {
+        const t = Math.random() * Math.PI * 2;
+        const scale = minDim * 0.42;
+        const denom = 1 + Math.sin(t) * Math.sin(t);
+        const jitter = (Math.random() - 0.5) * (minDim * 0.03);
+        const ix = (scale * Math.cos(t)) / denom + jitter;
+        const iy = (scale * Math.sin(t) * Math.cos(t)) / denom + jitter;
+        return [cx + ix, cy + iy];
+      }
+
+      if (targetShape === "spiral") {
+        const arm = Math.random() > 0.5 ? 0 : Math.PI;
+        const r = Math.pow(Math.random(), 0.55) * minDim * 0.42;
+        const theta = (r / minDim) * 12.0 + arm + (Math.random() - 0.5) * 0.22;
+        return [cx + Math.cos(theta) * r, cy + Math.sin(theta) * r];
+      }
+
+      if (targetShape === "saturn") {
+        if (Math.random() < 0.5) {
+          const angle = Math.random() * Math.PI * 2;
+          const rRing = minDim * (0.30 + Math.random() * 0.12);
+          const rx = Math.cos(angle) * rRing;
+          const ry = Math.sin(angle) * rRing * 0.28;
+          const tilt = -0.45;
+          return [cx + rx * Math.cos(tilt) - ry * Math.sin(tilt), cy + rx * Math.sin(tilt) + ry * Math.cos(tilt)];
+        } else {
+          const theta = Math.random() * Math.PI * 2;
+          const r = Math.sqrt(Math.random()) * minDim * 0.18;
+          return [cx + Math.cos(theta) * r, cy + Math.sin(theta) * r];
+        }
+      }
+
+      if (targetShape === "star") {
+        const angle = Math.random() * Math.PI * 2;
+        const points = 5;
+        const section = Math.PI / points;
+        const aMod = ((angle % (section * 2)) + section * 2) % (section * 2);
+        const t = aMod / section;
+        const baseR = t < 1 ? 0.42 + 0.58 * t : 1.0 - 0.58 * (t - 1);
+        const scale = minDim * 0.36;
+        return [cx + Math.cos(angle - Math.PI / 2) * baseR * scale, cy + Math.sin(angle - Math.PI / 2) * baseR * scale];
+      }
+
+      // Default random
+      return [Math.random() * w, Math.random() * h];
+    }
+
+    const VERTEX_SHADER = `
+      attribute vec2 a_position;
+      attribute float a_life;
+      attribute float a_maxLife;
+      attribute vec3 a_color;
+
+      uniform vec2 u_resolution;
+      uniform float u_particleSize;
+      uniform float u_particleOpacity;
+
+      varying float v_alpha;
+      varying vec3 v_color;
+
+      void main() {
+        float lifeRatio = clamp(a_life / a_maxLife, 0.0, 1.0);
+        v_alpha = sin(lifeRatio * 3.14159265) * u_particleOpacity;
+        v_color = a_color;
+
+        vec2 clipSpace = (a_position / u_resolution) * 2.0 - 1.0;
+        gl_Position = vec4(clipSpace * vec2(1.0, -1.0), 0.0, 1.0);
+        gl_PointSize = u_particleSize;
+      }
+    `;
+
+    const FRAGMENT_SHADER = `
+      precision highp float;
+      varying float v_alpha;
+      varying vec3 v_color;
+
+      void main() {
+        vec2 coord = gl_PointCoord - vec2(0.5);
+        float dist = length(coord);
+        if (dist > 0.5) discard;
+        // Soft radial particle edge
+        float softAlpha = smoothstep(0.5, 0.1, dist);
+        gl_FragColor = vec4(v_color, v_alpha * softAlpha);
+      }
+    `;
+
+    function createShader(type, source) {
+      const shader = gl.createShader(type);
+      gl.shaderSource(shader, source);
+      gl.compileShader(shader);
+      return shader;
+    }
+
+    const program = gl.createProgram();
+    gl.attachShader(program, createShader(gl.VERTEX_SHADER, VERTEX_SHADER));
+    gl.attachShader(program, createShader(gl.FRAGMENT_SHADER, FRAGMENT_SHADER));
+    gl.linkProgram(program);
+    gl.useProgram(program);
+
+    const aPosition = gl.getAttribLocation(program, "a_position");
+    const aLife = gl.getAttribLocation(program, "a_life");
+    const aMaxLife = gl.getAttribLocation(program, "a_maxLife");
+    const aColor = gl.getAttribLocation(program, "a_color");
+
+    const uResolution = gl.getUniformLocation(program, "u_resolution");
+    const uParticleSize = gl.getUniformLocation(program, "u_particleSize");
+    const uParticleOpacity = gl.getUniformLocation(program, "u_particleOpacity");
+
+    let positions, targets, velocities, lives, maxLives, colorAttrs;
+    let posBuffer = gl.createBuffer();
+    let lifeBuffer = gl.createBuffer();
+    let maxLifeBuffer = gl.createBuffer();
+    let colorBuffer = gl.createBuffer();
+
+    function initArrays(count) {
+      positions = new Float32Array(count * 2);
+      targets = new Float32Array(count * 2);
+      velocities = new Float32Array(count * 2);
+      lives = new Float32Array(count);
+      maxLives = new Float32Array(count);
+      colorAttrs = new Float32Array(count * 3);
+
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const w = canvas.width;
+      const h = canvas.height;
+      const palette = PALETTES[currentPalette].map(hexToRgb);
+
+      for (let i = 0; i < count; i++) {
+        const [tx, ty] = computeShapeTarget(currentShape, i, count, w, h);
+        targets[i * 2] = tx;
+        targets[i * 2 + 1] = ty;
+
+        positions[i * 2] = tx + (Math.random() - 0.5) * 40;
+        positions[i * 2 + 1] = ty + (Math.random() - 0.5) * 40;
+        velocities[i * 2] = (Math.random() - 0.5) * 0.5;
+        velocities[i * 2 + 1] = (Math.random() - 0.5) * 0.5;
+
+        const mLife = lifespan * (0.8 + Math.random() * 0.4);
+        maxLives[i] = mLife;
+        lives[i] = Math.random() * mLife;
+
+        const rgb = palette[Math.floor(Math.random() * palette.length)];
+        colorAttrs[i * 3] = rgb[0];
+        colorAttrs[i * 3 + 1] = rgb[1];
+        colorAttrs[i * 3 + 2] = rgb[2];
+      }
+    }
+
+    const mouse = { x: -9999, y: -9999, vx: 0, vy: 0, active: false };
+
+    window.addEventListener('mousemove', (e) => {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const newX = e.clientX * dpr;
+      const newY = e.clientY * dpr;
+      if (mouse.x !== -9999) {
+        mouse.vx = newX - mouse.x;
+        mouse.vy = newY - mouse.y;
+      }
+      mouse.x = newX;
+      mouse.y = newY;
+      mouse.active = true;
+    });
+
+    window.addEventListener('mouseleave', () => {
+      mouse.active = false;
+      mouse.x = -9999;
+      mouse.y = -9999;
+    });
+
+    // Touch support for mobile devices
+    window.addEventListener('touchmove', (e) => {
+      if (e.touches.length > 0) {
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        mouse.x = e.touches[0].clientX * dpr;
+        mouse.y = e.touches[0].clientY * dpr;
+        mouse.active = true;
+      }
+    }, { passive: true });
+
+    window.addEventListener('touchend', () => {
+      mouse.active = false;
+    });
+
+    function resize() {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const dw = Math.floor(window.innerWidth * dpr);
+      const dh = Math.floor(window.innerHeight * dpr);
+      if (canvas.width !== dw || canvas.height !== dh) {
+        canvas.width = dw;
+        canvas.height = dh;
+        gl.viewport(0, 0, dw, dh);
+        initArrays(particleCount);
+      }
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    // UI Controls
+    function changeShape(s) {
+      currentShape = s;
+      const w = canvas.width;
+      const h = canvas.height;
+      for (let i = 0; i < particleCount; i++) {
+        const [tx, ty] = computeShapeTarget(currentShape, i, particleCount, w, h);
+        targets[i * 2] = tx;
+        targets[i * 2 + 1] = ty;
+      }
+    }
+
+    function changePalette(p) {
+      currentPalette = p;
+      const palette = PALETTES[currentPalette].map(hexToRgb);
+      for (let i = 0; i < particleCount; i++) {
+        const rgb = palette[Math.floor(Math.random() * palette.length)];
+        colorAttrs[i * 3] = rgb[0];
+        colorAttrs[i * 3 + 1] = rgb[1];
+        colorAttrs[i * 3 + 2] = rgb[2];
+      }
+    }
+
+    function changeCount(c) {
+      particleCount = parseInt(c);
+      initArrays(particleCount);
+    }
+
+    function changeCursor(m) {
+      cursorMode = m;
+    }
+
+    // FPS Meter
+    let lastTime = performance.now();
+    let frameCount = 0;
+    const fpsElem = document.getElementById('fps-counter');
+
+    let time = 0;
+    function render() {
+      time += 0.012;
+      frameCount++;
+      const now = performance.now();
+      if (now - lastTime >= 1000) {
+        const fps = Math.round((frameCount * 1000) / (now - lastTime));
+        fpsElem.innerText = fps;
+        fpsElem.style.color = fps >= 50 ? '#10b981' : (fps >= 30 ? '#f59e0b' : '#ef4444');
+        frameCount = 0;
+        lastTime = now;
+      }
+
+      const w = canvas.width;
+      const h = canvas.height;
+      const isRandom = currentShape === "random";
+      const spring = isRandom ? 0.0 : springStiffness;
+
+      for (let i = 0; i < particleCount; i++) {
+        lives[i] += 1;
+        if (lives[i] >= maxLives[i]) {
+          lives[i] = 0;
+          const [tx, ty] = computeShapeTarget(currentShape, i, particleCount, w, h);
+          targets[i * 2] = tx;
+          targets[i * 2 + 1] = ty;
+        }
+
+        const px = positions[i * 2];
+        const py = positions[i * 2 + 1];
+        const tx = targets[i * 2];
+        const ty = targets[i * 2 + 1];
+
+        let fx = (tx - px) * spring;
+        let fy = (ty - py) * spring;
+
+        const angle = Math.sin(px * noiseScale + time) * Math.cos(py * noiseScale + time) * Math.PI * 2;
+        const curlMag = isRandom ? noiseStrength * 2.0 : noiseStrength * 0.5;
+        fx += Math.cos(angle) * curlMag;
+        fy += Math.sin(angle) * curlMag;
+
+        velocities[i * 2] = (velocities[i * 2] + fx) * damping;
+        velocities[i * 2 + 1] = (velocities[i * 2 + 1] + fy) * damping;
+
+        if (interactive && mouse.active) {
+          const dx = px - mouse.x;
+          const dy = py - mouse.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+
+          if (dist < cursorRadius && dist > 0) {
+            const factor = (1 - dist / cursorRadius) * cursorStrength;
+            if (cursorMode === "disperse") {
+              velocities[i * 2] += (dx / dist) * factor * 14.0;
+              velocities[i * 2 + 1] += (dy / dist) * factor * 14.0;
+            } else if (cursorMode === "attract") {
+              velocities[i * 2] -= (dx / dist) * factor * 12.0;
+              velocities[i * 2 + 1] -= (dy / dist) * factor * 12.0;
+            } else if (cursorMode === "swirl") {
+              velocities[i * 2] += (-dy / dist) * factor * 15.0;
+              velocities[i * 2 + 1] += (dx / dist) * factor * 15.0;
+            }
+          }
+        }
+
+        positions[i * 2] += velocities[i * 2];
+        positions[i * 2 + 1] += velocities[i * 2 + 1];
+
+        if (isRandom) {
+          if (positions[i * 2] < -20) positions[i * 2] = w + 20;
+          else if (positions[i * 2] > w + 20) positions[i * 2] = -20;
+          if (positions[i * 2 + 1] < -20) positions[i * 2 + 1] = h + 20;
+          else if (positions[i * 2 + 1] > h + 20) positions[i * 2 + 1] = -20;
+        }
+      }
+
+      gl.clearColor(0.027, 0.035, 0.055, 1.0);
+      gl.clear(gl.COLOR_BUFFER_BIT);
+
+      gl.enable(gl.BLEND);
+      gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+
+      gl.uniform2f(uResolution, w, h);
+      gl.uniform1f(uParticleSize, 2.8);
+      gl.uniform1f(uParticleOpacity, 0.85);
+
+      gl.bindBuffer(gl.ARRAY_BUFFER, posBuffer);
+      gl.bufferData(gl.ARRAY_BUFFER, positions, gl.DYNAMIC_DRAW);
+      gl.enableVertexAttribArray(aPosition);
+      gl.vertexAttribPointer(aPosition, 2, gl.FLOAT, false, 0, 0);
+
+      gl.bindBuffer(gl.ARRAY_BUFFER, lifeBuffer);
+      gl.bufferData(gl.ARRAY_BUFFER, lives, gl.DYNAMIC_DRAW);
+      gl.enableVertexAttribArray(aLife);
+      gl.vertexAttribPointer(aLife, 1, gl.FLOAT, false, 0, 0);
+
+      gl.bindBuffer(gl.ARRAY_BUFFER, maxLifeBuffer);
+      gl.bufferData(gl.ARRAY_BUFFER, maxLives, gl.DYNAMIC_DRAW);
+      gl.enableVertexAttribArray(aMaxLife);
+      gl.vertexAttribPointer(aMaxLife, 1, gl.FLOAT, false, 0, 0);
+
+      gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
+      gl.bufferData(gl.ARRAY_BUFFER, colorAttrs, gl.DYNAMIC_DRAW);
+      gl.enableVertexAttribArray(aColor);
+      gl.vertexAttribPointer(aColor, 3, gl.FLOAT, false, 0, 0);
+
+      gl.drawArrays(gl.POINTS, 0, particleCount);
+
+      requestAnimationFrame(render);
+    }
+
+    render();
+  </script>
+</body>
+</html>

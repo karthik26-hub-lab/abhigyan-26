@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quantum Bharat Animated Core - Abhigyan '26</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=JetBrains+Mono:wght@400;600;700;800&family=Outfit:wght@500;600;700;800;900&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg-dark: #020408;
+      --cyan-electric: #00F2FE;
+      --cyan-glow: rgba(0, 242, 254, 0.6);
+      --gold-24k: #F5A623;
+      --gold-glow: rgba(245, 166, 35, 0.6);
+      --text-main: #FFFFFF;
+      --text-muted: #94A3B8;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: 'Outfit', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      user-select: none;
+    }
+
+    /* Top Review Toolbar */
+    .toolbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: rgba(2, 4, 8, 0.85);
+      border-bottom: 1px solid rgba(0, 242, 254, 0.25);
+      backdrop-filter: blur(16px);
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .toolbar-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--cyan-electric);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .badge-chakra {
+      background: rgba(245, 166, 35, 0.15);
+      color: var(--gold-24k);
+      border: 1px solid rgba(245, 166, 35, 0.35);
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+    }
+
+    .controls-row {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .btn-ctrl {
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      color: #94A3B8;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      padding: 6px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-ctrl:hover, .btn-ctrl.active {
+      border-color: var(--cyan-electric);
+      color: var(--cyan-electric);
+      background: rgba(0, 242, 254, 0.12);
+    }
+
+    /* Main Hero Stage */
+    .stage-container {
+      position: relative;
+      width: 100vw;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      perspective: 1200px;
+    }
+
+    /* Interactive 3D Parallax Master Frame */
+    .quantum-parallax-card {
+      position: relative;
+      width: 100%;
+      max-width: 1280px;
+      aspect-ratio: 16 / 9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform-style: preserve-3d;
+      transition: transform 0.1s cubic-bezier(0.2, 0, 0.2, 1);
+    }
+
+    @media (max-width: 900px) {
+      .quantum-parallax-card {
+        aspect-ratio: 4 / 3;
+        max-width: 100%;
+      }
+    }
+
+    /* Layer 1: High-Res Master Artwork (Uploaded by User) */
+    .base-artwork {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 24px;
+      box-shadow: 0 30px 100px rgba(0, 0, 0, 0.95), 0 0 80px rgba(0, 242, 254, 0.15);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      transform: translateZ(0px);
+    }
+
+    /* Dark Edge Vignette to blend perfectly into the web layout */
+    .vignette-layer {
+      position: absolute;
+      inset: 0;
+      border-radius: 24px;
+      background: radial-gradient(circle at 50% 50%, transparent 40%, rgba(2, 4, 8, 0.7) 75%, #020408 100%);
+      pointer-events: none;
+      transform: translateZ(10px);
+    }
+
+    /* Layer 2: Live Animated Ashoka Quantum Chakra in Center */
+    .chakra-overlay-wrap {
+      position: absolute;
+      top: 49.6%;
+      left: 50.1%;
+      transform: translate(-50%, -50%) translateZ(40px);
+      width: 24%;
+      height: auto;
+      aspect-ratio: 1 / 1;
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* The Smoothly Spinning 24-Spoke Wheel */
+    .spinning-chakra-svg {
+      width: 100%;
+      height: 100%;
+      animation: spinChakra 28s linear infinite;
+      transform-origin: center center;
+      filter: drop-shadow(0 0 16px var(--cyan-electric));
+    }
+
+    @keyframes spinChakra {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* Breathing Cyan Singularity Pulse */
+    .chakra-energy-pulse {
+      position: absolute;
+      width: 32%;
+      height: 32%;
+      border-radius: 50%;
+      background: radial-gradient(circle, #FFFFFF 0%, var(--cyan-electric) 40%, transparent 75%);
+      filter: blur(8px);
+      animation: energyPulse 3s ease-in-out infinite;
+    }
+
+    @keyframes energyPulse {
+      0%, 100% { transform: scale(0.9); opacity: 0.65; }
+      50% { transform: scale(1.35); opacity: 1; }
+    }
+
+    /* Layer 3: Travelling Laser Photon Packets on PCB Tracks */
+    .photon-canvas-layer {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      transform: translateZ(30px);
+    }
+
+    /* Foreground Typography Overlay */
+    .hero-text-overlay {
+      position: absolute;
+      bottom: 28px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      z-index: 50;
+      transform: translateZ(70px);
+      pointer-events: auto;
+      padding: 0 20px;
+    }
+
+    .telemetry-chip-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 18px;
+      background: rgba(2, 4, 8, 0.85);
+      border: 1px solid rgba(245, 166, 35, 0.4);
+      border-radius: 999px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--gold-24k);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 0 25px rgba(245, 166, 35, 0.2);
+    }
+
+    .hero-title-syne {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2.4rem, 6vw, 4.4rem);
+      font-weight: 800;
+      letter-spacing: -1px;
+      line-height: 1;
+      text-transform: uppercase;
+      background: linear-gradient(180deg, #FFFFFF 30%, #CBD5E1 70%, #64748B 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 10px 30px rgba(0, 0, 0, 0.9);
+    }
+
+    .hero-theme-cinzel {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(1.2rem, 3.2vw, 2.2rem);
+      font-weight: 900;
+      letter-spacing: 8px;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, #FFFFFF 0%, #F5A623 50%, #D97706 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 35px rgba(245, 166, 35, 0.6);
+      margin-top: 4px;
+    }
+
+    .glimpse-sub {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: clamp(0.75rem, 1.8vw, 1rem);
+      font-weight: 700;
+      letter-spacing: 4px;
+      color: var(--cyan-electric);
+      text-shadow: 0 0 20px var(--cyan-electric);
+      margin-top: 6px;
+      margin-bottom: 18px;
+    }
+
+    .btn-row-main {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary-gold {
+      background: linear-gradient(135deg, #F5A623, #D97706);
+      color: #020408;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 14px;
+      padding: 12px 28px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 0 30px rgba(245, 166, 35, 0.4);
+      transition: all 0.25s;
+    }
+
+    .btn-primary-gold:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 45px rgba(245, 166, 35, 0.7);
+    }
+
+    .btn-outline-cyan {
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid var(--cyan-electric);
+      color: var(--cyan-electric);
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      font-size: 13px;
+      padding: 12px 24px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.25s;
+      box-shadow: 0 0 20px rgba(0, 242, 254, 0.2);
+    }
+
+    .btn-outline-cyan:hover {
+      background: rgba(0, 242, 254, 0.12);
+      transform: scale(1.05);
+    }
+
+    /* Live Telemetry Legend */
+    .legend-box {
+      position: absolute;
+      top: 75px;
+      left: 32px;
+      z-index: 60;
+      background: rgba(2, 4, 8, 0.85);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      border-left: 3px solid var(--cyan-electric);
+      padding: 12px 18px;
+      border-radius: 8px;
+      backdrop-filter: blur(12px);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: #94A3B8;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .legend-box strong {
+      color: #FFFFFF;
+    }
+
+    @media (max-width: 900px) {
+      .legend-box { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Controller Toolbar -->
+  <header class="toolbar">
+    <div class="toolbar-title">
+      <span>QUANTUM_BHARAT // CORE_SYNTHESIS</span>
+      <span class="badge-chakra">Ashoka Chakra + Semiconductor Ring</span>
+    </div>
+
+    <div class="controls-row">
+      <button class="btn-ctrl active" id="btnParallax" onclick="toggleParallax()">3D Parallax: ON</button>
+      <button class="btn-ctrl" onclick="resetView()">Reset View</button>
+    </div>
+  </header>
+
+  <!-- Live Telemetry Box -->
+  <div class="legend-box">
+    <div>CENTER: <strong>24-SPOKE QUANTUM CHAKRA</strong></div>
+    <div>ORBITS: <strong>GOLD PCB BUS TRACES + IC PACKAGES</strong></div>
+    <div>MATRIX: <strong>SANSKRIT & DIRAC STATE EQUATIONS</strong></div>
+    <div>DEPT: <strong>SRM VADAPALANI ECE (500 INNOVATORS)</strong></div>
+  </div>
+
+  <!-- Main 3D Stage -->
+  <main class="stage-container" id="stageContainer">
+
+    <div class="quantum-parallax-card" id="parallaxCard">
+      
+      <!-- Layer 1: High-Res Master Artwork (Uploaded Image) -->
+      <img src="assets/quantum_bharat_core.jpg" alt="Quantum Bharat Core" class="base-artwork" />
+
+      <!-- Layer 1.5: Seamless Edge Vignette -->
+      <div class="vignette-layer"></div>
+
+      <!-- Layer 2: Live Animated Ashoka Quantum Chakra (24 Spokes in Pure SVG) -->
+      <div class="chakra-overlay-wrap">
+        <!-- Center Energy Singularity Pulse -->
+        <div class="chakra-energy-pulse"></div>
+
+        <!-- 24-Spoke Ashoka Chakra Wheel rotating smoothly -->
+        <svg class="spinning-chakra-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <filter id="chakraGlow" x="-30%" y="-30%" width="160%" height="160%">
+              <feGaussianBlur stdDeviation="2.5" result="blur" />
+              <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+            </filter>
+          </defs>
+
+          <!-- Outer Gear Ring -->
+          <circle cx="100" cy="100" r="88" fill="none" stroke="#00F2FE" stroke-width="2" opacity="0.9" filter="url(#chakraGlow)" />
+          <circle cx="100" cy="100" r="84" fill="none" stroke="#FFFFFF" stroke-width="1" opacity="0.8" />
+          <circle cx="100" cy="100" r="78" fill="none" stroke="#00F2FE" stroke-width="1.5" stroke-dasharray="3 5" opacity="0.85" />
+
+          <!-- Inner Ring -->
+          <circle cx="100" cy="100" r="22" fill="none" stroke="#00F2FE" stroke-width="2" opacity="0.9" />
+          <circle cx="100" cy="100" r="14" fill="#00F2FE" opacity="0.6" />
+          <circle cx="100" cy="100" r="6" fill="#FFFFFF" />
+
+          <!-- 24 Precision Ashoka Chakra Spokes -->
+          <g stroke="#00F2FE" stroke-width="1.8" filter="url(#chakraGlow)">
+            <!-- Generated 24 spokes at 15-degree intervals -->
+            <line x1="100" y1="22" x2="100" y2="78" transform="rotate(0 100 100)" />
+            <line x1="100" y1="22" x2="100" y2="78" transform="rotate(15 100 100)" />
+            <line x1="100" y1="22" x2="100" y2="78" transform="rotate(30 100 100)" />
+            <line x1="100" y1="22" x2="100" y2="78" transform="rotate(45 100 100)" />
+            <line x1="100" y1="22" x2="100" y2="78" transform="rotate(60 100 100)" />
+            <line x1="100" y1="22" x2="100" y2="78" transform="rotate(75 100 100)" />
+            <line x1="100" y1="22" x2="100" y2="78" transform="rotate(90 100 100)" />
+            <line x1="100" y1="22" x2="100" y2="78" transform="rotate(105 100 100)" />
+            <line x1="100" y1="22" x2="100" y2="78" transform="rotate(120 100 100)" />
+            <line x1="100" y1="22" x2="100" y2="78" transform="rotate(135 100 100)" />
+            <line x1="100" y1="22" x2="100" y2="78" transform="rotate(150 100 100)" />
+            <line x1="100" y1="22" x2="100" y2="78" transform="rotate(165 100 100)" />
+            <line x1="100" y1="22" x2="100" y2="78" transform="rotate(180 100 100)" />
+            <line x1="100" y1="22" x2="100" y2="78" transform="rotate(195 100 100)" />
+            <line x1="100" y1="22" x2="100" y2="78" transform="rotate(210 100 100)" />
+            <line x1="100" y1="22" x2="100" y2="78" transform="rotate(225 100 100)" />
+            <line x1="100" y1="22" x2="100" y2="78" transform="rotate(240 100 100)" />
+            <line x1="100" y1="22" x2="100" y2="78" transform="rotate(255 100 100)" />
+            <line x1="100" y1="22" x2="100" y2="78" transform="rotate(270 100 100)" />
+            <line x1="100" y1="22" x2="100" y2="78" transform="rotate(285 100 100)" />
+            <line x1="100" y1="22" x2="100" y2="78" transform="rotate(300 100 100)" />
+            <line x1="100" y1="22" x2="100" y2="78" transform="rotate(315 100 100)" />
+            <line x1="100" y1="22" x2="100" y2="78" transform="rotate(330 100 100)" />
+            <line x1="100" y1="22" x2="100" y2="78" transform="rotate(345 100 100)" />
+          </g>
+        </svg>
+      </div>
+
+      <!-- Layer 3: Travelling Photons Canvas on the PCB Orbit Tracks -->
+      <canvas class="photon-canvas-layer" id="photonCanvas"></canvas>
+
+      <!-- Layer 4: Foreground Hero Typography & Action Buttons -->
+      <div class="hero-text-overlay">
+        <div class="telemetry-chip-tag">
+          <span>SRM IST VADAPALANI • DEPT OF ECE</span>
+        </div>
+
+        <h1 class="hero-title-syne">Abhigyan '26</h1>
+
+        <div class="hero-theme-cinzel">QUANTUM BHARAT</div>
+
+        <div class="glimpse-sub">A GLIMPSE INTO THE FUTURE • SEPTEMBER 24</div>
+
+        <div class="btn-row-main">
+          <button class="btn-primary-gold">Register for 11 Events →</button>
+          <button class="btn-outline-cyan">Download Brochure</button>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <script>
+    // =========================================================================
+    // 1. TRAVELLING PHOTON PACKETS ON THE PCB TRACKS (CANVAS)
+    // =========================================================================
+    const canvas = document.getElementById('photonCanvas');
+    const ctx = canvas.getContext('2d');
+    let width, height;
+
+    function resize() {
+      const card = document.getElementById('parallaxCard');
+      width = canvas.width = card.clientWidth;
+      height = canvas.height = card.clientHeight;
+    }
+
+    window.addEventListener('resize', resize);
+    resize();
+
+    // Two tilted elliptical orbits matching the artwork
+    // Orbit 1: Tilted left ~28 deg
+    // Orbit 2: Tilted right ~-25 deg
+    const numPhotons = 48;
+    const photons = [];
+
+    for (let i = 0; i < numPhotons; i++) {
+      photons.push({
+        orbit: i % 2, // 0 = Left Tilted PCB ring, 1 = Right Tilted PCB ring
+        t: Math.random(),
+        speed: 0.0015 + Math.random() * 0.002,
+        size: 1.5 + Math.random() * 2.5,
+        color: Math.random() > 0.4 ? '#00F2FE' : '#F5A623',
+        tail: []
+      });
+    }
+
+    function drawPhotons() {
+      ctx.clearRect(0, 0, width, height);
+
+      const cx = width * 0.501;
+      const cy = height * 0.496;
+      const rx = width * 0.44;
+      const ry = height * 0.22;
+
+      photons.forEach(p => {
+        p.t += p.speed;
+        if (p.t > 1) p.t -= 1;
+
+        const angle = p.t * Math.PI * 2;
+        const tilt = p.orbit === 0 ? 0.42 : -0.38;
+
+        const ex = Math.cos(angle) * rx;
+        const ey = Math.sin(angle) * ry;
+
+        // 2D Rotation by tilt angle
+        const px = cx + (ex * Math.cos(tilt) - ey * Math.sin(tilt));
+        const py = cy + (ex * Math.sin(tilt) + ey * Math.cos(tilt));
+
+        // Draw glowing photon packet
+        ctx.beginPath();
+        ctx.arc(px, py, p.size, 0, Math.PI * 2);
+        ctx.fillStyle = p.color;
+        ctx.shadowColor = p.color;
+        ctx.shadowBlur = 10;
+        ctx.fill();
+
+        // Secondary outer soft pulse
+        ctx.beginPath();
+        ctx.arc(px, py, p.size * 2, 0, Math.PI * 2);
+        ctx.fillStyle = p.color === '#00F2FE' ? 'rgba(0, 242, 254, 0.25)' : 'rgba(245, 166, 35, 0.25)';
+        ctx.fill();
+      });
+
+      requestAnimationFrame(drawPhotons);
+    }
+
+    drawPhotons();
+
+    // =========================================================================
+    // 2. INTERACTIVE 3D MOUSE PARALLAX TILT
+    // =========================================================================
+    const card = document.getElementById('parallaxCard');
+    let isParallaxActive = true;
+
+    window.addEventListener('mousemove', (e) => {
+      if (!isParallaxActive) return;
+
+      const x = (e.clientX / window.innerWidth) - 0.5;
+      const y = (e.clientY / window.innerHeight) - 0.5;
+
+      const rotY = x * 14;  // Max 14 deg tilt
+      const rotX = -y * 12; // Max 12 deg tilt
+
+      card.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg)`;
+    });
+
+    // Mobile Gyroscope / Orientation Support
+    if (window.DeviceOrientationEvent) {
+      window.addEventListener('deviceorientation', (e) => {
+        if (!isParallaxActive || !e.gamma) return;
+        const rotY = Math.min(Math.max(e.gamma * 0.4, -14), 14);
+        const rotX = Math.min(Math.max((e.beta - 45) * 0.3, -12), 12);
+        card.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg)`;
+      }, { passive: true });
+    }
+
+    function toggleParallax() {
+      isParallaxActive = !isParallaxActive;
+      const btn = document.getElementById('btnParallax');
+      btn.innerText = `3D Parallax: ${isParallaxActive ? 'ON' : 'OFF'}`;
+      btn.classList.toggle('active', isParallaxActive);
+      if (!isParallaxActive) {
+        card.style.transform = 'rotateX(0deg) rotateY(0deg)';
+      }
+    }
+
+    function resetView() {
+      card.style.transform = 'rotateX(0deg) rotateY(0deg)';
+    }
+  </script>
+</body>
+</html>

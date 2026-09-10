@@ -1,0 +1,200 @@
+/* =========================================================================
+   CINEMATIC 3D EARTH INTRODUCTION STYLES
+   Hollywood Movie Shutter Flash, 3D Canvas Viewport, Specular Title Slam & Corner Docking
+   ========================================================================= */
+
+/* Main Cinematic Stage Overlay (Fixed full-viewport) */
+#cinematicIntroStage {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  z-index: 9990;
+  overflow: hidden;
+  pointer-events: auto;
+  background: #010308;
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity;
+}
+
+/* 3D WebGL Canvas Container */
+#cinematicEarthCanvasContainer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  transition: transform 1.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.9s ease-out;
+  transform-origin: center center;
+  will-change: transform, opacity;
+}
+
+#cinematicEarthCanvasContainer canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* Corner Docking Animation (Glides from center to top-left corner) */
+#cinematicIntroStage.docked #cinematicEarthCanvasContainer {
+  transform: translate(-34vw, -32vh) scale(0.48);
+  opacity: 0.85;
+}
+
+@media (max-width: 1024px) {
+  #cinematicIntroStage.docked #cinematicEarthCanvasContainer {
+    transform: translate(-30vw, -30vh) scale(0.55);
+    opacity: 0.75;
+  }
+}
+
+@media (max-width: 768px) {
+  #cinematicIntroStage.docked #cinematicEarthCanvasContainer {
+    transform: translate(-26vw, -28vh) scale(0.62);
+    opacity: 0.65;
+  }
+}
+
+#cinematicIntroStage.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Studio Shutter Flash Overlay */
+#flash-overlay {
+  position: fixed;
+  inset: 0;
+  background: #FFFFFF;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 9999;
+  transition: opacity 0.09s ease-out;
+  will-change: opacity;
+}
+
+/* Center Movie Title Slam Container with Cinematic Radial Backlight */
+#introTitleSlam {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  pointer-events: none;
+  z-index: 9995;
+  opacity: 0;
+  width: 90%;
+  max-width: 960px;
+  padding: 24px;
+  background: transparent;
+  transition: opacity 0.35s ease-out, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+}
+
+/* 1. Abhigyan '26 Signature Specular Slam */
+.intro-slam-signature {
+  width: clamp(280px, 46vw, 640px);
+  height: auto;
+  opacity: 0;
+  transform: scale(2.2);
+  filter: drop-shadow(0 4px 18px rgba(0, 0, 0, 0.95)) drop-shadow(0 0 45px rgba(0, 229, 255, 0.65));
+  transition: transform 0.42s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.28s ease-out;
+  will-change: transform, opacity;
+}
+
+/* 2. Quantum Bharat 24K Minted Gold Slam */
+.intro-slam-quantum {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(1.8rem, 4.6vw, 3.6rem);
+  font-weight: 800;
+  letter-spacing: clamp(4px, 1.2vw, 10px);
+  color: #F5C518;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.95), 0 0 35px rgba(245, 197, 24, 0.85);
+  margin-top: 14px;
+  opacity: 0;
+  transform: scale(1.6);
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease-out;
+  will-change: transform, opacity;
+}
+
+/* 3. Literary Humanist Tagline Badge */
+.intro-slam-tagline {
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-style: italic;
+  font-size: clamp(1.2rem, 2.4vw, 1.95rem);
+  color: #F1F5F9;
+  margin-top: 14px;
+  padding: 6px 22px;
+  background: rgba(6, 12, 30, 0.75);
+  border: 1px solid rgba(245, 197, 24, 0.35);
+  border-radius: 9999px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  opacity: 0;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9);
+  transition: opacity 0.5s ease-out 0.15s;
+}
+
+/* Slammed Active State */
+#introTitleSlam.slammed {
+  opacity: 1;
+}
+
+#introTitleSlam.slammed .intro-slam-signature {
+  opacity: 1;
+  transform: scale(1.0);
+}
+
+#introTitleSlam.slammed .intro-slam-quantum {
+  opacity: 1;
+  transform: scale(1.0);
+}
+
+#introTitleSlam.slammed .intro-slam-tagline {
+  opacity: 0.96;
+}
+
+/* Fading handoff to main page */
+#introTitleSlam.fading {
+  opacity: 0;
+  transform: translate(-50%, -52%) scale(0.92);
+}
+
+/* Discreet Skip Intro Pill Button */
+#introSkipBtn {
+  position: absolute;
+  top: 24px;
+  right: 28px;
+  z-index: 9998;
+  padding: 8px 18px;
+  border-radius: 9999px;
+  background: rgba(5, 10, 24, 0.65);
+  border: 1px solid rgba(245, 197, 24, 0.35);
+  color: #CBD5E1;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.6px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  cursor: pointer;
+  transition: all 0.25s ease;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+#introSkipBtn:hover {
+  border-color: #F5C518;
+  color: #FFFFFF;
+  background: rgba(10, 18, 40, 0.85);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 18px rgba(245, 197, 24, 0.25);
+}
+
+#introSkipBtn:active {
+  transform: translateY(0);
+}

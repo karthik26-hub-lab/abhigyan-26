@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Abhigyan 2026 | Quantum Bharat - Visual Architecture</title>
+  
+  <!-- Elite-tier Modern Typography: Inter & Plus Jakarta Sans (Precision, Clarity, Understated Luxury) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Three.js from cdnjs -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg-dark: #03060C;
+      --gold-pure: #E5A93C;
+      --gold-muted: rgba(229, 169, 60, 0.15);
+      --cyan-pure: #00E5FF;
+      --cyan-muted: rgba(0, 229, 255, 0.12);
+      --text-white: #FFFFFF;
+      --text-sub: #94A3B8;
+      --text-muted: #64748B;
+      --border-subtle: rgba(255, 255, 255, 0.08);
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-white);
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      user-select: none;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Subtle Cosmic Star Dust in CSS */
+    .space-dust-layer {
+      position: fixed;
+      inset: 0;
+      background-image: 
+        radial-gradient(1px 1px at 20px 30px, rgba(255, 255, 255, 0.4), transparent),
+        radial-gradient(1px 1px at 90px 140px, rgba(0, 229, 255, 0.4), transparent),
+        radial-gradient(1px 1px at 220px 70px, rgba(229, 169, 60, 0.4), transparent),
+        radial-gradient(1px 1px at 450px 290px, rgba(255, 255, 255, 0.3), transparent),
+        radial-gradient(1.5px 1.5px at 700px 390px, rgba(0, 229, 255, 0.35), transparent);
+      background-size: 550px 550px;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.6;
+    }
+
+    /* Top Review & Diagnostic Toolbar */
+    .top-toolbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: rgba(3, 6, 12, 0.85);
+      border-bottom: 1px solid var(--border-subtle);
+      backdrop-filter: blur(20px);
+      padding: 12px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .tool-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--cyan-pure);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .tool-tag .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--cyan-pure);
+      box-shadow: 0 0 8px var(--cyan-pure);
+    }
+
+    .ctrl-group {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .btn-ctrl {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-sub);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      padding: 6px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-ctrl:hover, .btn-ctrl.active {
+      border-color: var(--cyan-pure);
+      color: var(--cyan-pure);
+      background: var(--cyan-muted);
+    }
+
+    /* 3D WebGL Canvas Layer (Holds the True 3D Rotating Rings) */
+    #threejs-viewport {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 2;
+      pointer-events: auto;
+      cursor: grab;
+    }
+
+    #threejs-viewport:active {
+      cursor: grabbing;
+    }
+
+    /* Refined Foreground Layout */
+    .hero-container {
+      position: relative;
+      z-index: 10;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 90px 40px 40px;
+      pointer-events: none;
+    }
+
+    /* Institution Header - Understated Precision */
+    .inst-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      width: 100%;
+      max-width: 1320px;
+      margin: 0 auto;
+      pointer-events: auto;
+    }
+
+    .inst-title-block {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .inst-badge-row {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 2px;
+      color: var(--gold-pure);
+      text-transform: uppercase;
+      margin-bottom: 2px;
+    }
+
+    .inst-main-name {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      color: var(--text-white);
+      text-transform: uppercase;
+    }
+
+    .inst-sub-dept {
+      font-size: 13px;
+      color: var(--text-sub);
+      font-weight: 400;
+    }
+
+    /* Placeholder Space Box for Venue & Meta (as requested) */
+    .meta-placeholder-pill {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px dashed rgba(255, 255, 255, 0.18);
+      border-radius: 8px;
+      padding: 10px 18px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 3px;
+    }
+
+    .meta-placeholder-pill strong {
+      color: var(--cyan-pure);
+    }
+
+    /* Center Brand Composition */
+    .center-hero-content {
+      align-self: center;
+      text-align: center;
+      max-width: 900px;
+      margin: auto 0;
+      pointer-events: auto;
+    }
+
+    /* Sleek Theme Badge */
+    .theme-pill-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 7px 20px;
+      background: rgba(229, 169, 60, 0.08);
+      border: 1px solid rgba(229, 169, 60, 0.3);
+      border-radius: 999px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--gold-pure);
+      margin-bottom: 24px;
+      box-shadow: 0 0 30px rgba(229, 169, 60, 0.1);
+    }
+
+    /* High-End Clean Display Title (Modern Sans-Serif, not cursive) */
+    .symposium-title-display {
+      font-size: clamp(3.4rem, 8vw, 6.2rem);
+      font-weight: 800;
+      letter-spacing: -2.5px;
+      line-height: 0.95;
+      color: #FFFFFF;
+      margin-bottom: 12px;
+      text-shadow: 0 20px 50px rgba(0, 0, 0, 0.9);
+    }
+
+    .symposium-title-display span.gradient-year {
+      font-weight: 300;
+      color: var(--cyan-pure);
+      letter-spacing: -1px;
+      text-shadow: 0 0 35px var(--cyan-pure);
+    }
+
+    .theme-subheading {
+      font-size: clamp(1.2rem, 3vw, 1.85rem);
+      font-weight: 700;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #FFFFFF;
+      margin-bottom: 10px;
+    }
+
+    .theme-subheading span.accent-gold {
+      color: var(--gold-pure);
+      text-shadow: 0 0 25px rgba(229, 169, 60, 0.4);
+    }
+
+    .glimpse-statement {
+      font-size: clamp(0.9rem, 2vw, 1.1rem);
+      font-weight: 400;
+      color: var(--text-sub);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 32px;
+    }
+
+    /* Primary Action Buttons */
+    .hero-actions-row {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .btn-action-primary {
+      background: #FFFFFF;
+      color: #03060C;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      padding: 14px 32px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      box-shadow: 0 0 30px rgba(255, 255, 255, 0.25);
+    }
+
+    .btn-action-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 45px rgba(0, 229, 255, 0.5);
+      background: var(--cyan-pure);
+    }
+
+    .btn-action-secondary {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-white);
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      padding: 14px 28px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      backdrop-filter: blur(10px);
+    }
+
+    .btn-action-secondary:hover {
+      border-color: var(--gold-pure);
+      color: var(--gold-pure);
+      transform: translateY(-2px);
+    }
+
+    /* Bottom Information Strip - Reserved Clean Space (as requested) */
+    .bottom-status-strip {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      max-width: 1320px;
+      margin: 0 auto;
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 20px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+      flex-wrap: wrap;
+      gap: 16px;
+      pointer-events: auto;
+    }
+
+    .status-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .status-pill {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-subtle);
+      padding: 5px 12px;
+      border-radius: 6px;
+    }
+
+    .space-indicator {
+      color: var(--text-sub);
+      border: 1px dashed rgba(255, 255, 255, 0.15);
+      padding: 4px 10px;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background Space Dust -->
+  <div class="space-dust-layer"></div>
+
+  <!-- Top Controller Toolbar -->
+  <header class="top-toolbar">
+    <div class="tool-tag">
+      <span class="dot"></span>
+      <span>TRUE 3D GYROSCOPIC ORBITAL ENGINE</span>
+    </div>
+
+    <div class="ctrl-group">
+      <button class="btn-ctrl active" id="btnRingSpin" onclick="toggleRingSpin()">Rings Orbiting: ON</button>
+      <button class="btn-ctrl" onclick="reset3DCamera()">Reset Perspective</button>
+    </div>
+  </header>
+
+  <!-- 3D Three.js Canvas Container (Where the physical rings rotate in 3D) -->
+  <div id="threejs-viewport"></div>
+
+  <!-- Foreground Layout -->
+  <main class="hero-container">
+
+    <!-- Top Institution Branding & Space Reserved -->
+    <header class="inst-header">
+      <div class="inst-title-block">
+        <div class="inst-badge-row">
+          <span>SRM Institute of Science and Technology</span>
+          <span>•</span>
+          <span>Vadapalani Campus</span>
+        </div>
+        <div class="inst-main-name">Faculty of Engineering and Technology</div>
+        <div class="inst-sub-dept">Department of Electronics & Communication Engineering</div>
+      </div>
+
+      <!-- Space Reserved for Date & Venue -->
+      <div class="meta-placeholder-pill">
+        <div>DATE: <strong>SEPTEMBER 24, 2026</strong></div>
+        <div>VENUE: <strong>AUDITORIUM, VADAPALANI CAMPUS</strong></div>
+        <div style="font-size: 10px; color: var(--text-sub);">[SPACE RESERVED FOR REGISTRATION & COORDINATOR PHONES]</div>
+      </div>
+    </header>
+
+    <!-- Center Hero Content -->
+    <section class="center-hero-content">
+      
+      <div class="theme-pill-tag">
+        <span>⚡ NATIONAL LEVEL TECHNICAL SYMPOSIUM ⚡</span>
+      </div>
+
+      <h1 class="symposium-title-display">
+        Abhigyan <span class="gradient-year">'26</span>
+      </h1>
+
+      <div class="theme-subheading">
+        <span class="accent-gold">QUANTUM BHARAT</span>
+      </div>
+
+      <p class="glimpse-statement">
+        A Glimpse Into The Future
+      </p>
+
+      <div class="hero-actions-row">
+        <button class="btn-action-primary">Explore 11 Events</button>
+        <button class="btn-action-secondary">Register Team</button>
+      </div>
+
+    </section>
+
+    <!-- Bottom Status Strip (Space Reserved for Events, Coordinators, Rules) -->
+    <footer class="bottom-status-strip">
+      <div class="status-left">
+        <div class="status-pill">
+          <span>DRAG SCREEN TO ROTATE 3D PERSPECTIVE</span>
+        </div>
+        <div class="space-indicator">
+          [SPACE ALLOCATED: 5 TECHNICAL + 6 NON-TECHNICAL ARENAS]
+        </div>
+      </div>
+
+      <div>
+        <span>NAAC A++ • NIRF 11TH UNIVERSITY • CATEGORY 1 (12B)</span>
+      </div>
+    </footer>
+
+  </main>
+
+  <script>
+    // =========================================================================
+    // TRUE 3D GYROSCOPIC ORBITAL ENGINE (THE RINGS THEMSELVES SPIN IN 3D)
+    // =========================================================================
+    const container = document.getElementById('threejs-viewport');
+    
+    const scene = new THREE.Scene();
+    scene.fog = new THREE.FogExp2(0x03060C, 0.025);
+
+    const camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 0.1, 100);
+    camera.position.set(0, 0, 11);
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.25;
+    container.appendChild(renderer.domElement);
+
+    // Dynamic Lighting
+    const ambientLight = new THREE.AmbientLight(0x0a1020, 2.0);
+    scene.add(ambientLight);
+
+    const keyLight = new THREE.DirectionalLight(0xffffff, 2.4);
+    keyLight.position.set(6, 8, 8);
+    scene.add(keyLight);
+
+    const cyanPointLight = new THREE.PointLight(0x00E5FF, 4.0, 12);
+    cyanPointLight.position.set(0, 0, 0);
+    scene.add(cyanPointLight);
+
+    const goldPointLight = new THREE.PointLight(0xE5A93C, 3.0, 10);
+    goldPointLight.position.set(0, 0, 0);
+    scene.add(goldPointLight);
+
+    // Master System Anchor Group
+    const masterSystem = new THREE.Group();
+    scene.add(masterSystem);
+
+    // =========================================================================
+    // 1. CENTERPIECE: THE RADIANT 24-SPOKE QUANTUM ASHOKA CHAKRA
+    // =========================================================================
+    const chakraGroup = new THREE.Group();
+    masterSystem.add(chakraGroup);
+
+    // Center Core Singularity
+    const coreMat = new THREE.MeshBasicMaterial({ color: 0xFFFFFF });
+    const coreSphere = new THREE.Mesh(new THREE.SphereGeometry(0.26, 32, 32), coreMat);
+    chakraGroup.add(coreSphere);
+
+    // Center Glowing Energy Shell
+    const shellMat = new THREE.MeshStandardMaterial({
+      color: 0x00E5FF,
+      emissive: 0x00A0CC,
+      emissiveIntensity: 0.6,
+      transparent: true,
+      opacity: 0.45,
+      roughness: 0.1,
+      metalness: 0.8
+    });
+    const shellSphere = new THREE.Mesh(new THREE.SphereGeometry(0.46, 32, 32), shellMat);
+    chakraGroup.add(shellSphere);
+
+    // 24 Radial Spokes
+    const spokeMat = new THREE.MeshStandardMaterial({
+      color: 0x00E5FF,
+      emissive: 0x0099BB,
+      emissiveIntensity: 0.5,
+      roughness: 0.2,
+      metalness: 0.8
+    });
+    const spokeGeo = new THREE.CylinderGeometry(0.014, 0.014, 1.3, 8);
+
+    for (let s = 0; s < 12; s++) { // 12 full diameters = 24 spokes
+      const spoke = new THREE.Mesh(spokeGeo, spokeMat);
+      spoke.rotation.z = (s / 12) * Math.PI;
+      chakraGroup.add(spoke);
+    }
+
+    // Inner & Outer Chakra Phase Rings
+    const chakraRimMat = new THREE.MeshStandardMaterial({
+      color: 0x00E5FF,
+      emissive: 0x0088AA,
+      emissiveIntensity: 0.4,
+      roughness: 0.2,
+      metalness: 0.85
+    });
+    const rim1 = new THREE.Mesh(new THREE.TorusGeometry(0.68, 0.022, 16, 80), chakraRimMat);
+    const rim2 = new THREE.Mesh(new THREE.TorusGeometry(0.78, 0.016, 16, 80), chakraRimMat);
+    chakraGroup.add(rim1);
+    chakraGroup.add(rim2);
+
+    // =========================================================================
+    // 2. THE TRUE 3D ORBITAL RINGS (PHYSICALLY ROTATING IN 3D SPACE)
+    // =========================================================================
+
+    // Custom Function to create a high-precision 3D PCB Ring with Embedded IC Chips
+    function create3DOrbitalRing(radiusX, radiusY, tubeRadius, colorHex, emissiveHex, numChips) {
+      const ringContainer = new THREE.Group();
+
+      // Parametric Elliptical Curve for the 3D Track
+      const curve = new THREE.EllipseCurve(0, 0, radiusX, radiusY, 0, Math.PI * 2, false, 0);
+      const points = curve.getPoints(120);
+      const points3D = points.map(p => new THREE.Vector3(p.x, p.y, 0));
+
+      const path3D = new THREE.CatmullRomCurve3(points3D, true);
+      const tubeGeo = new THREE.TubeGeometry(path3D, 120, tubeRadius, 16, true);
+
+      const tubeMat = new THREE.MeshStandardMaterial({
+        color: colorHex,
+        emissive: emissiveHex,
+        emissiveIntensity: 0.45,
+        roughness: 0.2,
+        metalness: 0.95
+      });
+
+      const tubeMesh = new THREE.Mesh(tubeGeo, tubeMat);
+      ringContainer.add(tubeMesh);
+
+      // Embedded Surface-Mount Microchips (ICs) along this 3D Ring
+      const chipMat = new THREE.MeshStandardMaterial({
+        color: 0x0c1322,
+        roughness: 0.25,
+        metalness: 0.85
+      });
+      const chipGoldLeadMat = new THREE.MeshStandardMaterial({
+        color: 0xE5A93C,
+        roughness: 0.1,
+        metalness: 0.95
+      });
+
+      const chipBoxGeo = new THREE.BoxGeometry(0.24, 0.14, 0.08);
+      const chipLeadGeo = new THREE.BoxGeometry(0.28, 0.16, 0.03);
+
+      for (let c = 0; c < numChips; c++) {
+        const u = c / numChips;
+        const pt = path3D.getPointAt(u);
+        const tangent = path3D.getTangentAt(u);
+
+        const chipGroup = new THREE.Group();
+        chipGroup.position.copy(pt);
+
+        // Orient chip along curve tangent
+        const axis = new THREE.Vector3(0, 1, 0);
+        chipGroup.quaternion.setFromUnitVectors(axis, tangent);
+
+        const chipBody = new THREE.Mesh(chipBoxGeo, chipMat);
+        const chipLeads = new THREE.Mesh(chipLeadGeo, chipGoldLeadMat);
+        chipGroup.add(chipLeads);
+        chipGroup.add(chipBody);
+
+        ringContainer.add(chipGroup);
+      }
+
+      // Glowing Data Photon on this Ring
+      const photonGeo = new THREE.SphereGeometry(0.065, 16, 16);
+      const photonMat = new THREE.MeshBasicMaterial({ color: 0xFFFFFF });
+      const photon = new THREE.Mesh(photonGeo, photonMat);
+      ringContainer.add(photon);
+
+      return { container: ringContainer, path: path3D, photon: photon, photonT: Math.random() };
+    }
+
+    // --- ORBITAL RING 1: 24K Gold Semiconductor PCB Ring ---
+    const ring1Obj = create3DOrbitalRing(3.2, 1.45, 0.035, 0xE5A93C, 0x664400, 8);
+    // Initial Tilt
+    ring1Obj.container.rotation.x = Math.PI / 3.2;
+    ring1Obj.container.rotation.y = -Math.PI / 5;
+    masterSystem.add(ring1Obj.container);
+
+    // --- ORBITAL RING 2: Cryogenic Cyan Quantum Ring ---
+    const ring2Obj = create3DOrbitalRing(3.0, 1.35, 0.032, 0x00E5FF, 0x005577, 7);
+    // Interlocking Counter-Tilt
+    ring2Obj.container.rotation.x = -Math.PI / 3.5;
+    ring2Obj.container.rotation.y = Math.PI / 4;
+    masterSystem.add(ring2Obj.container);
+
+    // --- ORBITAL RING 3: Outer Fine Telemetry Ring (Titanium / White Gold) ---
+    const ring3Obj = create3DOrbitalRing(3.4, 1.55, 0.022, 0x94A3B8, 0x223344, 5);
+    ring3Obj.container.rotation.x = Math.PI / 2.2;
+    ring3Obj.container.rotation.z = Math.PI / 6;
+    masterSystem.add(ring3Obj.container);
+
+    // =========================================================================
+    // 3. INTERACTION & CAMERA DRAG
+    // =========================================================================
+    let isRingsSpinning = true;
+    let isMouseDown = false;
+    let prevMouse = { x: 0, y: 0 };
+    let targetCameraRot = { x: 0, y: 0 };
+    let currentCameraRot = { x: 0, y: 0 };
+
+    window.addEventListener('mousedown', (e) => {
+      isMouseDown = true;
+      prevMouse = { x: e.clientX, y: e.clientY };
+    });
+
+    window.addEventListener('mouseup', () => {
+      isMouseDown = false;
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      // Subtle Parallax hover when not dragging
+      if (!isMouseDown) {
+        const nx = (e.clientX / window.innerWidth) * 2 - 1;
+        const ny = -(e.clientY / window.innerHeight) * 2 + 1;
+        targetCameraRot.y = nx * 0.25;
+        targetCameraRot.x = -ny * 0.18;
+      } else {
+        const dx = e.clientX - prevMouse.x;
+        const dy = e.clientY - prevMouse.y;
+        targetCameraRot.y += dx * 0.005;
+        targetCameraRot.x += dy * 0.005;
+        prevMouse = { x: e.clientX, y: e.clientY };
+      }
+    });
+
+    // Touch support for mobile phones
+    window.addEventListener('touchmove', (e) => {
+      if (e.touches.length > 0) {
+        const t = e.touches[0];
+        const nx = (t.clientX / window.innerWidth) * 2 - 1;
+        const ny = -(t.clientY / window.innerHeight) * 2 + 1;
+        targetCameraRot.y = nx * 0.3;
+        targetCameraRot.x = -ny * 0.2;
+      }
+    }, { passive: true });
+
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    function toggleRingSpin() {
+      isRingsSpinning = !isRingsSpinning;
+      const btn = document.getElementById('btnRingSpin');
+      btn.innerText = `Rings Orbiting: ${isRingsSpinning ? 'ON' : 'OFF'}`;
+      btn.classList.toggle('active', isRingsSpinning);
+    }
+
+    function reset3DCamera() {
+      targetCameraRot = { x: 0, y: 0 };
+    }
+
+    // =========================================================================
+    // 4. MAIN ANIMATION LOOP (PHYSICAL 3D ROTATION)
+    // =========================================================================
+    const clock = new THREE.Clock();
+
+    function animate() {
+      requestAnimationFrame(animate);
+
+      const delta = clock.getDelta();
+      const elapsed = clock.getElapsedTime();
+
+      // Smooth camera damping
+      currentCameraRot.x += (targetCameraRot.x - currentCameraRot.x) * 0.06;
+      currentCameraRot.y += (targetCameraRot.y - currentCameraRot.y) * 0.06;
+
+      masterSystem.rotation.x = currentCameraRot.x;
+      masterSystem.rotation.y = currentCameraRot.y;
+
+      // 1. Center Ashoka Chakra smoothly spins on its flat Z axis
+      chakraGroup.rotation.z += 0.006;
+
+      // 2. Pulse of the central singularity
+      const pulse = Math.sin(elapsed * 2.8) * 0.5 + 1.0;
+      shellSphere.scale.setScalar(0.95 + pulse * 0.08);
+      cyanPointLight.intensity = 3.5 + pulse * 1.5;
+
+      // 3. THE 3D ORBITAL RINGS PHYSICAL REVOLUTION (As requested: The rings spin in 3D!)
+      if (isRingsSpinning) {
+        // Gold PCB Ring spins smoothly along its tilted 3D axis
+        ring1Obj.container.rotation.z += 0.007;
+
+        // Cyan Quantum Ring counter-rotates along its gyroscopic angle
+        ring2Obj.container.rotation.z -= 0.009;
+
+        // Outer Titanium Ring rotates gently
+        ring3Obj.container.rotation.z += 0.004;
+      }
+
+      // 4. Animate Travelling Photons along the 3D curves
+      [ring1Obj, ring2Obj, ring3Obj].forEach(r => {
+        r.photonT = (r.photonT + 0.003) % 1.0;
+        const pt = r.path.getPointAt(r.photonT);
+        r.photon.position.copy(pt);
+      });
+
+      renderer.render(scene, camera);
+    }
+
+    animate();
+  </script>
+</body>
+</html>

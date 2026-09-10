@@ -1,0 +1,628 @@
+/* =========================================================================
+   NAVBAR & MOBILE NAVIGATION OVERLAY STYLES
+   Dark Navy Luxury Ribbon, Official SRM Seal & Full-Screen Mobile Menu
+   ========================================================================= */
+
+.global-navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 66px;
+  z-index: 500;
+  background: rgba(4, 7, 18, 0.78);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  opacity: 0;
+  transform: translateY(-8px);
+}
+
+.global-navbar.settled {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.nav-container {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+/* Brand Lockup with Official SRM Seal */
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.nav-brand:hover {
+  opacity: 0.92;
+}
+
+.nav-brand-logo {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  border-radius: 50%;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.6));
+  flex-shrink: 0;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nav-brand:hover .nav-brand-logo {
+  transform: scale(1.06);
+}
+
+.nav-brand-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5px;
+}
+
+.brand-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.brand-accent {
+  color: #E5A93C;
+}
+
+.brand-sub {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  color: #94A3B8;
+  text-transform: uppercase;
+}
+
+/* Centered Auditorium Venue Badge */
+.nav-center-venue {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: #E2E8F0;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+  user-select: none;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.nav-center-venue:hover {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(245, 197, 24, 0.45);
+}
+
+.nav-venue-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #F5C518;
+  flex-shrink: 0;
+  display: inline-block;
+}
+
+.nav-venue-text {
+  color: #F1F5F9;
+}
+
+/* Desktop Navigation Links */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  position: relative;
+  padding: 4px 0;
+}
+
+.nav-link {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #94A3B8;
+  text-decoration: none;
+  letter-spacing: 0.2px;
+  transition: color 0.18s ease;
+  position: relative;
+  padding: 4px 2px 8px 2px;
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.nav-link:hover {
+  color: #F8FAFC;
+}
+
+.nav-link.active {
+  color: #FFFFFF;
+}
+
+/* Floating Sliding Indicator Under Active Nav Link */
+.nav-active-glider {
+  position: absolute;
+  bottom: 0px;
+  left: 0;
+  height: 2px;
+  width: 0px;
+  background: var(--cyan-electric, #00E5FF);
+  border-radius: 2px;
+  box-shadow: 0 0 10px rgba(0, 229, 255, 0.45);
+  pointer-events: none;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+              width 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+              opacity 0.2s ease;
+  will-change: transform, width;
+  opacity: 0;
+}
+
+/* Nav Actions */
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* -------------------------------------------------------------------------
+   From Uiverse.io by xueyuantan — Navbar Register Button
+   ------------------------------------------------------------------------- */
+.nav-btn-reg {
+  width: 8.5em;
+  height: 2.7em;
+  border-radius: 30em;
+  font-size: 13.5px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 700;
+  color: #111827;
+  background-color: #FFFFFF;
+  border: none;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.45), -2px -2px 6px rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  outline: none;
+  text-decoration: none;
+  letter-spacing: 0.3px;
+  transition: all 0.25s ease;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.nav-btn-reg::before {
+  content: '';
+  width: 0;
+  height: 2.7em;
+  border-radius: 30em;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-image: linear-gradient(to right, #0fd850 0%, #f9f047 100%);
+  transition: width 0.5s ease;
+  display: block;
+  z-index: -1;
+}
+
+.nav-btn-reg:hover {
+  color: #062b14;
+  transform: translateY(-1px);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+}
+
+.nav-btn-replay {
+  height: 2.7em;
+  padding: 0 14px;
+  border-radius: 30em;
+  font-size: 13px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 600;
+  color: #94A3B8;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  outline: none;
+  transition: all 0.25s ease;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.nav-btn-replay:hover {
+  color: #F5C518;
+  border-color: rgba(245, 197, 24, 0.4);
+  background: rgba(245, 197, 24, 0.08);
+  transform: translateY(-1px);
+}
+
+@media (max-width: 768px) {
+  .nav-btn-replay {
+    display: none;
+  }
+}
+
+.nav-btn-reg:hover::before {
+  width: 8.5em;
+}
+
+.nav-btn-reg:active {
+  transform: translateY(1px);
+}
+
+/* Mobile Hamburger Trigger Button */
+.nav-hamburger-btn {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: #E2E8F0;
+  width: 40px;
+  height: 38px;
+  border-radius: 8px;
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.nav-hamburger-btn:hover,
+.nav-hamburger-btn:active {
+  background: rgba(0, 229, 255, 0.14);
+  border-color: rgba(0, 229, 255, 0.45);
+  color: #00E5FF;
+}
+
+/* =========================================================================
+/* =========================================================================
+   CURVED MOBILE NAVIGATION SHEET (Right-aligned, organic SVG curve)
+   Layout matching curved-menu specification with Quantum Bharat theme
+   ========================================================================= */
+
+/* Dimmed backdrop overlay covering the rest of the screen */
+.curved-menu-backdrop {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  background: rgba(2, 6, 16, 0.72);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: 9998;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.45s ease, visibility 0.45s ease;
+}
+
+.curved-menu-backdrop.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+/* Sliding curved drawer anchored to the right */
+.curved-menu-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(86vw, 390px);
+  height: 100vh;
+  height: 100dvh;
+  background: #050a18;
+  border-left: 1px solid rgba(245, 197, 24, 0.22);
+  z-index: 9999;
+  box-shadow: -16px 0 50px rgba(0, 0, 0, 0.85);
+  transform: translateX(calc(100% + 100px));
+  transition: transform 0.8s cubic-bezier(0.76, 0, 0.24, 1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: visible;
+  box-sizing: border-box;
+}
+
+.curved-menu-drawer.active {
+  transform: translateX(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .curved-menu-drawer {
+    transition: transform 0.2s ease !important;
+  }
+}
+
+/* Organic SVG Curve attached to drawer's left edge */
+.curved-svg-edge {
+  position: absolute;
+  top: 0;
+  left: -99px;
+  width: 100px;
+  height: 100%;
+  pointer-events: none;
+  fill: #050a18;
+  z-index: 1;
+}
+
+.curved-svg-edge path {
+  transition: d 0.8s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+/* Content Container */
+.curved-menu-content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 36px 32px max(32px, env(safe-area-inset-bottom, 32px));
+  position: relative;
+  z-index: 2;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+/* Header with Navigation label and Close button */
+.curved-menu-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+  margin-bottom: 12px;
+}
+
+.curved-nav-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 2.2px;
+  text-transform: uppercase;
+  color: #94A3B8;
+}
+
+.curved-close-btn {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: #CBD5E1;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.curved-close-btn:hover,
+.curved-close-btn:active {
+  background: rgba(245, 197, 24, 0.15);
+  border-color: rgba(245, 197, 24, 0.6);
+  color: #F5C518;
+  transform: rotate(90deg);
+}
+
+/* Numbered Editorial Navigation List with Hairline Dividers */
+.curved-nav-list {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: auto 0;
+  padding: 10px 0;
+}
+
+.curved-nav-link {
+  display: flex;
+  align-items: baseline;
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  text-decoration: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.curved-nav-link:hover,
+.curved-nav-link:active {
+  transform: translateX(8px);
+}
+
+.curved-nav-index {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: clamp(1.4rem, 4.2vw, 1.85rem);
+  font-weight: 300;
+  color: #F5C518;
+  min-width: 38px;
+  margin-right: 8px;
+  transition: color 0.2s ease;
+}
+
+.curved-nav-heading {
+  font-family: 'Outfit', 'Syne', sans-serif;
+  font-size: clamp(1.6rem, 5.2vw, 2.2rem);
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #F8FAFC;
+  transition: color 0.2s ease;
+}
+
+.curved-nav-link:hover .curved-nav-heading,
+.curved-nav-link:active .curved-nav-heading {
+  color: #F5C518;
+}
+
+/* Footer: Clean Register Button Replacing Social Icons */
+.curved-menu-footer {
+  padding-top: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin-top: auto;
+}
+
+.curved-reg-btn {
+  width: 100%;
+  height: 50px;
+  border-radius: 999px;
+  background: #F5C518;
+  color: #020814;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 0.4px;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 18px rgba(245, 197, 24, 0.32);
+  transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.curved-reg-btn:hover {
+  background: #FFD43F;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(245, 197, 24, 0.45);
+}
+
+.curved-reg-btn:active {
+  transform: translateY(1px);
+}
+
+/* =========================================================================
+   RESPONSIVE BREAKPOINTS (<= 768px & <= 380px)
+   ========================================================================= */
+@media (max-width: 960px) {
+  .nav-center-venue {
+    display: none !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .global-navbar {
+    height: 54px;
+  }
+
+  .global-navbar .nav-links {
+    display: none !important;
+  }
+
+  .nav-hamburger-btn {
+    display: inline-flex !important;
+  }
+
+  .global-navbar .nav-actions {
+    display: flex !important;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .global-navbar .nav-container {
+    padding: 0 16px;
+    justify-content: space-between;
+  }
+
+  .nav-brand {
+    align-items: center;
+    text-align: left;
+    gap: 10px;
+  }
+
+  .nav-brand-logo {
+    width: 32px;
+    height: 32px;
+  }
+
+  .brand-title {
+    font-size: 12.5px;
+  }
+
+  .brand-sub {
+    font-size: 8px;
+    letter-spacing: 0.8px;
+  }
+
+  .nav-btn-reg {
+    font-size: 11.5px;
+    width: 7.6em;
+    height: 2.6em;
+  }
+
+  .nav-btn-reg::before {
+    height: 2.6em;
+  }
+
+  .nav-btn-reg:hover::before {
+    width: 7.6em;
+  }
+}
+
+@media (max-width: 380px) {
+  .nav-brand-logo {
+    width: 28px;
+    height: 28px;
+  }
+
+  .brand-title {
+    font-size: 11.5px;
+  }
+
+  .brand-sub {
+    font-size: 7.5px;
+  }
+
+  .nav-btn-reg {
+    font-size: 11px;
+    width: 7.2em;
+    height: 2.5em;
+  }
+
+  .nav-btn-reg::before {
+    height: 2.5em;
+  }
+
+  .nav-btn-reg:hover::before {
+    width: 7.2em;
+  }
+
+  .nav-hamburger-btn {
+    width: 36px;
+    height: 34px;
+  }
+}

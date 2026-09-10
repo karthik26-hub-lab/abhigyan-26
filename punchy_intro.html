@@ -1,0 +1,2548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Abhigyan '26 | Punchy Kinetic Intro Prototype</title>
+  
+  <!-- High-Caliber Typography: Cinzel (Roman Gold for Quantum Bharat), Plus Jakarta Sans & Inter (Modern, Clean, High-Contrast) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@800;900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&family=Plus+Jakarta+Sans:wght@700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg-dark: #030611;
+      --cyan-electric: #00E5FF;
+      --cyan-glow: rgba(0, 229, 255, 0.7);
+      --gold-pure: #E5A93C;
+      --gold-glow: rgba(229, 169, 60, 0.7);
+      --text-white: #FFFFFF;
+      --text-sub: #94A3B8;
+      --border-subtle: rgba(255, 255, 255, 0.08);
+    }
+
+    html {
+      width: 100%;
+      height: -webkit-fill-available;
+      overflow-x: hidden;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-white);
+      font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      min-height: 100vh;
+      min-height: 100dvh;
+      min-height: -webkit-fill-available;
+      width: 100%;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      user-select: none;
+      -webkit-font-smoothing: antialiased;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* Main Viewport Container (Zero shake to eliminate lag on lower-end devices) */
+    #viewport-wrapper {
+      width: 100%;
+      min-height: 100vh;
+      min-height: 100dvh;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      padding-top: env(safe-area-inset-top, 0px);
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+      padding-left: env(safe-area-inset-left, 0px);
+      padding-right: env(safe-area-inset-right, 0px);
+    }
+
+    /* Fast, Crisp Studio Shutter Flash (Zero lag, pure hardware opacity pulse) */
+    #flash-overlay {
+      position: fixed;
+      inset: 0;
+      background: #FFFFFF;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 1000;
+      transition: opacity 0.08s ease-out;
+    }
+
+    /* Clean cosmic backdrop powered by the official Master Banner Artwork */
+    /* Deep dark background with ambient core glow to make quantum particles stand out */
+    .cosmic-backdrop {
+      position: fixed;
+      inset: 0;
+      background-color: #020409;
+      background-image: 
+        radial-gradient(ellipse 65% 55% at 50% 45%, rgba(0, 229, 255, 0.12) 0%, rgba(229, 169, 60, 0.08) 32%, rgba(2, 4, 10, 0.78) 68%, #020409 100%),
+        url('/assets/master_banner_4k.jpg');
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+      z-index: 1;
+    }
+
+    /* Ambient Core Quantum Glow (Behind Particles) */
+    .quantum-core-glow {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: clamp(320px, 60vw, 750px);
+      height: clamp(320px, 60vw, 750px);
+      background: radial-gradient(circle, rgba(0, 229, 255, 0.14) 0%, rgba(229, 169, 60, 0.07) 35%, transparent 70%);
+      filter: blur(40px);
+      pointer-events: none;
+      z-index: 2;
+      opacity: 0.85;
+    }
+
+    /* High-Performance Floating Quantum Particles Canvas */
+    #quantumParticlesCanvas {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 3;
+    }
+
+    /* Blurred Semiconductor Microchips & PCB Layer (Cinematic Depth of Field) */
+    .blurred-chips-layer {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 4;
+      filter: blur(10px) brightness(0.48);
+      opacity: 0.65;
+      transform: scale(1.05);
+      transition: transform 0.2s cubic-bezier(0.2, 0, 0.2, 1);
+    }
+
+    /* =========================================================================
+       GLOBAL DESKTOP NAVBAR (Dark Glass Luxury Ribbon)
+       ========================================================================= */
+    .global-navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 66px;
+      z-index: 500;
+      background: rgba(4, 7, 18, 0.72);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.7);
+      display: flex;
+      align-items: center;
+      transition: opacity 0.6s ease, transform 0.6s ease;
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+
+    .global-navbar.settled {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .nav-container {
+      width: 100%;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      transition: opacity 0.2s ease;
+    }
+
+    .nav-brand:hover {
+      opacity: 0.92;
+    }
+
+    .nav-brand-logo {
+      width: 40px;
+      height: 40px;
+      object-fit: contain;
+      border-radius: 50%;
+      filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.6));
+      flex-shrink: 0;
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .nav-brand:hover .nav-brand-logo {
+      transform: scale(1.06);
+    }
+
+    .nav-brand-text {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5px;
+    }
+
+    .brand-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 0.8px;
+      color: #FFFFFF;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .brand-accent {
+      color: #E5A93C;
+    }
+
+    .brand-sub {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9.5px;
+      font-weight: 600;
+      letter-spacing: 1.2px;
+      color: #94A3B8;
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+    }
+
+    .nav-link {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 13.5px;
+      font-weight: 600;
+      color: #94A3B8;
+      text-decoration: none;
+      letter-spacing: 0.2px;
+      transition: color 0.18s ease;
+      position: relative;
+      padding: 4px 0;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      color: #FFFFFF;
+    }
+
+    .nav-link.active::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--cyan-electric);
+      border-radius: 2px;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .nav-btn-reg {
+      background: #FFFFFF;
+      color: #030712;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      padding: 8px 18px;
+      border-radius: 6px;
+      border: 1px solid #FFFFFF;
+      cursor: pointer;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+      transition: background 0.18s ease, transform 0.18s ease;
+    }
+
+    .nav-btn-reg:hover {
+      background: #E2E8F0;
+      transform: translateY(-1px);
+    }
+
+    .nav-btn-replay {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #94A3B8;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11.5px;
+      font-weight: 600;
+      padding: 7px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.18s ease;
+    }
+
+    .nav-btn-replay:hover {
+      color: #FFFFFF;
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+
+    /* Mobile Hamburger Trigger Button (Desktop Hidden) */
+    .nav-hamburger-btn {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      color: #E2E8F0;
+      width: 40px;
+      height: 38px;
+      border-radius: 8px;
+      cursor: pointer;
+      padding: 0;
+      transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .nav-hamburger-btn:hover,
+    .nav-hamburger-btn:active {
+      background: rgba(0, 229, 255, 0.14);
+      border-color: rgba(0, 229, 255, 0.45);
+      color: #00E5FF;
+    }
+
+    /* =========================================================================
+       FULL-SCREEN MOBILE NAVIGATION OVERLAY (Dark Navy, Gold/Teal Accents)
+       ========================================================================= */
+    .mobile-nav-overlay {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      height: 100dvh;
+      background: rgba(4, 7, 18, 0.98);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 18px 24px max(24px, env(safe-area-inset-bottom, 24px));
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transform: translateY(-8px);
+      transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.3s;
+    }
+
+    .mobile-nav-overlay.active {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .mobile-nav-overlay {
+        transition: none !important;
+        transform: none !important;
+      }
+    }
+
+    .mobile-nav-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .mobile-nav-brand-lockup {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .mobile-nav-close-btn {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      color: #94A3B8;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .mobile-nav-close-btn:hover,
+    .mobile-nav-close-btn:active {
+      background: rgba(0, 229, 255, 0.15);
+      border-color: rgba(0, 229, 255, 0.5);
+      color: #00E5FF;
+    }
+
+    .mobile-nav-menu {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin: auto 0;
+      padding: 12px 0;
+    }
+
+    .mobile-nav-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 48px; /* Guaranteed >= 44px tap target */
+      padding: 12px 14px;
+      border-radius: 12px;
+      text-decoration: none;
+      color: #E2E8F0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      border: 1px solid transparent;
+      transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease, padding-left 0.18s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .mobile-nav-link:hover,
+    .mobile-nav-link:active {
+      background: rgba(0, 229, 255, 0.08);
+      border-color: rgba(0, 229, 255, 0.25);
+      color: #00E5FF; /* Teal accent */
+      padding-left: 20px;
+    }
+
+    .mobile-nav-link.active {
+      color: #F5C518; /* Gold accent */
+    }
+
+    .mobile-link-arrow {
+      font-size: 16px;
+      color: rgba(255, 255, 255, 0.3);
+      transition: color 0.18s ease, transform 0.18s ease;
+    }
+
+    .mobile-nav-link:hover .mobile-link-arrow,
+    .mobile-nav-link:active .mobile-link-arrow {
+      color: #00E5FF;
+      transform: translateX(4px);
+    }
+
+    .mobile-nav-footer {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .mobile-overlay-reg-btn {
+      width: 100%;
+      min-height: 48px;
+      background: linear-gradient(135deg, #00E5FF 0%, #00B4D8 100%);
+      color: #030712;
+      border: none;
+      border-radius: 12px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: 0.4px;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(0, 229, 255, 0.3);
+      transition: filter 0.18s ease;
+    }
+
+    .mobile-overlay-reg-btn:hover {
+      filter: brightness(1.08);
+    }
+
+    .mobile-overlay-accredit {
+      text-align: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      color: #64748B;
+      letter-spacing: 1px;
+    }
+
+    /* =========================================================================
+       THE MAIN KINETIC HERO STAGE
+       ========================================================================= */
+    .hero-stage {
+      position: relative;
+      z-index: 10;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px 80px;
+      text-align: center;
+    }
+
+    /* The Master Title Unit that performs the Flash Sequence & Settles */
+    /* The Master Title Unit that performs the Flash Sequence & Settles */
+    .master-title-unit {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1), margin 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: transform;
+    }
+
+    /* Settled state: Comfortably lowered into the center negative space */
+    .master-title-unit.settled {
+      transform: translateY(-8px);
+    }
+
+    /* SLAM 1: ABHIGYAN '26 (AUTHENTIC BANNER SIGNATURE WITH LIQUID SILVER GLASS & MOVING SPECULAR GLEAM) */
+    .title-line-1 {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0;
+    }
+
+    .word-abhigyan-26 {
+      display: inline-block;
+      width: clamp(270px, 46vw, 560px);
+      aspect-ratio: 628 / 171;
+      /* Dual-Layer: 1. Moving Glass Light Sheen, 2. Polished Liquid Silver Chrome Horizon Base */
+      background-image: 
+        linear-gradient(115deg, transparent 0%, transparent 40%, rgba(255, 255, 255, 0.98) 50%, transparent 60%, transparent 100%),
+        linear-gradient(180deg, 
+          #FFFFFF 0%, 
+          #EFF4F9 22%, 
+          #B4C6D7 48%, 
+          #2A3C4D 49%, /* Razor-sharp chrome horizon split */
+          #485C6E 52%, 
+          #D5E1EC 75%, 
+          #FFFFFF 88%, 
+          #6E8193 100%
+        );
+      background-size: 260% 100%, 100% 100%;
+      background-position: 200% 0, 0 0;
+      -webkit-mask-image: url('/assets/abhigyan_26_official_signature.png');
+      -webkit-mask-size: contain;
+      -webkit-mask-repeat: no-repeat;
+      -webkit-mask-position: center;
+      mask-image: url('/assets/abhigyan_26_official_signature.png');
+      mask-size: contain;
+      mask-repeat: no-repeat;
+      mask-position: center;
+      opacity: 0;
+      transform: scale(1.22);
+      filter: brightness(2.6) contrast(1.2);
+      transition: transform 0.24s cubic-bezier(0.16, 1, 0.3, 1), 
+                  opacity 0.12s ease-out, 
+                  filter 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+      animation: silverSheen 2s ease-out forwards;
+    }
+
+    .word-abhigyan-26.slammed {
+      opacity: 1;
+      transform: scale(1);
+      filter: brightness(1) contrast(1);
+    }
+
+    /* SLAM 2: QUANTUM BHARAT (SMOOTH & PROFESSIONAL CINEMATIC REVEAL) */
+    .word-quantum-bharat {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(1.4rem, 4.2vw, 3.4rem);
+      font-weight: 900;
+      letter-spacing: clamp(8px, 2.8vw, 18px); /* Starts wider, contracts smoothly into place */
+      text-transform: uppercase;
+      white-space: nowrap;
+      /* Dual-Layer: 1. Molten Gold Specular Sweep, 2. 24K Minted Gold Bullion Glass Horizon */
+      background-image: 
+        linear-gradient(115deg, transparent 0%, transparent 40%, rgba(255, 255, 235, 0.98) 50%, transparent 60%, transparent 100%),
+        linear-gradient(180deg, 
+          #FFFEEA 0%, 
+          #FEDC76 22%, 
+          #D49826 48%, 
+          #543102 49%, /* Razor-sharp 24K gold horizon split */
+          #7A4705 52%, 
+          #FCD86C 75%, 
+          #FFF2B5 88%, 
+          #6E3F05 100%
+        );
+      background-size: 260% 100%, 100% 100%;
+      background-position: 200% 0, 0 0;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      -webkit-text-stroke: 0.8px rgba(255, 228, 140, 0.55);
+      opacity: 0;
+      transform: translateY(18px);
+      transition: transform 0.85s cubic-bezier(0.16, 1, 0.3, 1), 
+                  opacity 0.7s ease-out, 
+                  letter-spacing 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+      animation: goldSheen 2.2s ease-out forwards 0.4s;
+      /* Negative top margin pulls Quantum Bharat right under the signature glyph baseline */
+      margin-top: clamp(-18px, -2.4vw, -8px);
+      margin-bottom: 0;
+    }
+
+    .word-quantum-bharat.slammed {
+      opacity: 1;
+      transform: translateY(0);
+      letter-spacing: clamp(5px, 1.8vw, 10px);
+    }
+
+    /* RESOLVE 4: A GLIMPSE INTO THE FUTURE (PLATINUM/CYAN LASER GLASS) */
+    .tagline-glimpse {
+      font-family: 'Inter', sans-serif;
+      font-size: clamp(0.72rem, 1.6vw, 1.15rem);
+      font-weight: 700;
+      letter-spacing: clamp(3.5px, 1.2vw, 7px);
+      text-transform: uppercase;
+      white-space: nowrap;
+      /* Dual-Layer: Laser Specular Gleam with High-Contrast Finish */
+      background-image: 
+        linear-gradient(115deg, transparent 0%, transparent 40%, rgba(255, 255, 255, 0.95) 50%, transparent 60%, transparent 100%),
+        linear-gradient(180deg, #FFFFFF 0%, #BAF7FD 48%, #0088A3 50%, #00E5FF 100%);
+      background-size: 260% 100%, 100% 100%;
+      background-position: 200% 0, 0 0;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      -webkit-text-stroke: 0.4px rgba(255, 255, 255, 0.3);
+      filter: none; /* ZERO BACKGROUND GLOW */
+      opacity: 0;
+      transform: translateY(16px);
+      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      animation: taglineSheen 2s ease-out forwards 0.8s;
+      margin-top: clamp(8px, 1.5vw, 14px);
+    }
+
+    .tagline-glimpse.slammed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* One-time reveal sheen (Clean & Calm - No distracting endless loops) */
+    @keyframes silverSheen {
+      0% { background-position: 200% 0, 0 0; }
+      100% { background-position: -50% 0, 0 0; }
+    }
+
+    @keyframes cyanSheen {
+      0% { background-position: 200% 0, 0 0; }
+      100% { background-position: -50% 0, 0 0; }
+    }
+
+    @keyframes goldSheen {
+      0% { background-position: 200% 0, 0 0; }
+      100% { background-position: -50% 0, 0 0; }
+    }
+
+    @keyframes taglineSheen {
+      0% { background-position: 200% 0, 0 0; }
+      100% { background-position: -50% 0, 0 0; }
+    }
+
+    /* =========================================================================
+       SURROUNDING CONTENT (FADES IN SMOOTHLY ONCE INTRO SETTLES)
+       ========================================================================= */
+    .settled-content {
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      margin-top: clamp(18px, 3vh, 30px);
+      pointer-events: none;
+      width: 100%;
+      max-width: 720px;
+    }
+
+    .settled-content.visible {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    /* =========================================================================
+       CENTERED CORE INFORMATION & MODERN ACTION CLUSTER (10/10 Standard)
+       Pure Centered Editorial Precision: No Clunky 2010 Boxes or Slab Buttons
+       ========================================================================= */
+    .settled-content {
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      margin-top: clamp(14px, 2.5vh, 24px);
+      pointer-events: none;
+      width: 100%;
+      max-width: 680px;
+    }
+
+    .settled-content.visible {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    /* 1. Date: Centered Minted Gold Glass Capsule */
+    /* 1. Date: Dark Glass Minted Gold Capsule */
+    .core-date-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: rgba(10, 16, 32, 0.75);
+      border: 1px solid rgba(245, 197, 24, 0.4);
+      padding: 7px 22px;
+      border-radius: 999px;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.7), 0 0 14px rgba(229, 169, 60, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.14);
+    }
+
+    .badge-calendar-icon {
+      color: #F5C518;
+      display: flex;
+      align-items: center;
+    }
+
+    .badge-date-text {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: clamp(11.5px, 1.2vw, 13px);
+      font-weight: 700;
+      color: #FFF6DE;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+    }
+
+    .badge-day-sep {
+      color: rgba(245, 197, 24, 0.6);
+      font-size: 10px;
+    }
+
+    .badge-day-text {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: clamp(10px, 1vw, 11.5px);
+      font-weight: 600;
+      color: #E5A93C;
+      letter-spacing: 1.5px;
+    }
+
+    /* 2. Venue: Centered, High-Contrast Line */
+    .core-venue-line {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      color: #FFFFFF;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      text-align: center;
+    }
+
+    .venue-part-main {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .venue-pin-icon {
+      color: var(--cyan-electric);
+      display: flex;
+      align-items: center;
+    }
+
+    .venue-name {
+      font-weight: 800;
+      font-size: clamp(14px, 1.7vw, 16.5px);
+      color: #FFFFFF;
+      letter-spacing: 0.2px;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+    }
+
+    .venue-sep {
+      color: var(--cyan-electric);
+      font-size: 12px;
+    }
+
+    .venue-campus {
+      font-weight: 500;
+      font-size: clamp(13px, 1.4vw, 15px);
+      color: #CBD5E1;
+      letter-spacing: 0.2px;
+    }
+
+    /* 3. Scope & Institution Tag */
+    .core-scope-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: clamp(9.5px, 1vw, 11px);
+      font-weight: 600;
+      color: #94A3B8;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      text-align: center;
+    }
+
+    .scope-short {
+      display: none;
+    }
+
+    .scope-full {
+      display: inline;
+    }
+
+    /* 4. Action Buttons: Mostly Dark Glass-Like Luxury Pills */
+    .hero-action-cluster {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      align-items: center;
+      margin-top: 10px;
+      width: 100%;
+    }
+
+    /* Primary: Luminous Quantum Dark Glass Pill */
+    .btn-action-explore {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: linear-gradient(135deg, rgba(0, 229, 255, 0.18) 0%, rgba(255, 255, 255, 0.08) 100%);
+      color: #FFFFFF;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
+      font-size: 14.5px;
+      letter-spacing: 0.3px;
+      padding: 13px 30px;
+      border-radius: 999px;
+      border: 1px solid rgba(0, 229, 255, 0.5);
+      cursor: pointer;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6), 0 0 16px rgba(0, 229, 255, 0.22), inset 0 1px 1px rgba(255, 255, 255, 0.3);
+      transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+
+    .btn-action-explore .btn-action-arrow {
+      font-size: 15px;
+      color: var(--cyan-electric);
+      transition: transform 0.2s ease;
+    }
+
+    .btn-action-explore:hover {
+      background: linear-gradient(135deg, rgba(0, 229, 255, 0.28) 0%, rgba(255, 255, 255, 0.14) 100%);
+      border-color: #00E5FF;
+      transform: translateY(-1px);
+      box-shadow: 0 10px 36px rgba(0, 229, 255, 0.38), inset 0 1px 2px rgba(255, 255, 255, 0.4);
+    }
+
+    .btn-action-explore:hover .btn-action-arrow {
+      transform: translateX(4px);
+    }
+
+    .btn-action-explore:active {
+      transform: translateY(0);
+    }
+
+    /* Secondary: Sleek Obsidian Crystal Glass Pill */
+    .btn-action-reg {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(10, 16, 32, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #F1F5F9;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 600;
+      font-size: 14.5px;
+      letter-spacing: 0.2px;
+      padding: 13px 26px;
+      border-radius: 999px;
+      cursor: pointer;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .btn-action-reg:hover {
+      background: rgba(18, 26, 48, 0.88);
+      border-color: rgba(245, 197, 24, 0.5);
+      color: #FFF2B5;
+      transform: translateY(-1px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7), 0 0 14px rgba(229, 169, 60, 0.18);
+    }
+
+    .btn-action-reg:active {
+      transform: translateY(0);
+    }
+
+    /* =========================================================================
+       SLEEK DARK GLASS REGISTRATION MODAL
+       Simple, Plain, Minimalist & Ultra-Sleek
+       ========================================================================= */
+    .reg-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(2, 4, 10, 0.82);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      z-index: 2500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .reg-modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .reg-modal-card {
+      background: rgba(8, 13, 26, 0.95);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 22px;
+      width: min(100%, 460px);
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 26px 26px 28px;
+      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.92), 0 0 40px rgba(0, 229, 255, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+      transform: scale(0.95) translateY(10px);
+      transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+    }
+
+    .reg-modal-overlay.active .reg-modal-card {
+      transform: scale(1) translateY(0);
+    }
+
+    .reg-modal-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .reg-badge-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--cyan-electric);
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .reg-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 20px;
+      font-weight: 800;
+      color: #FFFFFF;
+      letter-spacing: -0.2px;
+      line-height: 1.25;
+    }
+
+    .reg-sub {
+      font-size: 12px;
+      color: #94A3B8;
+      margin-top: 3px;
+    }
+
+    .reg-close-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #94A3B8;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .reg-close-btn:hover {
+      background: rgba(255, 255, 255, 0.14);
+      color: #FFFFFF;
+    }
+
+    .reg-form {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .reg-field {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      text-align: left;
+    }
+
+    .reg-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 600;
+      color: #CBD5E1;
+      letter-spacing: 0.5px;
+    }
+
+    .reg-input, .reg-select {
+      background: rgba(14, 20, 38, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 10px;
+      padding: 11px 14px;
+      color: #FFFFFF;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 13.5px;
+      outline: none;
+      transition: border-color 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .reg-input::placeholder {
+      color: #64748B;
+    }
+
+    .reg-input:focus, .reg-select:focus {
+      border-color: var(--cyan-electric);
+      box-shadow: 0 0 14px rgba(0, 229, 255, 0.25);
+    }
+
+    .reg-select option {
+      background: #080D1A;
+      color: #FFFFFF;
+    }
+
+    .reg-submit-btn {
+      width: 100%;
+      min-height: 46px;
+      margin-top: 6px;
+      background: linear-gradient(135deg, rgba(0, 229, 255, 0.9) 0%, rgba(0, 180, 216, 0.95) 100%);
+      color: #030712;
+      border: none;
+      border-radius: 999px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(0, 229, 255, 0.35);
+      transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .reg-submit-btn:hover {
+      filter: brightness(1.08);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 24px rgba(0, 229, 255, 0.5);
+    }
+
+    .reg-submit-btn:active {
+      transform: translateY(0);
+    }
+
+    .reg-direct-link-row {
+      text-align: center;
+      margin-top: 10px;
+      font-size: 11.5px;
+      color: #64748B;
+    }
+
+    .reg-direct-link {
+      color: var(--gold-pure);
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.15s;
+    }
+
+    .reg-direct-link:hover {
+      color: #FFE599;
+      text-decoration: underline;
+    }
+
+    .reg-success-msg {
+      display: none;
+      text-align: center;
+      padding: 24px 10px;
+    }
+
+    .reg-success-msg.active {
+      display: block;
+    }
+
+    .success-icon {
+      font-size: 40px;
+      color: #00E5FF;
+      margin-bottom: 12px;
+    }
+
+    .success-title {
+      font-size: 18px;
+      font-weight: 800;
+      color: #FFFFFF;
+      margin-bottom: 6px;
+    }
+
+    .success-sub {
+      font-size: 12.5px;
+      color: #94A3B8;
+      line-height: 1.5;
+    }
+
+    /* Bottom Trust & Accreditation Bar */
+    .bottom-trust-strip {
+      width: 100%;
+      border-top: 1px solid var(--border-subtle);
+      padding: 18px 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: #64748B;
+      opacity: 0;
+      transition: opacity 0.8s ease 0.4s;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .bottom-trust-strip.visible {
+      opacity: 1;
+    }
+
+    /* =========================================================================
+       MOBILE BOTTOM DOCK & SLIDER SHEET (Thumb-Friendly Ergonomics)
+       ========================================================================= */
+    .mobile-bottom-dock {
+      display: none; /* Hidden on Desktop */
+      position: fixed;
+      bottom: max(12px, env(safe-area-inset-bottom, 12px));
+      left: 50%;
+      transform: translateX(-50%);
+      width: calc(100% - 24px);
+      max-width: 380px;
+      z-index: 950;
+      background: rgba(6, 10, 22, 0.94);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 999px;
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      padding: 5px 6px;
+      justify-content: space-around;
+      align-items: center;
+      transition: opacity 0.6s ease, transform 0.6s ease;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .mobile-bottom-dock.settled {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .dock-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      color: #94A3B8;
+      text-decoration: none;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 5px 2px;
+      flex: 1;
+      min-width: 0;
+      border-radius: 12px;
+      transition: color 0.18s ease, background 0.18s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .dock-item span {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 9.5px;
+      font-weight: 600;
+      letter-spacing: 0.1px;
+      white-space: nowrap;
+    }
+
+    .dock-item svg {
+      width: 17px;
+      height: 17px;
+      transition: transform 0.18s ease;
+    }
+
+    .dock-item:active svg {
+      transform: scale(0.9);
+    }
+
+    .dock-item.active,
+    .dock-item:hover {
+      color: #FFFFFF;
+    }
+
+    .dock-item.dock-highlight {
+      color: #FFE599;
+    }
+
+    /* Bottom Slider Sheet (Clean Drawer Slider from Bottom - Zero Clutter) */
+    .bottom-slider-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.72);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      z-index: 2000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .bottom-slider-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .bottom-slider-sheet {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      max-height: 85vh;
+      background: #060A17;
+      border-top: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 24px 24px 0 0;
+      padding: 12px 20px max(24px, env(safe-area-inset-bottom, 24px));
+      transform: translateY(100%);
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      box-shadow: 0 -12px 40px rgba(0, 0, 0, 0.9);
+    }
+
+    .bottom-slider-overlay.active .bottom-slider-sheet {
+      transform: translateY(0);
+    }
+
+    .slider-drag-handle {
+      width: 38px;
+      height: 4.5px;
+      border-radius: 3px;
+      background: rgba(255, 255, 255, 0.25);
+      margin: 4px auto 14px;
+    }
+
+    .slider-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 14px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      margin-bottom: 16px;
+    }
+
+    .slider-brand {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 13.5px;
+      font-weight: 800;
+      color: #FFFFFF;
+      letter-spacing: 0.8px;
+    }
+
+    .slider-sub {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9.5px;
+      color: #94A3B8;
+      letter-spacing: 1px;
+    }
+
+    .slider-close-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #FFFFFF;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .slider-menu-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .slider-menu-card {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 12px 14px;
+      text-decoration: none;
+      color: inherit;
+      transition: background 0.18s ease;
+      cursor: pointer;
+    }
+
+    .slider-menu-card:active {
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .card-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+
+    .card-icon.cyan {
+      color: var(--cyan-electric);
+      background: rgba(0, 229, 255, 0.08);
+      border-color: rgba(0, 229, 255, 0.2);
+    }
+
+    .card-icon.gold {
+      color: var(--gold-pure);
+      background: rgba(229, 169, 60, 0.08);
+      border-color: rgba(229, 169, 60, 0.2);
+    }
+
+    .card-text {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      text-align: left;
+    }
+
+    .card-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 13.5px;
+      font-weight: 700;
+      color: #FFFFFF;
+    }
+
+    .card-desc {
+      font-size: 11px;
+      color: #94A3B8;
+    }
+
+    .slider-cta-row {
+      margin-top: 18px;
+    }
+
+    .slider-reg-btn {
+      width: 100%;
+      min-height: 48px;
+      background: #FFFFFF;
+      color: #030712;
+      border: none;
+      border-radius: 10px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.18s ease;
+    }
+
+    .slider-reg-btn:active {
+      background: #E2E8F0;
+    }
+
+    /* =========================================================================
+       COMPREHENSIVE MOBILE RESPONSIVENESS & WHATSAPP / IN-APP BROWSER OPTIMIZATION
+       Optimized across: iPhone SE (320px/375px), Budget Android (Vivo/Oppo/Realme ~360-390px),
+       Flagships (Samsung S24/iPhone 15 Pro Max 412-430px), Tablets (768px+)
+       ========================================================================= */
+
+    /* Tablet & Small Desktop (<= 992px) */
+    @media (max-width: 992px) {
+      .nav-links {
+        gap: 16px;
+      }
+      .nav-link {
+        font-size: 12.5px;
+      }
+      .master-title-unit.settled {
+        transform: translateY(-4px);
+      }
+    }
+
+    /* Standard Mobile & WhatsApp In-App Webviews (<= 768px) */
+    @media (max-width: 768px) {
+      .cosmic-backdrop {
+        background-position: center 35%;
+        background-image: 
+          radial-gradient(ellipse 95% 72% at 50% 46%, rgba(0, 229, 255, 0.14) 0%, rgba(229, 169, 60, 0.09) 35%, rgba(2, 4, 10, 0.82) 75%, #020409 100%),
+          url('/assets/master_banner_4k.jpg');
+      }
+
+      /* Responsive Navbar at <= 768px: Hide center links, show hamburger, keep logo & register */
+      .global-navbar {
+        height: 54px;
+      }
+
+      .global-navbar .nav-links {
+        display: none !important;
+      }
+
+      .nav-hamburger-btn {
+        display: inline-flex !important;
+      }
+
+      .nav-btn-replay {
+        display: none !important;
+      }
+
+      .global-navbar .nav-actions {
+        display: flex !important;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .global-navbar .nav-container {
+        padding: 0 16px;
+        justify-content: space-between;
+      }
+
+      .nav-brand {
+        align-items: center;
+        text-align: left;
+        gap: 10px;
+      }
+
+      .nav-brand-logo {
+        width: 32px;
+        height: 32px;
+      }
+
+      .brand-title {
+        font-size: 12.5px;
+      }
+
+      .brand-sub {
+        font-size: 8px;
+        letter-spacing: 0.8px;
+      }
+
+      /* Show Thumb-Friendly Bottom Dock on Mobile */
+      .mobile-bottom-dock {
+        display: flex;
+      }
+
+      /* Vertically centered hero stage in mobile viewport (Zero awkward empty voids) */
+      .hero-stage {
+        min-height: 100dvh;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 56px 16px 86px;
+      }
+
+      .master-title-unit {
+        width: 100%;
+      }
+
+      .master-title-unit.settled {
+        transform: translateY(0);
+      }
+
+      .word-abhigyan-26 {
+        width: clamp(215px, 76vw, 320px);
+      }
+
+      .word-quantum-bharat {
+        font-size: clamp(1.15rem, 4.8vw, 1.85rem);
+        letter-spacing: clamp(2.5px, 1.2vw, 5px);
+        margin-top: -8px;
+        max-width: 100%;
+        text-align: center;
+      }
+
+      .tagline-glimpse {
+        font-size: clamp(0.62rem, 2.2vw, 0.78rem);
+        letter-spacing: clamp(2px, 0.8vw, 3.8px);
+        margin-top: 6px;
+        max-width: 100%;
+        text-align: center;
+      }
+
+      /* Settled Content: Centered editorial precision */
+      .settled-content {
+        gap: 14px;
+        margin-top: 16px;
+        width: 100%;
+      }
+
+      /* Date Capsule */
+      .core-date-badge {
+        padding: 6px 18px;
+        gap: 8px;
+      }
+
+      .badge-date-text {
+        font-size: 11.5px;
+        letter-spacing: 1px;
+      }
+
+      .badge-day-sep {
+        font-size: 9px;
+      }
+
+      .badge-day-text {
+        font-size: 10.5px;
+      }
+
+      /* Venue: Centered 2 clean lines on mobile (Zero awkward wrapping) */
+      .core-venue-line {
+        flex-direction: column;
+        gap: 3px;
+        padding: 0 10px;
+      }
+
+      .venue-sep {
+        display: none;
+      }
+
+      .venue-name {
+        font-size: 14.5px;
+      }
+
+      .venue-campus {
+        font-size: 12.5px;
+        color: #CBD5E1;
+      }
+
+      .scope-full {
+        display: none;
+      }
+
+      .scope-short {
+        display: inline;
+      }
+
+      .core-scope-tag {
+        font-size: 9.5px;
+        letter-spacing: 0.8px;
+        line-height: 1.4;
+        max-width: 320px;
+      }
+
+      /* Action Buttons: Balanced luxury pills, not giant full-width slabs */
+      .hero-action-cluster {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        margin-top: 6px;
+        width: 100%;
+      }
+
+      .btn-action-explore {
+        width: min(100%, 260px);
+        min-height: 46px;
+        padding: 12px 24px;
+        font-size: 14px;
+      }
+
+      .btn-action-reg {
+        width: min(100%, 260px);
+        min-height: 44px;
+        padding: 11px 24px;
+        font-size: 13.5px;
+      }
+
+      /* Accreditations on mobile live in the bottom drawer slider for a pure zero-clutter hero */
+      .bottom-trust-strip {
+        display: none;
+      }
+    }
+
+    /* Small Mobile: iPhone SE (375px), Galaxy Fold (344px), Budget Android (<= 380px) */
+    @media (max-width: 380px) {
+      .nav-brand-logo {
+        width: 28px;
+        height: 28px;
+      }
+
+      .brand-title {
+        font-size: 11.5px;
+      }
+
+      .brand-sub {
+        font-size: 7.5px;
+      }
+
+      .word-abhigyan-26 {
+        width: clamp(195px, 80vw, 245px);
+      }
+
+      .word-quantum-bharat {
+        font-size: 1.12rem;
+        letter-spacing: 2px;
+        margin-top: -6px;
+      }
+
+      .tagline-glimpse {
+        font-size: 0.58rem;
+        letter-spacing: 1.6px;
+        margin-top: 5px;
+      }
+
+      .settled-content {
+        gap: 11px;
+        margin-top: 12px;
+      }
+
+      .core-date-badge {
+        padding: 5px 14px;
+        gap: 6px;
+      }
+
+      .badge-date-text {
+        font-size: 10px;
+      }
+
+      .badge-day-text {
+        font-size: 9px;
+      }
+
+      .venue-name {
+        font-size: 13.5px;
+      }
+
+      .venue-campus {
+        font-size: 11.5px;
+      }
+
+      .core-scope-tag {
+        font-size: 7.5px;
+        letter-spacing: 0.6px;
+      }
+
+      .btn-action-explore {
+        width: min(100%, 235px);
+        min-height: 42px;
+        font-size: 13px;
+        padding: 10px 18px;
+      }
+
+      .btn-action-reg {
+        width: min(100%, 235px);
+        min-height: 40px;
+        font-size: 12.5px;
+        padding: 9px 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Screen Shake & Viewport Wrapper -->
+  <div id="viewport-wrapper">
+    
+    <!-- Flash Flare Overlay -->
+    <div id="flash-overlay"></div>
+
+    <!-- Cosmic Backdrop Base -->
+    <div class="cosmic-backdrop"></div>
+
+    <!-- Ambient Core Quantum Glow (Behind Particles) -->
+    <div class="quantum-core-glow" aria-hidden="true"></div>
+
+    <!-- Visible Floating Quantum Particles Canvas -->
+    <canvas id="quantumParticlesCanvas" aria-hidden="true"></canvas>
+
+    <!-- Blurred Semiconductor Microchips & PCB Circuit Layer (Cinematic Depth of Field) -->
+    <div class="blurred-chips-layer" id="blurredChipsLayer">
+      <svg width="100%" height="100%" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <!-- PCB Circuit Line Gradients -->
+          <linearGradient id="goldTraceGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#F5A623" stop-opacity="0.8" />
+            <stop offset="100%" stop-color="#E5A93C" stop-opacity="0.2" />
+          </linearGradient>
+          <linearGradient id="cyanTraceGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#00E5FF" stop-opacity="0.8" />
+            <stop offset="100%" stop-color="#007799" stop-opacity="0.2" />
+          </linearGradient>
+        </defs>
+
+        <!-- ============================================================
+             PCB CIRCUIT TRACES (Orthogonal & 45-degree ECE bus lines)
+             ============================================================ -->
+        <g stroke="url(#goldTraceGrad)" stroke-width="2" fill="none" opacity="0.6">
+          <!-- Top-Left Circuit Traces -->
+          <path d="M 0,180 L 180,180 L 260,260 L 420,260" />
+          <path d="M 0,220 L 150,220 L 220,290 L 380,290" />
+          <path d="M 120,0 L 120,120 L 200,200 L 200,340" />
+
+          <!-- Top-Right Circuit Traces -->
+          <path d="M 1440,160 L 1280,160 L 1200,240 L 1020,240" />
+          <path d="M 1440,210 L 1310,210 L 1240,280 L 1080,280" />
+          <path d="M 1340,0 L 1340,110 L 1260,190 L 1260,320" />
+
+          <!-- Bottom-Left Circuit Traces -->
+          <path d="M 0,720 L 200,720 L 280,640 L 450,640" />
+          <path d="M 160,900 L 160,780 L 240,700 L 390,700" />
+
+          <!-- Bottom-Right Circuit Traces -->
+          <path d="M 1440,740 L 1240,740 L 1160,660 L 980,660" />
+          <path d="M 1280,900 L 1280,790 L 1200,710 L 1050,710" />
+        </g>
+
+        <!-- Cyan Cryogenic Waveguide Traces -->
+        <g stroke="url(#cyanTraceGrad)" stroke-width="1.8" fill="none" opacity="0.5">
+          <path d="M 60,0 L 60,200 L 180,320 L 180,500 L 320,640" />
+          <path d="M 1380,0 L 1380,220 L 1250,350 L 1250,540 L 1120,670" />
+          <path d="M 300,900 L 300,760 L 420,640 L 580,640" />
+          <path d="M 1140,900 L 1140,750 L 1020,630 L 860,630" />
+        </g>
+
+        <!-- Golden PCB Vias (Test Points) -->
+        <g fill="#F5A623" opacity="0.75">
+          <circle cx="420" cy="260" r="4" />
+          <circle cx="380" cy="290" r="4" />
+          <circle cx="200" cy="340" r="4" />
+          <circle cx="1020" cy="240" r="4" />
+          <circle cx="1080" cy="280" r="4" />
+          <circle cx="1260" cy="320" r="4" />
+          <circle cx="450" cy="640" r="4" />
+          <circle cx="390" cy="700" r="4" />
+          <circle cx="980" cy="660" r="4" />
+          <circle cx="1050" cy="710" r="4" />
+        </g>
+
+        <!-- ============================================================
+             CHIP 1: QFP SQUARE SILICON PROCESSOR (Top Left)
+             ============================================================ -->
+        <g transform="translate(140, 110)">
+          <!-- Gold Pin Leads (All 4 Sides) -->
+          <g fill="#E5A93C">
+            <!-- Top Pins -->
+            <rect x="25" y="-12" width="6" height="14" /><rect x="40" y="-12" width="6" height="14" /><rect x="55" y="-12" width="6" height="14" /><rect x="70" y="-12" width="6" height="14" /><rect x="85" y="-12" width="6" height="14" />
+            <!-- Bottom Pins -->
+            <rect x="25" y="118" width="6" height="14" /><rect x="40" y="118" width="6" height="14" /><rect x="55" y="118" width="6" height="14" /><rect x="70" y="118" width="6" height="14" /><rect x="85" y="118" width="6" height="14" />
+            <!-- Left Pins -->
+            <rect x="-12" y="25" width="14" height="6" /><rect x="-12" y="40" width="14" height="6" /><rect x="-12" y="55" width="14" height="6" /><rect x="-12" y="70" width="14" height="6" /><rect x="-12" y="85" width="14" height="6" />
+            <!-- Right Pins -->
+            <rect x="118" y="25" width="14" height="6" /><rect x="118" y="40" width="14" height="6" /><rect x="118" y="55" width="14" height="6" /><rect x="118" y="70" width="14" height="6" /><rect x="118" y="85" width="14" height="6" />
+          </g>
+          <!-- Ceramic Chip Body -->
+          <rect x="0" y="0" width="120" height="120" rx="10" fill="#0c1427" stroke="#1e293b" stroke-width="2" />
+          <!-- Center Heat Spreader Die -->
+          <rect x="24" y="24" width="72" height="72" rx="6" fill="#070c18" stroke="#00E5FF" stroke-width="1.5" stroke-opacity="0.6" />
+          <!-- Die Markings -->
+          <text x="60" y="55" fill="#E5A93C" font-family="'JetBrains Mono', monospace" font-size="10" font-weight="700" text-anchor="middle">SRM_ECE</text>
+          <text x="60" y="72" fill="#00E5FF" font-family="'JetBrains Mono', monospace" font-size="9" text-anchor="middle">Q_CORE // 3nm</text>
+        </g>
+
+        <!-- ============================================================
+             CHIP 2: DUAL IN-LINE RECTANGULAR MEMORY IC (Top Right)
+             ============================================================ -->
+        <g transform="translate(1160, 130)">
+          <!-- Gold Pin Leads (Left & Right) -->
+          <g fill="#E5A93C">
+            <rect x="-10" y="18" width="12" height="5" /><rect x="-10" y="36" width="12" height="5" /><rect x="-10" y="54" width="12" height="5" /><rect x="-10" y="72" width="12" height="5" /><rect x="-10" y="90" width="12" height="5" /><rect x="-10" y="108" width="12" height="5" />
+            <rect x="148" y="18" width="12" height="5" /><rect x="148" y="36" width="12" height="5" /><rect x="148" y="54" width="12" height="5" /><rect x="148" y="72" width="12" height="5" /><rect x="148" y="90" width="12" height="5" /><rect x="148" y="108" width="12" height="5" />
+          </g>
+          <!-- IC Body -->
+          <rect x="0" y="0" width="150" height="135" rx="8" fill="#0b1122" stroke="#1e293b" stroke-width="2" />
+          <circle cx="20" cy="18" r="4" fill="#E5A93C" opacity="0.6" /> <!-- Pin 1 dot -->
+          <text x="75" y="65" fill="#E2E8F0" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="700" text-anchor="middle">VLSI_MEM_64</text>
+          <text x="75" y="82" fill="#64748B" font-family="'JetBrains Mono', monospace" font-size="9" text-anchor="middle">REV_2026.09</text>
+        </g>
+
+        <!-- ============================================================
+             CHIP 3: LARGE QUANTUM BGA PROCESSOR (Bottom Left)
+             ============================================================ -->
+        <g transform="translate(180, 620)">
+          <g fill="#E5A93C">
+            <rect x="25" y="-10" width="6" height="12" /><rect x="45" y="-10" width="6" height="12" /><rect x="65" y="-10" width="6" height="12" /><rect x="85" y="-10" width="6" height="12" />
+            <rect x="-10" y="25" width="12" height="6" /><rect x="-10" y="45" width="12" height="6" /><rect x="-10" y="65" width="12" height="6" />
+            <rect x="110" y="25" width="12" height="6" /><rect x="110" y="45" width="12" height="6" /><rect x="110" y="65" width="12" height="6" />
+          </g>
+          <rect x="0" y="0" width="110" height="95" rx="8" fill="#090e1d" stroke="#00E5FF" stroke-width="1.5" stroke-opacity="0.4" />
+          <text x="55" y="48" fill="#00E5FF" font-family="'JetBrains Mono', monospace" font-size="10" font-weight="700" text-anchor="middle">Q_BHARAT</text>
+          <text x="55" y="64" fill="#E5A93C" font-family="'JetBrains Mono', monospace" font-size="9" text-anchor="middle">NQM_NODE</text>
+        </g>
+
+        <!-- ============================================================
+             CHIP 4: CRYOGENIC OPTICAL TRANSCEIVER (Bottom Right)
+             ============================================================ -->
+        <g transform="translate(1120, 610)">
+          <g fill="#E5A93C">
+            <rect x="25" y="-10" width="6" height="12" /><rect x="45" y="-10" width="6" height="12" /><rect x="65" y="-10" width="6" height="12" /><rect x="85" y="-10" width="6" height="12" />
+            <rect x="110" y="25" width="12" height="6" /><rect x="110" y="45" width="12" height="6" /><rect x="110" y="65" width="12" height="6" />
+          </g>
+          <rect x="0" y="0" width="110" height="95" rx="8" fill="#090e1d" stroke="#E5A93C" stroke-width="1.5" stroke-opacity="0.4" />
+          <text x="55" y="48" fill="#FFFFFF" font-family="'JetBrains Mono', monospace" font-size="10" font-weight="700" text-anchor="middle">PHOTON_IO</text>
+          <text x="55" y="64" fill="#00E5FF" font-family="'JetBrains Mono', monospace" font-size="9" text-anchor="middle">128_GBPS</text>
+        </g>
+      </svg>
+    </div>
+
+    <!-- Global Desktop Navigation Bar (Sleek Apple/Linear Glass Ribbon) -->
+    <header class="global-navbar" id="globalNavbar">
+      <div class="nav-container">
+        <!-- Brand Lockup with Official SRM Seal Logo -->
+        <a href="#home" class="nav-brand">
+          <img src="/assets/srm_seal_logo.png" alt="SRM Institute of Science and Technology" class="nav-brand-logo">
+          <div class="nav-brand-text">
+            <span class="brand-title">SRM <span class="brand-accent">VADAPALANI</span></span>
+            <span class="brand-sub">DEPARTMENT OF ECE // ABHIGYAN '26</span>
+          </div>
+        </a>
+
+        <!-- Navigation Links (Center) -->
+        <nav class="nav-links" aria-label="Main Navigation">
+          <a href="#home" class="nav-link active">Home</a>
+          <a href="#about" class="nav-link">About</a>
+          <a href="#events" class="nav-link">Events</a>
+          <a href="#schedule" class="nav-link">Schedule</a>
+          <a href="#venue" class="nav-link">Venue</a>
+          <a href="#faq" class="nav-link">FAQ</a>
+        </nav>
+
+        <!-- Right Quick Actions: Hamburger (Mobile) + Register + Replay (Desktop) -->
+        <div class="nav-actions">
+          <!-- Mobile Hamburger Toggle (Positioned between Logo and Register on Mobile) -->
+          <button class="nav-hamburger-btn" id="navHamburgerBtn" type="button" aria-label="Open Navigation Menu" onclick="toggleNavMobileMenu(true)">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+          </button>
+          <button class="nav-btn-reg" onclick="openRegistrationModal()">Register</button>
+          <button class="nav-btn-replay" onclick="startPunchySequence()" title="Replay Kinetic Sequence">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
+            </svg>
+            <span>Replay</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Full-Screen Mobile Navigation Overlay Menu (Dark Navy, Gold/Teal Accents) -->
+    <div class="mobile-nav-overlay" id="mobileNavOverlay" role="dialog" aria-modal="true" aria-label="Mobile Navigation Menu">
+      <div class="mobile-nav-header">
+        <div class="mobile-nav-brand-lockup">
+          <img src="/assets/srm_seal_logo.png" alt="SRM Institute of Science and Technology" class="nav-brand-logo">
+          <div class="nav-brand-text">
+            <span class="brand-title">SRM <span class="brand-accent">VADAPALANI</span></span>
+            <span class="brand-sub">DEPARTMENT OF ECE // ABHIGYAN '26</span>
+          </div>
+        </div>
+        <button class="mobile-nav-close-btn" id="mobileNavCloseBtn" type="button" aria-label="Close Navigation Menu" onclick="toggleNavMobileMenu(false)">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <nav class="mobile-nav-menu" aria-label="Mobile Menu Links">
+        <a href="#home" class="mobile-nav-link active" onclick="handleMobileNavClick(event, '#home')">
+          <span class="mobile-link-text">Home</span>
+          <span class="mobile-link-arrow">→</span>
+        </a>
+        <a href="#about" class="mobile-nav-link" onclick="handleMobileNavClick(event, '#about')">
+          <span class="mobile-link-text">About</span>
+          <span class="mobile-link-arrow">→</span>
+        </a>
+        <a href="#events" class="mobile-nav-link" onclick="handleMobileNavClick(event, '#events')">
+          <span class="mobile-link-text">Events</span>
+          <span class="mobile-link-arrow">→</span>
+        </a>
+        <a href="#schedule" class="mobile-nav-link" onclick="handleMobileNavClick(event, '#schedule')">
+          <span class="mobile-link-text">Schedule</span>
+          <span class="mobile-link-arrow">→</span>
+        </a>
+        <a href="#venue" class="mobile-nav-link" onclick="handleMobileNavClick(event, '#venue')">
+          <span class="mobile-link-text">Venue</span>
+          <span class="mobile-link-arrow">→</span>
+        </a>
+        <a href="#faq" class="mobile-nav-link" onclick="handleMobileNavClick(event, '#faq')">
+          <span class="mobile-link-text">FAQ</span>
+          <span class="mobile-link-arrow">→</span>
+        </a>
+      </nav>
+
+      <div class="mobile-nav-footer">
+        <button class="mobile-overlay-reg-btn" type="button" onclick="toggleNavMobileMenu(false); openRegistrationModal();">
+          Register Team
+        </button>
+        <div class="mobile-overlay-accredit">
+          SRM IST VADAPALANI // DEPARTMENT OF ECE
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Hero Stage -->
+    <main class="hero-stage">
+      
+      <!-- The Master Unit: Performs Flash Slams, then settles middle-above-center -->
+      <div class="master-title-unit" id="masterTitleUnit">
+        <!-- SLAM 1: ABHIGYAN '26 (OFFICIAL BANNER SIGNATURE LOCKUP) -->
+        <div class="title-line-1">
+          <span class="word-abhigyan-26" id="wordAbhigyan26" role="img" aria-label="Abhigyan '26"></span>
+        </div>
+
+        <!-- SLAM 3: QUANTUM BHARAT -->
+        <div class="word-quantum-bharat" id="wordQuantumBharat">QUANTUM BHARAT</div>
+
+        <!-- RESOLVE: A GLIMPSE INTO THE FUTURE -->
+        <div class="tagline-glimpse" id="taglineGlimpse">A GLIMPSE INTO THE FUTURE</div>
+
+      </div>
+
+      <!-- Settled Foreground Content (Fades in around the settled title) -->
+      <div class="settled-content" id="settledContent">
+        
+        <!-- Centered Core Date: Minted 24K Gold Glass Capsule -->
+        <div class="core-date-badge" role="region" aria-label="Event Date">
+          <span class="badge-calendar-icon" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="16" y1="2" x2="16" y2="6"></line>
+              <line x1="8" y1="2" x2="8" y2="6"></line>
+              <line x1="3" y1="10" x2="21" y2="10"></line>
+            </svg>
+          </span>
+          <span class="badge-date-text">SEPTEMBER 24, 2026</span>
+          <span class="badge-day-sep">•</span>
+          <span class="badge-day-text">THURSDAY</span>
+        </div>
+
+        <!-- Centered Official Venue: High-Contrast Architectural Line -->
+        <div class="core-venue-line" role="region" aria-label="Official Venue">
+          <span class="venue-part-main">
+            <span class="venue-pin-icon" aria-hidden="true">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                <circle cx="12" cy="10" r="3"></circle>
+              </svg>
+            </span>
+            <span class="venue-name">Auditorium</span>
+          </span>
+          <span class="venue-sep" aria-hidden="true">•</span>
+          <span class="venue-campus">SRM IST Vadapalani Campus, Chennai</span>
+        </div>
+
+        <!-- Academic Department Accreditation Line -->
+        <div class="core-scope-tag">
+          <span class="scope-full">Department of Electronics & Communication Engineering</span>
+          <span class="scope-short">Department of ECE</span>
+          <span class="scope-sep">•</span>
+          <span class="scope-campus">SRM IST Vadapalani</span>
+        </div>
+
+        <!-- Clean, Simple, Elegant Action CTAs (Mostly Dark Glass Theme) -->
+        <div class="hero-action-cluster">
+          <button class="btn-action-explore" id="btnExploreArenas" type="button" onclick="toggleBottomSlider(true)">
+            <span>Explore 11 Arenas</span>
+            <span class="btn-action-arrow" aria-hidden="true">→</span>
+          </button>
+          <button class="btn-action-reg" id="btnRegisterTeam" type="button" onclick="openRegistrationModal()">
+            <span>Register Team</span>
+          </button>
+        </div>
+
+      </div>
+
+    </main>
+
+    <!-- Bottom Accreditations Strip -->
+    <footer class="bottom-trust-strip" id="bottomStrip">
+      <div>SRM IST VADAPALANI // DEPARTMENT OF ELECTRONICS &amp; COMMUNICATION ENGINEERING</div>
+      <div>NAAC A++ • NIRF 11TH RANKED UNIVERSITY • CATEGORY 1 (12B)</div>
+    </footer>
+
+    <!-- Mobile Floating Bottom Dock (Thumb Ergonomics - Zero Screen Space Lost) -->
+    <nav class="mobile-bottom-dock" id="mobileBottomDock" aria-label="Mobile Navigation">
+      <a href="#home" class="dock-item active">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+          <polyline points="9 22 9 12 15 12 15 22"></polyline>
+        </svg>
+        <span>Home</span>
+      </a>
+
+      <a href="#events" class="dock-item">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="7" height="7"></rect>
+          <rect x="14" y="3" width="7" height="7"></rect>
+          <rect x="14" y="14" width="7" height="7"></rect>
+          <rect x="3" y="14" width="7" height="7"></rect>
+        </svg>
+        <span>Arenas</span>
+      </a>
+
+      <a href="#schedule" class="dock-item">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+          <line x1="16" y1="2" x2="16" y2="6"></line>
+          <line x1="8" y1="2" x2="8" y2="6"></line>
+          <line x1="3" y1="10" x2="21" y2="10"></line>
+        </svg>
+        <span>Schedule</span>
+      </a>
+
+      <a href="#register" class="dock-item dock-highlight" onclick="document.getElementById('btnRegisterTeam').click(); return false;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+          <circle cx="8.5" cy="7.5" r="4"></circle>
+          <line x1="20" y1="8" x2="20" y2="14"></line>
+          <line x1="23" y1="11" x2="17" y2="11"></line>
+        </svg>
+        <span>Register</span>
+      </a>
+
+      <!-- Three-Line Menu Trigger for Bottom Slider Sheet -->
+      <button class="dock-item dock-menu-btn" id="dockMenuTrigger" type="button" aria-label="Open Directory Menu" onclick="toggleBottomSlider(true)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+        <span>Menu</span>
+      </button>
+    </nav>
+
+    <!-- Mobile Bottom Slider Sheet (Clean Drawer Slider from Bottom - Zero Clutter) -->
+    <div class="bottom-slider-overlay" id="bottomSliderOverlay" onclick="toggleBottomSlider(false)">
+      <div class="bottom-slider-sheet" id="bottomSliderSheet" onclick="event.stopPropagation()">
+        <!-- Handle Bar for tactile swipe down feel -->
+        <div class="slider-drag-handle" aria-hidden="true"></div>
+
+        <!-- Slider Header with SRM Seal Logo -->
+        <div class="slider-header">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <img src="/assets/srm_seal_logo.png" alt="SRM IST Logo" style="width: 34px; height: 34px; border-radius: 50%; object-fit: contain;">
+            <div>
+              <div class="slider-brand">ABHIGYAN '26 DIRECTORY</div>
+              <div class="slider-sub">Department of ECE • SRM Vadapalani</div>
+            </div>
+          </div>
+          <button class="slider-close-btn" onclick="toggleBottomSlider(false)" aria-label="Close menu">✕</button>
+        </div>
+
+        <!-- Slider Menu List -->
+        <div class="slider-menu-grid">
+          <a href="#events" class="slider-menu-card" onclick="toggleBottomSlider(false)">
+            <div class="card-icon cyan">⚡</div>
+            <div class="card-text">
+              <div class="card-title">11 Arenas & Contests</div>
+              <div class="card-desc">5 Technical & 6 Non-Technical Events</div>
+            </div>
+          </a>
+
+          <a href="#schedule" class="slider-menu-card" onclick="toggleBottomSlider(false)">
+            <div class="card-icon gold">📅</div>
+            <div class="card-text">
+              <div class="card-title">Event Schedule</div>
+              <div class="card-desc">Thursday, September 24, 2026</div>
+            </div>
+          </a>
+
+          <a href="#venue" class="slider-menu-card" onclick="toggleBottomSlider(false)">
+            <div class="card-icon">📍</div>
+            <div class="card-text">
+              <div class="card-title">Auditorium & Campus</div>
+              <div class="card-desc">SRM IST Vadapalani Campus, Chennai</div>
+            </div>
+          </a>
+
+          <a href="#prizes" class="slider-menu-card" onclick="toggleBottomSlider(false)">
+            <div class="card-icon gold">🏆</div>
+            <div class="card-text">
+              <div class="card-title">₹50,000+ Prize Pool</div>
+              <div class="card-desc">Certificates & Cash Awards for Winners</div>
+            </div>
+          </a>
+
+          <a href="#about" class="slider-menu-card" onclick="toggleBottomSlider(false)">
+            <div class="card-icon">🏛️</div>
+            <div class="card-text">
+              <div class="card-title">Department of ECE</div>
+              <div class="card-desc">National Technical Symposium • NAAC A++ Campus</div>
+            </div>
+          </a>
+
+          <div class="slider-menu-card" onclick="toggleBottomSlider(false); startPunchySequence();">
+            <div class="card-icon cyan">↺</div>
+            <div class="card-text">
+              <div class="card-title">Replay Kinetic Intro</div>
+              <div class="card-desc">Experience the cinematic opening sequence</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Fast Registration Action in Slider -->
+        <div class="slider-cta-row">
+          <button class="slider-reg-btn" onclick="toggleBottomSlider(false); openRegistrationModal();">
+            Register Your Team Now →
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Sleek Dark Glass Registration Modal (Simple, Plain, Minimalist & Sleek) -->
+    <div class="reg-modal-overlay" id="regModalOverlay" onclick="closeRegistrationModal(event)">
+      <div class="reg-modal-card" id="regModalCard" onclick="event.stopPropagation()">
+        <!-- Modal Header -->
+        <div class="reg-modal-header">
+          <div>
+            <div class="reg-badge-tag">ABHIGYAN '26 • REGISTRATION</div>
+            <h2 class="reg-title">Team Registration</h2>
+            <div class="reg-sub">National Level Technical Symposium • September 24, 2026</div>
+          </div>
+          <button class="reg-close-btn" type="button" onclick="closeRegistrationModal()" aria-label="Close registration modal">✕</button>
+        </div>
+
+        <!-- Registration Form -->
+        <form class="reg-form" id="registrationForm" onsubmit="handleRegistrationSubmit(event)">
+          <div class="reg-field">
+            <label class="reg-label" for="regTeamName">TEAM / LEAD NAME</label>
+            <input class="reg-input" id="regTeamName" type="text" placeholder="e.g. Quantum Pioneers / Karthik R" required />
+          </div>
+
+          <div class="reg-field">
+            <label class="reg-label" for="regCollege">COLLEGE / INSTITUTION</label>
+            <input class="reg-input" id="regCollege" type="text" placeholder="e.g. SRM Institute of Science & Technology" required />
+          </div>
+
+          <div class="reg-field">
+            <label class="reg-label" for="regPhone">WHATSAPP PHONE NUMBER</label>
+            <input class="reg-input" id="regPhone" type="tel" placeholder="e.g. +91 98765 43210 (For group link & updates)" required />
+          </div>
+
+          <div class="reg-field">
+            <label class="reg-label" for="regTrack">SELECT PREFERRED ARENA / EVENT</label>
+            <select class="reg-select" id="regTrack" required>
+              <option value="" disabled selected>Choose an arena from 11 events...</option>
+              <optgroup label="Technical Arenas (5 Events)">
+                <option value="circuitron">Circuitron (Circuit Debugging & VLSI)</option>
+                <option value="code_quest">Code Quest (Algorithmic Coding)</option>
+                <option value="tech_paper">Quantum Colloquium (Paper Presentation)</option>
+                <option value="robowar">Robo-Arena (Autonomous & Manual Bots)</option>
+                <option value="ai_challenge">AI Horizon (Generative AI Hackathon)</option>
+              </optgroup>
+              <optgroup label="Non-Technical Arenas (6 Events)">
+                <option value="quantum_quiz">Quantum Minds (General & Tech Quiz)</option>
+                <option value="gaming">Battleground Bharat (E-Sports Gaming)</option>
+                <option value="photography">Lens of Tomorrow (Photography & Reels)</option>
+                <option value="shark_tank">Pitch Perfect (ECE Shark Tank)</option>
+                <option value="treasure_hunt">Quantum Trail (Campus Treasure Hunt)</option>
+                <option value="ad_zap">Ad-Mania (Product Launch & Marketing)</option>
+              </optgroup>
+            </select>
+          </div>
+
+          <button class="reg-submit-btn" type="submit" id="btnSubmitReg">
+            <span>Complete Registration</span>
+            <span aria-hidden="true">→</span>
+          </button>
+
+          <div class="reg-direct-link-row">
+            <span>Prefer an external form? </span>
+            <a href="https://forms.gle" target="_blank" rel="noopener noreferrer" class="reg-direct-link">Open Official Google Form</a>
+          </div>
+        </form>
+
+        <!-- Success Message State -->
+        <div class="reg-success-msg" id="regSuccessMsg">
+          <div class="success-icon">✓</div>
+          <div class="success-title">Spot Reserved Successfully!</div>
+          <div class="success-sub">
+            Thank you for registering for Abhigyan '26. We've recorded your entry and the coordinating committee will share reporting instructions and schedule details via WhatsApp shortly.
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // =========================================================================
+    // PUNCHY KINETIC SEQUENCE ENGINE
+    // Flash 1: Abhigyan slams in with studio shutter pulse
+    // Flash 2: QUANTUM BHARAT smoothly reveals in 24K Roman Gold
+    // Resolve: A Glimpse into the Future sweeps in
+    // Settle: Title glides to middle-above-center; surrounding UI fades in!
+    // =========================================================================
+
+    const vpWrapper = document.getElementById('viewport-wrapper');
+    const flashOverlay = document.getElementById('flash-overlay');
+    
+    const wordAbhigyan26 = document.getElementById('wordAbhigyan26');
+    const wordQuantumBharat = document.getElementById('wordQuantumBharat');
+    const taglineGlimpse = document.getElementById('taglineGlimpse');
+    const masterTitleUnit = document.getElementById('masterTitleUnit');
+    const globalNavbar = document.getElementById('globalNavbar');
+    const settledContent = document.getElementById('settledContent');
+    const bottomStrip = document.getElementById('bottomStrip');
+    const mobileBottomDock = document.getElementById('mobileBottomDock');
+
+    function triggerFlash(intensity = 0.14) {
+      flashOverlay.style.opacity = intensity;
+      setTimeout(() => {
+        flashOverlay.style.opacity = '0';
+      }, 75);
+    }
+
+    function toggleBottomSlider(open) {
+      const overlay = document.getElementById('bottomSliderOverlay');
+      if (open) {
+        overlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      } else {
+        overlay.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    }
+
+    // =========================================================================
+    // SLEEK REGISTRATION MODAL HANDLERS
+    // =========================================================================
+    function openRegistrationModal() {
+      const modal = document.getElementById('regModalOverlay');
+      if (modal) {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+    }
+
+    function closeRegistrationModal(e) {
+      if (e && e.target && e.target !== e.currentTarget && !e.target.classList.contains('reg-close-btn')) {
+        return;
+      }
+      const modal = document.getElementById('regModalOverlay');
+      if (modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    }
+
+    function handleRegistrationSubmit(e) {
+      e.preventDefault();
+      const form = document.getElementById('registrationForm');
+      const success = document.getElementById('regSuccessMsg');
+      if (form && success) {
+        form.style.display = 'none';
+        success.classList.add('active');
+      }
+    }
+
+    // Mobile Navigation Full-Screen Menu Controller
+    function toggleNavMobileMenu(open) {
+      const overlay = document.getElementById('mobileNavOverlay');
+      if (!overlay) return;
+      if (open) {
+        overlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      } else {
+        overlay.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    }
+
+    function handleMobileNavClick(e, targetHref) {
+      // Auto-close menu on link tap and unlock scroll
+      toggleNavMobileMenu(false);
+      // If target hash exists, smoothly scroll if supported
+      if (targetHref && targetHref.startsWith('#')) {
+        const targetEl = document.querySelector(targetHref);
+        if (targetEl) {
+          e.preventDefault();
+          targetEl.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+    }
+
+    // Close bottom slider, registration modal, or mobile nav menu with Escape key
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeRegistrationModal();
+        toggleBottomSlider(false);
+        toggleNavMobileMenu(false);
+      }
+    });
+
+    // =========================================================================
+    // QUANTUM PARTICLES SIMULATION ENGINE
+    // Ambient floating quantum nodes, gold/cyan photon sparkles & subtle entanglements
+    // =========================================================================
+    (function initQuantumParticles() {
+      const canvas = document.getElementById('quantumParticlesCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d', { alpha: true });
+      let w, h, dpr;
+      let particles = [];
+      const isMobile = window.innerWidth <= 768;
+      const PARTICLE_COUNT = isMobile ? 42 : 85;
+      const CONNECT_DIST = isMobile ? 65 : 85;
+
+      const COLORS = [
+        { r: 0, g: 229, b: 255 },   // Cyan Electric
+        { r: 245, g: 197, b: 24 },  // 24K Minted Gold
+        { r: 255, g: 255, b: 255 }, // Photon Diamond White
+        { r: 56, g: 189, b: 248 }   // Cryo Sky Blue
+      ];
+
+      function resize() {
+        dpr = Math.min(window.devicePixelRatio || 1, 2);
+        w = window.innerWidth;
+        h = window.innerHeight;
+        canvas.width = w * dpr;
+        canvas.height = h * dpr;
+        ctx.scale(dpr, dpr);
+      }
+
+      window.addEventListener('resize', resize, { passive: true });
+      resize();
+
+      class QuantumParticle {
+        constructor() {
+          this.reset(true);
+        }
+
+        reset(init = false) {
+          this.x = Math.random() * w;
+          this.y = init ? Math.random() * h : (Math.random() > 0.5 ? -10 : h + 10);
+          this.r = Math.random() * 1.6 + 0.8;
+          this.baseAlpha = Math.random() * 0.45 + 0.35;
+          this.alpha = this.baseAlpha;
+          this.colorObj = COLORS[Math.floor(Math.random() * COLORS.length)];
+          this.vx = (Math.random() - 0.5) * 0.4;
+          this.vy = (Math.random() - 0.5) * 0.35 - 0.08; // Soft upward buoyant drift
+          this.pulseSpeed = Math.random() * 0.03 + 0.015;
+          this.pulsePhase = Math.random() * Math.PI * 2;
+        }
+
+        update() {
+          this.x += this.vx;
+          this.y += this.vy;
+          this.pulsePhase += this.pulseSpeed;
+          this.alpha = this.baseAlpha + Math.sin(this.pulsePhase) * 0.25;
+          if (this.alpha < 0.1) this.alpha = 0.1;
+
+          if (this.x < -20) this.x = w + 20;
+          if (this.x > w + 20) this.x = -20;
+          if (this.y < -20) this.y = h + 20;
+          if (this.y > h + 20) this.y = -20;
+        }
+
+        draw() {
+          const { r, g, b } = this.colorObj;
+          ctx.save();
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${this.alpha})`;
+          ctx.shadowColor = `rgba(${r}, ${g}, ${b}, ${this.alpha * 0.8})`;
+          ctx.shadowBlur = this.r * 4;
+          ctx.fill();
+          ctx.restore();
+        }
+      }
+
+      for (let i = 0; i < PARTICLE_COUNT; i++) {
+        particles.push(new QuantumParticle());
+      }
+
+      let mouse = { x: -1000, y: -1000, active: false };
+      if (!isMobile) {
+        window.addEventListener('mousemove', (e) => {
+          mouse.x = e.clientX;
+          mouse.y = e.clientY;
+          mouse.active = true;
+        }, { passive: true });
+        window.addEventListener('mouseleave', () => {
+          mouse.active = false;
+        });
+      }
+
+      function render() {
+        ctx.clearRect(0, 0, w, h);
+
+        for (let i = 0; i < particles.length; i++) {
+          const p1 = particles[i];
+          p1.update();
+
+          if (mouse.active) {
+            const dx = p1.x - mouse.x;
+            const dy = p1.y - mouse.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < 110 && dist > 0) {
+              const force = (1 - dist / 110) * 1.4;
+              p1.x += (dx / dist) * force;
+              p1.y += (dy / dist) * force;
+            }
+          }
+
+          p1.draw();
+
+          for (let j = i + 1; j < particles.length; j++) {
+            const p2 = particles[j];
+            const dx = p1.x - p2.x;
+            const dy = p1.y - p2.y;
+            const d = Math.sqrt(dx * dx + dy * dy);
+
+            if (d < CONNECT_DIST) {
+              const lineAlpha = (1 - d / CONNECT_DIST) * 0.18 * Math.min(p1.alpha, p2.alpha);
+              ctx.beginPath();
+              ctx.moveTo(p1.x, p1.y);
+              ctx.lineTo(p2.x, p2.y);
+              ctx.strokeStyle = `rgba(0, 229, 255, ${lineAlpha})`;
+              ctx.lineWidth = 0.75;
+              ctx.stroke();
+            }
+          }
+        }
+
+        requestAnimationFrame(render);
+      }
+
+      render();
+    })();
+
+    function startPunchySequence() {
+      // 1. Reset all elements to hidden state
+      wordAbhigyan26.classList.remove('slammed');
+      wordQuantumBharat.classList.remove('slammed');
+      taglineGlimpse.classList.remove('slammed');
+      masterTitleUnit.classList.remove('settled');
+      globalNavbar.classList.remove('settled');
+      settledContent.classList.remove('visible');
+      bottomStrip.classList.remove('visible');
+      mobileBottomDock.classList.remove('settled');
+
+      // 2. TIMELINE: Punchy Optical Flash -> Smooth Professional Reveal
+      
+      // T + 250ms: PUNCHY FLASH INTRO — ABHIGYAN '26 SLAMS IN (OPTICAL FLASH POP)
+      setTimeout(() => {
+        triggerFlash(0.16);
+        wordAbhigyan26.classList.add('slammed');
+      }, 250);
+
+      // T + 950ms: SMOOTH & PROFESSIONAL REVEAL — QUANTUM BHARAT (24K GOLD GLIDE)
+      setTimeout(() => {
+        wordQuantumBharat.classList.add('slammed');
+      }, 950);
+
+      // T + 1750ms: RESOLVE — A GLIMPSE INTO THE FUTURE (LASER CYAN)
+      setTimeout(() => {
+        taglineGlimpse.classList.add('slammed');
+      }, 1750);
+
+      // T + 2450ms: SETTLE — TITLE GLIDES INTO POSITION; SURROUNDING UI FADES IN!
+      setTimeout(() => {
+        masterTitleUnit.classList.add('settled');
+        globalNavbar.classList.add('settled');
+        settledContent.classList.add('visible');
+        bottomStrip.classList.add('visible');
+        mobileBottomDock.classList.add('settled');
+      }, 2450);
+    }
+
+    // Subtle Optical Parallax for Blurred Microchips (Desktop mice only; mobile touch is hardware-frozen at 60 FPS)
+    const blurredLayer = document.getElementById('blurredChipsLayer');
+    if (window.matchMedia('(pointer: fine)').matches) {
+      window.addEventListener('mousemove', (e) => {
+        const nx = (e.clientX / window.innerWidth) - 0.5;
+        const ny = (e.clientY / window.innerHeight) - 0.5;
+        blurredLayer.style.transform = `scale(1.06) translate(${nx * 18}px, ${ny * 14}px)`;
+      }, { passive: true });
+    }
+
+    function applySettledOrIntro() {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('settled') === '1') {
+        const els = [masterTitleUnit, wordAbhigyan26, wordQuantumBharat, taglineGlimpse, globalNavbar, settledContent, bottomStrip, mobileBottomDock];
+        els.forEach(el => {
+          if (el) {
+            el.style.transition = 'none';
+            el.style.animation = 'none';
+          }
+        });
+        wordAbhigyan26.classList.add('slammed');
+        wordQuantumBharat.classList.add('slammed');
+        taglineGlimpse.classList.add('slammed');
+        masterTitleUnit.classList.add('settled');
+        globalNavbar.classList.add('settled');
+        settledContent.classList.add('visible');
+        bottomStrip.classList.add('visible');
+        mobileBottomDock.classList.add('settled');
+      } else {
+        startPunchySequence();
+      }
+    }
+
+    if (document.readyState === 'complete') {
+      applySettledOrIntro();
+    } else {
+      window.addEventListener('load', applySettledOrIntro);
+    }
+  </script>
+</body>
+</html>

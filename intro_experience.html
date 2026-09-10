@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Abhigyan '26 | Quantum Bharat - SRM IST Vadapalani</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Great Vibes / Dancing Script for 'Abhigyan', Outfit & Plus Jakarta for Tech UI -->
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cinzel:wght@600;700;800&family=JetBrains+Mono:wght@400;600&family=Outfit:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg-dark: #040711;
+      --gold-primary: #FFB703;
+      --gold-glow: #F59E0B;
+      --gold-light: #FEF08A;
+      --teal-cyan: #00F5D4;
+      --sky-blue: #38BDF8;
+      --text-main: #FFFFFF;
+      --text-muted: #94A3B8;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Top Review & Replay Bar */
+    .replay-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: rgba(4, 7, 17, 0.9);
+      border-bottom: 1px solid rgba(255, 183, 3, 0.2);
+      backdrop-filter: blur(12px);
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .brand-pill {
+      font-family: 'Outfit', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--gold-primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .brand-pill .badge {
+      background: rgba(0, 245, 212, 0.15);
+      color: var(--teal-cyan);
+      border: 1px solid rgba(0, 245, 212, 0.3);
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .btn-replay {
+      background: rgba(255, 183, 3, 0.15);
+      border: 1px solid var(--gold-primary);
+      color: var(--gold-light);
+      padding: 5px 14px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: 'JetBrains Mono', monospace;
+      transition: all 0.2s;
+    }
+
+    .btn-replay:hover {
+      background: var(--gold-primary);
+      color: #040711;
+    }
+
+    /* =========================================================================
+       CINEMATIC INTRO OVERLAY (Option B / Smooth Reveal)
+       ========================================================================= */
+    #cinematic-intro {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 500;
+      background: radial-gradient(circle at 50% 50%, #081026 0%, #040711 80%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 20px;
+      transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    #cinematic-intro.hidden {
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(1.06);
+    }
+
+    .intro-orbit-container {
+      width: 260px;
+      height: 260px;
+      margin-bottom: 24px;
+      position: relative;
+      animation: introFloat 4s ease-in-out infinite;
+    }
+
+    @keyframes introFloat {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-8px) rotate(2deg); }
+    }
+
+    .intro-college-tag {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(0.75rem, 1.8vw, 0.95rem);
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #94A3B8;
+      opacity: 0;
+      transform: translateY(15px);
+      animation: introFadeUp 0.8s 0.3s forwards cubic-bezier(0.16, 1, 0.3, 1);
+      margin-bottom: 8px;
+    }
+
+    .intro-presents {
+      font-family: 'Great Vibes', cursive;
+      font-size: clamp(1.4rem, 3.5vw, 2.2rem);
+      color: #CBD5E1;
+      opacity: 0;
+      transform: translateY(15px);
+      animation: introFadeUp 0.8s 0.6s forwards cubic-bezier(0.16, 1, 0.3, 1);
+      margin-bottom: 4px;
+    }
+
+    .intro-title {
+      font-family: 'Great Vibes', cursive;
+      font-size: clamp(3.8rem, 11vw, 6.8rem);
+      line-height: 0.95;
+      color: #FFFFFF;
+      text-shadow: 0 0 40px rgba(255, 255, 255, 0.6), 0 0 80px rgba(0, 245, 212, 0.3);
+      opacity: 0;
+      transform: scale(0.9) translateY(15px);
+      animation: introScaleUp 1s 0.9s forwards cubic-bezier(0.16, 1, 0.3, 1);
+      margin-bottom: 12px;
+    }
+
+    .intro-theme {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(1.5rem, 4vw, 2.6rem);
+      font-weight: 800;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, #FFF 10%, #FFB703 50%, #F59E0B 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 30px rgba(255, 183, 3, 0.5);
+      opacity: 0;
+      transform: translateY(15px);
+      animation: introFadeUp 0.8s 1.3s forwards cubic-bezier(0.16, 1, 0.3, 1);
+      margin-bottom: 10px;
+    }
+
+    .intro-tagline {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(0.9rem, 2.2vw, 1.3rem);
+      font-weight: 700;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--teal-cyan);
+      text-shadow: 0 0 20px rgba(0, 245, 212, 0.6);
+      opacity: 0;
+      transform: translateY(15px);
+      animation: introFadeUp 0.8s 1.6s forwards cubic-bezier(0.16, 1, 0.3, 1);
+      margin-bottom: 24px;
+    }
+
+    .intro-cta-row {
+      opacity: 0;
+      animation: introFadeUp 0.8s 2s forwards cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      gap: 14px;
+    }
+
+    .btn-enter {
+      background: linear-gradient(135deg, var(--gold-primary), #FB8500);
+      color: #040711;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 15px;
+      letter-spacing: 1px;
+      padding: 13px 32px;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 0 30px rgba(255, 183, 3, 0.4);
+      transition: all 0.25s;
+    }
+
+    .btn-enter:hover {
+      transform: scale(1.04);
+      box-shadow: 0 0 45px rgba(255, 183, 3, 0.7);
+    }
+
+    .btn-skip {
+      background: transparent;
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      color: #94A3B8;
+      font-size: 13px;
+      padding: 13px 22px;
+      border-radius: 999px;
+      cursor: pointer;
+    }
+
+    @keyframes introFadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes introScaleUp {
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    /* =========================================================================
+       MAIN SYMPOSIUM WEBSITE (MATCHING OFFICIAL POSTER LAYOUT)
+       ========================================================================= */
+    .website-content {
+      position: relative;
+      width: 100%;
+      min-height: 100vh;
+      padding-top: 50px;
+    }
+
+    /* Hero Banner matching the official SRM poster */
+    .hero-banner-section {
+      position: relative;
+      width: 100%;
+      min-height: 88vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px 60px;
+      overflow: hidden;
+      border-bottom: 1px solid rgba(255, 183, 3, 0.15);
+    }
+
+    /* Ambient Background Graphic Gradients */
+    .hero-banner-section::before {
+      content: "";
+      position: absolute;
+      top: -100px;
+      right: -100px;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0, 245, 212, 0.12) 0%, transparent 70%);
+      filter: blur(80px);
+      pointer-events: none;
+    }
+
+    .hero-banner-section::after {
+      content: "";
+      position: absolute;
+      bottom: -80px;
+      left: -80px;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 183, 3, 0.10) 0%, transparent 70%);
+      filter: blur(80px);
+      pointer-events: none;
+    }
+
+    /* Orbit Atom on Top-Right (Matching the exact location on the poster) */
+    .top-right-orbit {
+      position: absolute;
+      top: 30px;
+      right: 40px;
+      width: 380px;
+      height: 380px;
+      pointer-events: none;
+      z-index: 2;
+      opacity: 0.85;
+      animation: gentleOrbitFloat 6s ease-in-out infinite;
+    }
+
+    @keyframes gentleOrbitFloat {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-10px) rotate(3deg); }
+    }
+
+    /* Responsive adaptation for mobile */
+    @media (max-width: 900px) {
+      .top-right-orbit {
+        top: 18%;
+        right: 50%;
+        transform: translate(50%, -50%) !important;
+        width: 300px;
+        height: 300px;
+        opacity: 0.45; /* Sits behind text on mobile */
+      }
+    }
+
+    /* Hero Banner Grid Layout */
+    .poster-hero-container {
+      position: relative;
+      z-index: 10;
+      max-width: 1200px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .poster-header-box {
+      margin-bottom: 20px;
+    }
+
+    .college-name {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(1.1rem, 2.5vw, 1.85rem);
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #FFFFFF;
+      margin-bottom: 4px;
+    }
+
+    .campus-name {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(0.95rem, 2vw, 1.35rem);
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold-primary);
+      margin-bottom: 12px;
+    }
+
+    .dept-box {
+      border-top: 1px solid rgba(255, 183, 3, 0.3);
+      border-bottom: 1px solid rgba(255, 183, 3, 0.3);
+      padding: 8px 16px;
+      display: inline-block;
+    }
+
+    .faculty-title {
+      font-size: clamp(0.75rem, 1.5vw, 0.95rem);
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: #E2E8F0;
+      text-transform: uppercase;
+    }
+
+    .dept-title {
+      font-size: clamp(0.85rem, 1.8vw, 1.15rem);
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      color: #FFFFFF;
+      text-transform: uppercase;
+    }
+
+    .presents-script {
+      font-family: 'Great Vibes', cursive;
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      color: #CBD5E1;
+      margin-top: 10px;
+      margin-bottom: -15px;
+    }
+
+    .poster-symposium-title {
+      font-family: 'Great Vibes', cursive;
+      font-size: clamp(4.5rem, 12vw, 7.8rem);
+      line-height: 0.95;
+      color: #FFFFFF;
+      text-shadow: 0 0 35px rgba(255, 255, 255, 0.5), 0 0 70px rgba(0, 245, 212, 0.25);
+    }
+
+    .poster-theme-title {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(1.8rem, 5vw, 3.8rem);
+      font-weight: 900;
+      letter-spacing: 6px;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, #FFFFFF 0%, #FFB703 55%, #FB8500 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 40px rgba(255, 183, 3, 0.6);
+      margin-top: -5px;
+    }
+
+    .poster-tagline {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(1rem, 2.5vw, 1.5rem);
+      font-weight: 700;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--teal-cyan);
+      text-shadow: 0 0 25px rgba(0, 245, 212, 0.6);
+      margin-top: 6px;
+      margin-bottom: 24px;
+    }
+
+    /* Date and QR Code Ribbon */
+    .hero-meta-ribbon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 32px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    /* Exact Calendar Badge matching poster */
+    .calendar-badge {
+      background: rgba(15, 23, 42, 0.85);
+      border: 2px solid var(--sky-blue);
+      border-radius: 12px;
+      padding: 8px 18px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      box-shadow: 0 0 25px rgba(56, 189, 248, 0.25);
+    }
+
+    .cal-rings {
+      font-size: 11px;
+      letter-spacing: 4px;
+      color: var(--sky-blue);
+      font-family: 'JetBrains Mono', monospace;
+      margin-bottom: 2px;
+    }
+
+    .cal-month {
+      font-family: 'Outfit', sans-serif;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      color: #FFFFFF;
+      text-transform: uppercase;
+    }
+
+    .cal-day {
+      font-family: 'Outfit', sans-serif;
+      font-size: 32px;
+      font-weight: 900;
+      color: var(--sky-blue);
+      line-height: 1;
+    }
+
+    .hero-cta-buttons {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .btn-gold {
+      background: linear-gradient(135deg, var(--gold-primary), #FB8500);
+      color: #040711;
+      font-weight: 800;
+      font-size: 16px;
+      padding: 14px 32px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 0 30px rgba(255, 183, 3, 0.4);
+      transition: all 0.25s;
+    }
+
+    .btn-gold:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 40px rgba(255, 183, 3, 0.6);
+    }
+
+    .btn-teal {
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid var(--teal-cyan);
+      color: var(--teal-cyan);
+      font-weight: 700;
+      font-size: 16px;
+      padding: 14px 28px;
+      border-radius: 10px;
+      cursor: pointer;
+      box-shadow: 0 0 25px rgba(0, 245, 212, 0.2);
+      transition: all 0.25s;
+    }
+
+    .btn-teal:hover {
+      background: rgba(0, 245, 212, 0.1);
+      transform: translateY(-2px);
+    }
+
+    /* Accreditations Bar (NAAC A++, NIRF 11th, QS World Ranking) */
+    .accreditations-bar {
+      width: 100%;
+      background: rgba(11, 17, 32, 0.95);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 16px 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 24px;
+    }
+
+    .accred-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .accred-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 14px;
+      font-weight: 800;
+      color: #FFFFFF;
+    }
+
+    .accred-sub {
+      font-size: 11px;
+      color: #94A3B8;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* 11 Events Quick Section */
+    .events-quick-grid {
+      max-width: 1200px;
+      margin: 60px auto;
+      padding: 0 20px;
+    }
+
+    .section-title-wrap {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .section-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--teal-cyan);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .section-heading {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 800;
+      color: #FFFFFF;
+      margin-top: 6px;
+    }
+
+    .event-cards-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .event-preview-card {
+      background: rgba(15, 23, 42, 0.65);
+      border: 1px solid rgba(56, 189, 248, 0.2);
+      border-radius: 16px;
+      padding: 24px;
+      backdrop-filter: blur(12px);
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .event-preview-card:hover {
+      border-color: var(--teal-cyan);
+      transform: translateY(-4px);
+      box-shadow: 0 15px 35px rgba(0, 245, 212, 0.15);
+    }
+
+    .event-type-badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-family: 'JetBrains Mono', monospace;
+      margin-bottom: 12px;
+    }
+
+    .badge-tech {
+      background: rgba(0, 245, 212, 0.15);
+      color: var(--teal-cyan);
+      border: 1px solid rgba(0, 245, 212, 0.3);
+    }
+
+    .badge-nontech {
+      background: rgba(255, 183, 3, 0.15);
+      color: var(--gold-primary);
+      border: 1px solid rgba(255, 183, 3, 0.3);
+    }
+
+    .event-card-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #FFFFFF;
+      margin-bottom: 8px;
+    }
+
+    .event-card-meta {
+      display: flex;
+      justify-content: space-between;
+      color: #94A3B8;
+      font-size: 13px;
+      margin-bottom: 14px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .event-card-desc {
+      font-size: 13px;
+      color: #94A3B8;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Replay & Review Bar -->
+  <div class="replay-bar">
+    <div class="brand-pill">
+      <span>SRM IST VADAPALANI</span>
+      <span class="badge">Abhigyan '26</span>
+    </div>
+    <div>
+      <button class="btn-replay" onclick="replayIntro()">↺ Replay Cinematic Intro</button>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       1. CINEMATIC INTRO (The user requested "Intro directing into the website")
+       ========================================================================= -->
+  <div id="cinematic-intro">
+    
+    <!-- Animated Orbit Atom Centerpiece -->
+    <div class="intro-orbit-container">
+      <svg viewBox="0 0 400 400" width="100%" height="100%">
+        <defs>
+          <filter id="glowTealIntro" x="-30%" y="-30%" width="160%" height="160%">
+            <feGaussianBlur stdDeviation="4" result="blur" />
+            <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+          </filter>
+          <filter id="glowGoldIntro" x="-30%" y="-30%" width="160%" height="160%">
+            <feGaussianBlur stdDeviation="4" result="blur" />
+            <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+          </filter>
+          <radialGradient id="singularityGrad" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#FFFFFF" />
+            <stop offset="40%" stop-color="#00F5D4" />
+            <stop offset="80%" stop-color="#FFB703" />
+            <stop offset="100%" stop-color="#040711" stop-opacity="0" />
+          </radialGradient>
+          <path id="orbitIntro" d="M 50,200 a 150,55 0 1,0 300,0 a 150,55 0 1,0 -300,0" />
+        </defs>
+
+        <!-- Orbit 1 (-30 deg) -->
+        <g transform="rotate(-30 200 200)">
+          <use href="#orbitIntro" fill="none" stroke="rgba(56, 189, 248, 0.35)" stroke-width="1.8" />
+          <circle r="5" fill="#00F5D4" filter="url(#glowTealIntro)">
+            <animateMotion dur="10s" repeatCount="indefinite">
+              <mpath href="#orbitIntro" />
+            </animateMotion>
+          </circle>
+          <circle r="4" fill="#FFB703" filter="url(#glowGoldIntro)">
+            <animateMotion dur="10s" begin="-5s" repeatCount="indefinite">
+              <mpath href="#orbitIntro" />
+            </animateMotion>
+          </circle>
+        </g>
+
+        <!-- Orbit 2 (+30 deg) -->
+        <g transform="rotate(30 200 200)">
+          <use href="#orbitIntro" fill="none" stroke="rgba(56, 189, 248, 0.35)" stroke-width="1.8" />
+          <circle r="5" fill="#FFB703" filter="url(#glowGoldIntro)">
+            <animateMotion dur="13s" repeatCount="indefinite">
+              <mpath href="#orbitIntro" />
+            </animateMotion>
+          </circle>
+          <circle r="4" fill="#00F5D4" filter="url(#glowTealIntro)">
+            <animateMotion dur="13s" begin="-6.5s" repeatCount="indefinite">
+              <mpath href="#orbitIntro" />
+            </animateMotion>
+          </circle>
+        </g>
+
+        <!-- Orbit 3 (90 deg vertical) -->
+        <g transform="rotate(90 200 200)">
+          <use href="#orbitIntro" fill="none" stroke="rgba(56, 189, 248, 0.35)" stroke-width="1.8" />
+          <circle r="4.5" fill="#00F5D4" filter="url(#glowTealIntro)">
+            <animateMotion dur="16s" repeatCount="indefinite">
+              <mpath href="#orbitIntro" />
+            </animateMotion>
+          </circle>
+          <circle r="4.5" fill="#FFB703" filter="url(#glowGoldIntro)">
+            <animateMotion dur="16s" begin="-8s" repeatCount="indefinite">
+              <mpath href="#orbitIntro" />
+            </animateMotion>
+          </circle>
+        </g>
+
+        <!-- Center Glowing Singularity Core -->
+        <circle cx="200" cy="200" r="16" fill="url(#singularityGrad)" />
+        <circle cx="200" cy="200" r="4" fill="#FFFFFF" />
+      </svg>
+    </div>
+
+    <div class="intro-college-tag">
+      SRM INSTITUTE OF SCIENCE AND TECHNOLOGY • VADAPALANI CAMPUS
+    </div>
+    
+    <div class="intro-presents">
+      Department of ECE presents:
+    </div>
+
+    <h1 class="intro-title">
+      Abhigyan '26
+    </h1>
+
+    <div class="intro-theme">
+      QUANTUM BHARAT
+    </div>
+
+    <div class="intro-tagline">
+      A GLIMPSE INTO THE FUTURE
+    </div>
+
+    <div class="intro-cta-row">
+      <button class="btn-enter" onclick="enterSymposium()">Enter Experience →</button>
+      <button class="btn-skip" onclick="enterSymposium()">Skip to Events</button>
+    </div>
+
+  </div>
+
+  <!-- =========================================================================
+       2. MAIN WEBSITE (Matching the Official SRM Poster)
+       ========================================================================= -->
+  <main class="website-content" id="websiteMain">
+
+    <section class="hero-banner-section">
+
+      <!-- Orbit structure positioned on top right (exactly like the poster!) -->
+      <div class="top-right-orbit">
+        <svg viewBox="0 0 400 400" width="100%" height="100%">
+          <defs>
+            <filter id="glowPosterTeal" x="-30%" y="-30%" width="160%" height="160%">
+              <feGaussianBlur stdDeviation="3" result="b1" />
+              <feMerge><feMergeNode in="b1" /><feMergeNode in="SourceGraphic" /></feMerge>
+            </filter>
+            <filter id="glowPosterGold" x="-30%" y="-30%" width="160%" height="160%">
+              <feGaussianBlur stdDeviation="3" result="b1" />
+              <feMerge><feMergeNode in="b1" /><feMergeNode in="SourceGraphic" /></feMerge>
+            </filter>
+            <path id="orbitP" d="M 50,200 a 150,55 0 1,0 300,0 a 150,55 0 1,0 -300,0" />
+          </defs>
+          <g transform="rotate(-30 200 200)">
+            <use href="#orbitP" fill="none" stroke="rgba(56, 189, 248, 0.4)" stroke-width="1.6" />
+            <circle r="4.5" fill="#00F5D4" filter="url(#glowPosterTeal)">
+              <animateMotion dur="12s" repeatCount="indefinite"><mpath href="#orbitP" /></animateMotion>
+            </circle>
+          </g>
+          <g transform="rotate(30 200 200)">
+            <use href="#orbitP" fill="none" stroke="rgba(56, 189, 248, 0.4)" stroke-width="1.6" />
+            <circle r="4.5" fill="#FFB703" filter="url(#glowPosterGold)">
+              <animateMotion dur="15s" repeatCount="indefinite"><mpath href="#orbitP" /></animateMotion>
+            </circle>
+          </g>
+          <g transform="rotate(90 200 200)">
+            <use href="#orbitP" fill="none" stroke="rgba(56, 189, 248, 0.4)" stroke-width="1.6" />
+            <circle r="4" fill="#00F5D4" filter="url(#glowPosterTeal)">
+              <animateMotion dur="18s" repeatCount="indefinite"><mpath href="#orbitP" /></animateMotion>
+            </circle>
+          </g>
+          <!-- Glowing Center Nucleus -->
+          <circle cx="200" cy="200" r="14" fill="#00F5D4" opacity="0.8" filter="url(#glowPosterTeal)" />
+          <circle cx="200" cy="200" r="5" fill="#FFFFFF" />
+        </svg>
+      </div>
+
+      <!-- Main Poster Content -->
+      <div class="poster-hero-container">
+        
+        <div class="poster-header-box">
+          <div class="college-name">SRM INSTITUTE OF SCIENCE AND TECHNOLOGY</div>
+          <div class="campus-name">VADAPALANI CAMPUS</div>
+          <div class="dept-box">
+            <div class="faculty-title">Faculty of Engineering and Technology</div>
+            <div class="dept-title">Department of Electronics and Communication Engineering</div>
+          </div>
+        </div>
+
+        <div class="presents-script">presents:</div>
+        
+        <h1 class="poster-symposium-title">Abhigyan '26</h1>
+        
+        <div class="poster-theme-title">QUANTUM BHARAT</div>
+        
+        <div class="poster-tagline">A GLIMPSE INTO THE FUTURE</div>
+
+        <!-- Meta ribbon with Date (September 24) and CTAs -->
+        <div class="hero-meta-ribbon">
+          <!-- Calendar Badge -->
+          <div class="calendar-badge">
+            <span class="cal-rings">o-o-o-o</span>
+            <span class="cal-month">SEPTEMBER</span>
+            <span class="cal-day">24</span>
+          </div>
+
+          <div class="hero-cta-buttons">
+            <button class="btn-gold" onclick="scrollToEvents()">Register for 11 Events →</button>
+            <button class="btn-teal">Download Brochure</button>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- Official Accreditations Bar (from poster footer) -->
+    <section class="accreditations-bar">
+      <div class="accred-item">
+        <span class="accred-title">NAAC A++</span>
+        <span class="accred-sub">Grade Accredited</span>
+      </div>
+      <div class="accred-item">
+        <span class="accred-title">UGC 12B Status</span>
+        <span class="accred-sub">Category I</span>
+      </div>
+      <div class="accred-item">
+        <span class="accred-title">NIRF (2025)</span>
+        <span class="accred-sub">Ranked 11th University</span>
+      </div>
+      <div class="accred-item">
+        <span class="accred-title">QS World Ranking</span>
+        <span class="accred-sub">One among 54 in India</span>
+      </div>
+      <div class="accred-item">
+        <span class="accred-title">THE World Rankings</span>
+        <span class="accred-sub">One among 91 in India</span>
+      </div>
+    </section>
+
+    <!-- Event Quick Preview (Extracted from PDF) -->
+    <section class="events-quick-grid" id="eventsSection">
+      <div class="section-title-wrap">
+        <span class="section-tag">COMPETITIVE CHALLENGES</span>
+        <h2 class="section-heading">Featured Events</h2>
+      </div>
+
+      <div class="event-cards-row">
+        <!-- Event 1 -->
+        <div class="event-preview-card">
+          <span class="event-type-badge badge-tech">TECHNICAL</span>
+          <h3 class="event-card-title">Research Quest</h3>
+          <div class="event-card-meta">
+            <span>₹250 / team</span>
+            <span>Team of 3</span>
+          </div>
+          <p class="event-card-desc">
+            Paper presentation on Quantum Technologies (Computing, Quantum-AI, Electronics) and novel research across domains.
+          </p>
+        </div>
+
+        <!-- Event 2 -->
+        <div class="event-preview-card">
+          <span class="event-type-badge badge-tech">TECHNICAL</span>
+          <h3 class="event-card-title">Data Heist</h3>
+          <div class="event-card-meta">
+            <span>₹160 / team</span>
+            <span>Team of 3</span>
+          </div>
+          <p class="event-card-desc">
+            High-stakes digital forensics investigation across IoT data, telemetry logs, network traces, and encrypted clues.
+          </p>
+        </div>
+
+        <!-- Event 3 -->
+        <div class="event-preview-card">
+          <span class="event-type-badge badge-tech">TECHNICAL</span>
+          <h3 class="event-card-title">Binary Bingo</h3>
+          <div class="event-card-meta">
+            <span>₹150 / team</span>
+            <span>Team of 3</span>
+          </div>
+          <p class="event-card-desc">
+            Bit & Brain 2-round challenge: Number system conversion bingo + 30-second ECE Draw & Guess.
+          </p>
+        </div>
+
+        <!-- Event 4 -->
+        <div class="event-preview-card">
+          <span class="event-type-badge badge-nontech">NON-TECHNICAL</span>
+          <h3 class="event-card-title">IPL Auction</h3>
+          <div class="event-card-meta">
+            <span>₹200 / team</span>
+            <span>Team of 4</span>
+          </div>
+          <p class="event-card-desc">
+            Cricket strategy quiz round followed by live tactical bidding with virtual purse to assemble the ultimate franchise.
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    const introEl = document.getElementById('cinematic-intro');
+
+    // Automatically transition to website after 4.5 seconds if user doesn't click
+    let autoTimer = setTimeout(() => {
+      enterSymposium();
+    }, 4500);
+
+    function enterSymposium() {
+      clearTimeout(autoTimer);
+      introEl.classList.add('hidden');
+    }
+
+    function replayIntro() {
+      introEl.classList.remove('hidden');
+      clearTimeout(autoTimer);
+      autoTimer = setTimeout(() => {
+        enterSymposium();
+      }, 4500);
+    }
+
+    function scrollToEvents() {
+      document.getElementById('eventsSection').scrollIntoView({ behavior: 'smooth' });
+    }
+  </script>
+</body>
+</html>

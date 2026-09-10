@@ -1,0 +1,319 @@
+/* =========================================================================
+   SPONSORSHIP & PARTNERSHIPS SECTION STYLES
+   Department of ECE • SRM IST Vadapalani • Abhigyan '26
+   Tokens: Gold #F5C518 • Teal #00E5FF • Saffron #FF9933
+   Clean Editorial Layout
+   ========================================================================= */
+
+.sponsorship-section {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  padding: 96px 24px 140px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: transparent;
+}
+
+.sponsorship-container {
+  width: 100%;
+  max-width: 1120px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 48px;
+}
+
+/* -------------------------------------------------------------------------
+   Header Block: Matches About & Events Editorial Typographic Architecture
+   ------------------------------------------------------------------------- */
+.sponsorship-header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  width: 100%;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 32px;
+}
+
+.sponsorship-title {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: clamp(2.1rem, 3.6vw, 3rem);
+  font-weight: 800;
+  line-height: 1.18;
+  letter-spacing: -0.6px;
+  color: #F8FAFC;
+  margin: 0;
+  text-align: left;
+}
+
+.sponsorship-subtitle {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: clamp(15.5px, 1.12vw, 17px);
+  line-height: 1.65;
+  color: #94A3B8;
+  margin: 0;
+  max-width: 860px;
+  font-weight: 400;
+}
+
+/* -------------------------------------------------------------------------
+   4 Partnership Tiers Grid
+   ------------------------------------------------------------------------- */
+.sponsorship-tiers-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  width: 100%;
+}
+
+.sponsorship-tier-card {
+  display: flex;
+  flex-direction: column;
+  padding: 24px 20px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  background: transparent;
+  transition: border-color 0.2s ease;
+}
+
+.sponsorship-tier-card:hover {
+  border-color: rgba(255, 255, 255, 0.22);
+}
+
+.tier-badge-line {
+  margin-bottom: 14px;
+}
+
+.tier-pill-gold {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: #F5C518;
+  border-bottom: 1.5px solid #F5C518;
+  padding-bottom: 2px;
+}
+
+.tier-pill-cyan {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: #00E5FF;
+  border-bottom: 1.5px solid #00E5FF;
+  padding-bottom: 2px;
+}
+
+.tier-pill-saffron {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: #FF9933;
+  border-bottom: 1.5px solid #FF9933;
+  padding-bottom: 2px;
+}
+
+.tier-pill-white {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: #CBD5E1;
+  border-bottom: 1.5px solid #CBD5E1;
+  padding-bottom: 2px;
+}
+
+.tier-heading {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 17px;
+  font-weight: 700;
+  color: #F8FAFC;
+  line-height: 1.35;
+  margin: 0 0 10px 0;
+}
+
+.tier-desc {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: #94A3B8;
+  margin: 0 0 16px 0;
+  flex: 1;
+}
+
+.tier-features {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  padding-top: 14px;
+}
+
+.tier-features li {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 13px;
+  color: #CBD5E1;
+  line-height: 1.45;
+  position: relative;
+  padding-left: 14px;
+}
+
+.tier-features li::before {
+  content: '·';
+  position: absolute;
+  left: 0;
+  top: -2px;
+  color: #F5C518;
+  font-size: 18px;
+}
+
+/* -------------------------------------------------------------------------
+   Partnership Action & Contact Box
+   ------------------------------------------------------------------------- */
+.sponsorship-cta-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 28px;
+  padding: 32px 28px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  background: transparent;
+}
+
+.sponsorship-cta-text {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 680px;
+}
+
+.cta-box-title {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: #F8FAFC;
+  margin: 0;
+}
+
+.cta-box-desc {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: #94A3B8;
+  margin: 0;
+}
+
+.sponsorship-coordinators {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 13.5px;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  margin-top: 6px;
+}
+
+.sponsor-coord-label {
+  color: #94A3B8;
+  font-weight: 600;
+}
+
+.sponsor-coord-item {
+  color: #F8FAFC;
+}
+
+.sponsor-tel {
+  color: #F5C518;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.18s ease;
+}
+
+.sponsor-tel:hover {
+  color: #FFFFFF;
+}
+
+.sponsor-coord-sep {
+  color: #F5C518;
+  user-select: none;
+}
+
+.sponsorship-cta-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* Flat Gold CTA Button */
+.btn-sponsor-inquire {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: #F5C518;
+  color: #020814;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  height: 46px;
+  padding: 0 26px;
+  border-radius: 999px;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.15s ease;
+  white-space: nowrap;
+}
+
+.btn-sponsor-inquire:hover {
+  background: #E5A93C;
+  transform: translateY(-1px);
+}
+
+/* -------------------------------------------------------------------------
+   Responsive Breakpoints
+   ------------------------------------------------------------------------- */
+@media (max-width: 1024px) {
+  .sponsorship-tiers-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .sponsorship-section {
+    padding: 64px 16px 100px 16px;
+  }
+
+  .sponsorship-container {
+    gap: 36px;
+  }
+
+  .sponsorship-tiers-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .sponsorship-cta-box {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 24px 18px;
+  }
+
+  .btn-sponsor-inquire {
+    width: 100%;
+    justify-content: center;
+  }
+}

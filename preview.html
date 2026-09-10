@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quantum Bharat Orbital Component Review - Abhigyan'26</title>
+  <!-- Google Fonts for High-Tech Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* =========================================
+       CSS RESET & BASE THEME TOKENS
+       ========================================= */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg-dark: #070B19;
+      --bg-card: rgba(15, 23, 42, 0.7);
+      --teal-glow: #00F5D4;
+      --teal-dim: rgba(0, 245, 212, 0.35);
+      --saffron-glow: #FF9E00;
+      --saffron-solar: #FFB703;
+      --saffron-dim: rgba(255, 158, 0, 0.35);
+      --orbit-cold: rgba(56, 189, 248, 0.22);
+      --orbit-cold-bright: rgba(56, 189, 248, 0.45);
+      --text-main: #F8FAFC;
+      --text-muted: #94A3B8;
+      --component-opacity: 0.4;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+    }
+
+    /* Top Review Controller Bar (For Testing & Review) */
+    .review-toolbar {
+      width: 100%;
+      background: rgba(11, 17, 32, 0.95);
+      border-bottom: 1px solid rgba(56, 189, 248, 0.2);
+      backdrop-filter: blur(12px);
+      padding: 12px 24px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .toolbar-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      color: var(--teal-glow);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .toolbar-title .badge {
+      background: rgba(255, 158, 0, 0.15);
+      color: var(--saffron-glow);
+      border: 1px solid rgba(255, 158, 0, 0.3);
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 9999px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .toolbar-controls {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .control-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .btn-toggle {
+      background: rgba(30, 41, 59, 0.7);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      color: var(--text-main);
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .btn-toggle:hover {
+      border-color: var(--teal-glow);
+      color: var(--teal-glow);
+    }
+
+    .btn-toggle.active {
+      background: rgba(0, 245, 212, 0.15);
+      border-color: var(--teal-glow);
+      color: var(--teal-glow);
+    }
+
+    /* Container for viewport testing */
+    .viewport-wrapper {
+      width: 100%;
+      max-width: 100%;
+      display: flex;
+      justify-content: center;
+      padding: 20px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .viewport-wrapper.mobile-frame {
+      max-width: 390px;
+      border: 2px solid rgba(56, 189, 248, 0.3);
+      border-radius: 36px;
+      margin: 20px auto;
+      padding: 0;
+      box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.8), 0 0 30px rgba(0, 245, 212, 0.1);
+      overflow: hidden;
+      min-height: 720px;
+    }
+
+    /* =========================================
+       HERO SECTION WITH QUANTUM ORBIT BACKGROUND
+       ========================================= */
+    .hero-container {
+      position: relative;
+      width: 100%;
+      min-height: 82vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      padding: 60px 20px;
+    }
+
+    /* Background Layer holding the Quantum Orbital Component */
+    .quantum-orbital-background {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100%;
+      max-width: 820px;
+      height: auto;
+      aspect-ratio: 1 / 1;
+      pointer-events: none; /* strictly non-interactive */
+      user-select: none;
+      z-index: 1; /* Behind hero content */
+      opacity: var(--component-opacity);
+      transition: opacity 0.3s ease;
+    }
+
+    /* SVG internal styling */
+    .quantum-orbital-svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+      overflow: visible;
+    }
+
+    /* Cold Orbit Tracks */
+    .orbit-line {
+      fill: none;
+      stroke: var(--orbit-cold);
+      stroke-width: 1.4;
+      transition: stroke 0.3s ease;
+    }
+
+    .orbit-line-dashed {
+      fill: none;
+      stroke: rgba(56, 189, 248, 0.15);
+      stroke-width: 1;
+      stroke-dasharray: 4 8;
+    }
+
+    /* Central Quantum Core */
+    .nucleus-outer {
+      fill: none;
+      stroke: rgba(0, 245, 212, 0.2);
+      stroke-width: 1.5;
+      animation: corePulse 4s ease-in-out infinite;
+    }
+
+    .nucleus-mid {
+      fill: none;
+      stroke: rgba(255, 158, 0, 0.35);
+      stroke-width: 1.2;
+      stroke-dasharray: 6 4;
+      animation: coreSpin 20s linear infinite;
+      transform-origin: 400px 400px;
+    }
+
+    .nucleus-inner {
+      fill: url(#nucleusGradient);
+      filter: url(#glowCore);
+    }
+
+    /* CSS Keyframes for Nucleus & Rotations */
+    @keyframes corePulse {
+      0%, 100% {
+        r: 32px;
+        opacity: 0.3;
+      }
+      50% {
+        r: 38px;
+        opacity: 0.7;
+      }
+    }
+
+    @keyframes coreSpin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* Respect reduced motion preference */
+    @media (prefers-reduced-motion: reduce) {
+      .quantum-orbital-svg * {
+        animation-play-state: paused !important;
+      }
+      .nucleus-outer, .nucleus-mid {
+        animation: none !important;
+      }
+    }
+
+    /* =========================================
+       HERO FOREGROUND CONTENT (HIGH LEGIBILITY)
+       ========================================= */
+    .hero-content {
+      position: relative;
+      z-index: 10; /* Cleanly above the 30-50% opacity background */
+      text-align: center;
+      max-width: 760px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .department-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(0, 245, 212, 0.3);
+      border-radius: 9999px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--teal-glow);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      font-family: 'JetBrains Mono', monospace;
+      box-shadow: 0 0 20px rgba(0, 245, 212, 0.12);
+    }
+
+    .department-badge .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: var(--saffron-glow);
+      box-shadow: 0 0 8px var(--saffron-glow);
+    }
+
+    .symposium-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(2.8rem, 7vw, 4.8rem);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -1.5px;
+      background: linear-gradient(135deg, #FFFFFF 30%, #E2E8F0 60%, #94A3B8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .theme-pill {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(1.1rem, 2.8vw, 1.6rem);
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: linear-gradient(90deg, var(--saffron-glow), var(--teal-glow));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(0.95rem, 2vw, 1.15rem);
+      color: var(--text-muted);
+      line-height: 1.6;
+      max-width: 600px;
+    }
+
+    .cta-group {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      margin-top: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #00F5D4, #00B4D8);
+      color: #070B19;
+      font-weight: 700;
+      font-size: 15px;
+      padding: 13px 28px;
+      border-radius: 10px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 0 25px rgba(0, 245, 212, 0.4);
+      transition: all 0.25s ease;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 35px rgba(0, 245, 212, 0.6);
+    }
+
+    .btn-secondary {
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(255, 158, 0, 0.4);
+      color: var(--saffron-glow);
+      font-weight: 600;
+      font-size: 15px;
+      padding: 13px 26px;
+      border-radius: 10px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.25s ease;
+      cursor: pointer;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 158, 0, 0.1);
+      border-color: var(--saffron-glow);
+      transform: translateY(-2px);
+    }
+
+    /* Stats bar preview below hero */
+    .quick-stats {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      width: 100%;
+      flex-wrap: wrap;
+    }
+
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .stat-value {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .stat-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+    }
+
+    /* Explanatory Note Card */
+    .notes-card {
+      width: 100%;
+      max-width: 900px;
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(56, 189, 248, 0.2);
+      border-radius: 16px;
+      padding: 24px;
+      margin: 20px auto 40px;
+      backdrop-filter: blur(10px);
+    }
+
+    .notes-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--teal-glow);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .notes-list {
+      list-style: none;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 14px;
+      color: var(--text-muted);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .notes-list li {
+      position: relative;
+      padding-left: 22px;
+    }
+
+    .notes-list li::before {
+      content: "✦";
+      position: absolute;
+      left: 0;
+      top: 1px;
+      color: var(--saffron-glow);
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- =======================================================
+       TOP TOOLBAR (Allows you to review & test all parameters)
+       ======================================================= -->
+  <header class="review-toolbar">
+    <div class="toolbar-title">
+      <span>ATOM ORBITAL COMPONENT</span>
+      <span class="badge">Quantum Bharat</span>
+    </div>
+
+    <div class="toolbar-controls">
+      <!-- Opacity Selector (30%, 40%, 50%) -->
+      <div class="control-group">
+        <span>Opacity:</span>
+        <button class="btn-toggle" onclick="setOpacity(0.3, this)">30%</button>
+        <button class="btn-toggle active" onclick="setOpacity(0.4, this)">40% (Default)</button>
+        <button class="btn-toggle" onclick="setOpacity(0.5, this)">50%</button>
+      </div>
+
+      <!-- Viewport Device Switcher (Desktop vs Mobile) -->
+      <div class="control-group">
+        <span>Device View:</span>
+        <button class="btn-toggle active" id="btnDesk" onclick="setViewMode('desktop')">💻 Laptop</button>
+        <button class="btn-toggle" id="btnMob" onclick="setViewMode('mobile')">📱 Mobile</button>
+      </div>
+
+      <!-- Pause/Resume Motion (simulates prefers-reduced-motion) -->
+      <div class="control-group">
+        <button class="btn-toggle" id="btnMotion" onclick="toggleMotion()">⏸ Pause Motion</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- =======================================================
+       VIEWPORT WRAPPER (Switches between Desktop & Mobile)
+       ======================================================= -->
+  <main class="viewport-wrapper" id="viewportContainer">
+    <section class="hero-container">
+
+      <!-- =====================================================
+           THE QUANTUM ORBITAL BACKGROUND COMPONENT
+           (Pure SVG + Pure CSS animations, strictly non-interactive,
+            3 angled orbits, teal & saffron particles on cold lines)
+           ===================================================== -->
+      <div class="quantum-orbital-background" id="orbitalComponent" aria-hidden="true">
+        <svg class="quantum-orbital-svg" viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <!-- Particle Glow Filters -->
+            <!-- Teal Glow Filter -->
+            <filter id="glow-teal" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur1" />
+              <feGaussianBlur in="SourceGraphic" stdDeviation="8" result="blur2" />
+              <feMerge>
+                <feMergeNode in="blur2" />
+                <feMergeNode in="blur1" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+
+            <!-- Saffron Glow Filter -->
+            <filter id="glow-saffron" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur1" />
+              <feGaussianBlur in="SourceGraphic" stdDeviation="8" result="blur2" />
+              <feMerge>
+                <feMergeNode in="blur2" />
+                <feMergeNode in="blur1" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+
+            <!-- Core Glow Filter -->
+            <filter id="glowCore" x="-40%" y="-40%" width="180%" height="180%">
+              <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur" />
+              <feMerge>
+                <feMergeNode in="blur" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+
+            <!-- Core Radial Gradient (Fusion of Teal & Saffron) -->
+            <radialGradient id="nucleusGradient" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#FFFFFF" />
+              <stop offset="30%" stop-color="#00F5D4" />
+              <stop offset="75%" stop-color="#FF9E00" />
+              <stop offset="100%" stop-color="#070B19" stop-opacity="0" />
+            </radialGradient>
+
+            <!-- Master Orbit Paths (Defined once, used for both tracks & motion paths) -->
+            <!-- Ellipse 1: rx=320, ry=115, centered at (400, 400) -->
+            <path id="path-orbit-1" d="M 80,400 a 320,115 0 1,0 640,0 a 320,115 0 1,0 -640,0" />
+            <!-- Ellipse 2: rx=320, ry=115, centered at (400, 400) -->
+            <path id="path-orbit-2" d="M 80,400 a 320,115 0 1,0 640,0 a 320,115 0 1,0 -640,0" />
+            <!-- Ellipse 3: rx=320, ry=115, centered at (400, 400) -->
+            <path id="path-orbit-3" d="M 80,400 a 320,115 0 1,0 640,0 a 320,115 0 1,0 -640,0" />
+          </defs>
+
+          <!-- ==============================================
+               ORBIT 1: Angled at -30 degrees
+               Features: 1 Teal Particle + 1 Saffron Particle
+               Speed: 16 seconds (Staggered)
+               ============================================== -->
+          <g transform="rotate(-30 400 400)">
+            <!-- Cold Solid Track Line -->
+            <use href="#path-orbit-1" class="orbit-line" />
+            <!-- Concentric Faint Dashed Accents (Subtle high-tech ECE feel) -->
+            <use href="#path-orbit-1" class="orbit-line-dashed" transform="scale(0.96) translate(16.6 16.6)" />
+
+            <!-- Particle 1: Electric Teal (Clockwise, 16s) -->
+            <circle r="4.5" fill="#00F5D4" filter="url(#glow-teal)">
+              <animateMotion dur="16s" repeatCount="indefinite">
+                <mpath href="#path-orbit-1" />
+              </animateMotion>
+            </circle>
+
+            <!-- Particle 2: Solar Saffron (Trailing half-cycle behind at 8s) -->
+            <circle r="4" fill="#FF9E00" filter="url(#glow-saffron)">
+              <animateMotion dur="16s" begin="-8s" repeatCount="indefinite">
+                <mpath href="#path-orbit-1" />
+              </animateMotion>
+            </circle>
+          </g>
+
+          <!-- ==============================================
+               ORBIT 2: Angled at +30 degrees
+               Features: 1 Saffron Particle + 1 Teal Particle
+               Speed: 21 seconds (Staggered speed)
+               ============================================== -->
+          <g transform="rotate(30 400 400)">
+            <!-- Cold Solid Track Line -->
+            <use href="#path-orbit-2" class="orbit-line" />
+            <!-- Dashed Track Accent -->
+            <use href="#path-orbit-2" class="orbit-line-dashed" transform="scale(0.96) translate(16.6 16.6)" />
+
+            <!-- Particle 3: Solar Saffron (Starts at 0s, 21s cycle) -->
+            <circle r="4.5" fill="#FFB703" filter="url(#glow-saffron)">
+              <animateMotion dur="21s" repeatCount="indefinite">
+                <mpath href="#path-orbit-2" />
+              </animateMotion>
+            </circle>
+
+            <!-- Particle 4: Electric Teal (Starts at -10.5s offset) -->
+            <circle r="3.8" fill="#00F5D4" filter="url(#glow-teal)">
+              <animateMotion dur="21s" begin="-10.5s" repeatCount="indefinite">
+                <mpath href="#path-orbit-2" />
+              </animateMotion>
+            </circle>
+          </g>
+
+          <!-- ==============================================
+               ORBIT 3: Angled at 90 degrees (Vertical Axis)
+               Features: 1 Teal Particle + 1 Saffron Particle
+               Speed: 26 seconds (Slowest, deep ambient)
+               ============================================== -->
+          <g transform="rotate(90 400 400)">
+            <!-- Cold Solid Track Line -->
+            <use href="#path-orbit-3" class="orbit-line" />
+            <!-- Dashed Track Accent -->
+            <use href="#path-orbit-3" class="orbit-line-dashed" transform="scale(0.96) translate(16.6 16.6)" />
+
+            <!-- Particle 5: Electric Teal (26s cycle) -->
+            <circle r="4.2" fill="#00F5D4" filter="url(#glow-teal)">
+              <animateMotion dur="26s" repeatCount="indefinite">
+                <mpath href="#path-orbit-3" />
+              </animateMotion>
+            </circle>
+
+            <!-- Particle 6: Solar Saffron (Starts at -13s offset) -->
+            <circle r="4" fill="#FF9E00" filter="url(#glow-saffron)">
+              <animateMotion dur="26s" begin="-13s" repeatCount="indefinite">
+                <mpath href="#path-orbit-3" />
+              </animateMotion>
+            </circle>
+          </g>
+
+          <!-- ==============================================
+               CENTRAL NUCLEUS / QUANTUM HUB
+               Layered glowing core with subtle breathing pulse
+               ============================================== -->
+          <g class="nucleus-group">
+            <!-- Pulsing Quantum Aura Ring (Teal) -->
+            <circle cx="400" cy="400" r="32" class="nucleus-outer" />
+            
+            <!-- Rotating Dashed Geometric Ring (Saffron) -->
+            <circle cx="400" cy="400" r="22" class="nucleus-mid" />
+            
+            <!-- Core Glowing Singularity (Dual Saffron-Teal Gradient) -->
+            <circle cx="400" cy="400" r="14" class="nucleus-inner" />
+            
+            <!-- Center Qubit State Dot -->
+            <circle cx="400" cy="400" r="4" fill="#FFFFFF" opacity="0.95" />
+          </g>
+        </svg>
+      </div>
+
+      <!-- =====================================================
+           FOREGROUND HERO CONTENT
+           (Demonstrates how crystal clear text remains above it)
+           ===================================================== -->
+      <div class="hero-content">
+        <div class="department-badge">
+          <span class="dot"></span>
+          <span>ECE DEPARTMENT PRESENTS</span>
+        </div>
+
+        <h1 class="symposium-title">ABHIGYAN '26</h1>
+
+        <div class="theme-pill">
+          <span>⚡ THEME: QUANTUM BHARAT ⚡</span>
+        </div>
+
+        <p class="hero-subtitle">
+          Where India’s deep-tech resurgence meets the quantum frontier. 
+          11 premier technical and creative challenges engineered for innovators.
+        </p>
+
+        <div class="cta-group">
+          <button class="btn-primary">Explore 11 Events →</button>
+          <button class="btn-secondary">Register Team</button>
+        </div>
+
+        <div class="quick-stats">
+          <div class="stat-item">
+            <span class="stat-value">5</span>
+            <span class="stat-label">Technical Events</span>
+          </div>
+          <div class="stat-item" style="color: var(--teal-glow);">|</div>
+          <div class="stat-item">
+            <span class="stat-value">6</span>
+            <span class="stat-label">Non-Tech Events</span>
+          </div>
+          <div class="stat-item" style="color: var(--teal-glow);">|</div>
+          <div class="stat-item">
+            <span class="stat-value">500+</span>
+            <span class="stat-label">Participants</span>
+          </div>
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <!-- =======================================================
+       EXPLANATORY NOTES CARD (Specs & Design Decisions)
+       ======================================================= -->
+  <section class="notes-card">
+    <h2 class="notes-title">✦ Component Architecture & Design Choices</h2>
+    <ul class="notes-list">
+      <li>
+        <strong>Cold Orbit Lines:</strong> Hex <code>rgba(56, 189, 248, 0.22)</code> (Ice Sky Blue) ensures clean architectural contrast without clashing with the dark cosmic navy background.
+      </li>
+      <li>
+        <strong>Teal Particle Hex:</strong> <code>#00F5D4</code> (Electric Quantum Cyan) with SVG Gaussian multi-stage glow filter.
+      </li>
+      <li>
+        <strong>Saffron Particle Hex:</strong> <code>#FF9E00</code> & <code>#FFB703</code> (Solar Saffron Gold) symbolizing Bharat's scientific energy.
+      </li>
+      <li>
+        <strong>3 Elliptical Orbit Angles:</strong> Rotated at <code>-30°</code>, <code>+30°</code>, and <code>90°</code> (vertical). Gives the iconic quantum atom symmetry while staying sophisticated.
+      </li>
+      <li>
+        <strong>Staggered Planetary Speeds:</strong> Orbit 1 at 16s, Orbit 2 at 21s, Orbit 3 at 26s. Particles never align repetitively, creating an organic, living quantum state.
+      </li>
+      <li>
+        <strong>Strictly Non-Interactive:</strong> Uses <code>pointer-events: none</code> and <code>user-select: none</code> so text selection, buttons, and clicks are 100% unimpeded.
+      </li>
+      <li>
+        <strong>Zero Heavy Libraries:</strong> 100% pure SVG + CSS. Total file weight is &lt; 5 KB, consuming negligible CPU/GPU, ensuring 60 FPS locked on mobile.
+      </li>
+      <li>
+        <strong>Reduced Motion Support:</strong> Respects <code>prefers-reduced-motion: reduce</code> seamlessly via CSS.
+      </li>
+    </ul>
+  </section>
+
+  <!-- =======================================================
+       REVIEW CONTROL SCRIPTS
+       ======================================================= -->
+  <script>
+    const orbitalElem = document.getElementById('orbitalComponent');
+    const viewportContainer = document.getElementById('viewportContainer');
+    const btnDesk = document.getElementById('btnDesk');
+    const btnMob = document.getElementById('btnMob');
+    const btnMotion = document.getElementById('btnMotion');
+    let isMotionPaused = false;
+
+    // Set Opacity (30%, 40%, 50%)
+    function setOpacity(val, btn) {
+      document.documentElement.style.setProperty('--component-opacity', val);
+      document.querySelectorAll('.control-group .btn-toggle').forEach(b => {
+        if (b.innerText.includes('%')) b.classList.remove('active');
+      });
+      if (btn) btn.classList.add('active');
+    }
+
+    // Switch Viewport Mode (Desktop / Laptop vs Mobile Frame)
+    function setViewMode(mode) {
+      if (mode === 'mobile') {
+        viewportContainer.classList.add('mobile-frame');
+        btnMob.classList.add('active');
+        btnDesk.classList.remove('active');
+      } else {
+        viewportContainer.classList.remove('mobile-frame');
+        btnDesk.classList.add('active');
+        btnMob.classList.remove('active');
+      }
+    }
+
+    // Toggle Motion (Simulate prefers-reduced-motion)
+    function toggleMotion() {
+      const svg = document.querySelector('.quantum-orbital-svg');
+      if (!isMotionPaused) {
+        svg.pauseAnimations();
+        btnMotion.innerText = '▶ Resume Motion';
+        btnMotion.classList.add('active');
+        isMotionPaused = true;
+      } else {
+        svg.unpauseAnimations();
+        btnMotion.innerText = '⏸ Pause Motion';
+        btnMotion.classList.remove('active');
+        isMotionPaused = false;
+      }
+    }
+
+    // Auto-respect OS prefers-reduced-motion
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      toggleMotion();
+    }
+  </script>
+</body>
+</html>

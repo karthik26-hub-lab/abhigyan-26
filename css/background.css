@@ -1,0 +1,176 @@
+/* =========================================================================
+   BACKGROUND & COSMIC GALAXY STYLES
+   High-Quality Starfield, Deep Interstellar Dust & DotField Physics Layer
+   ========================================================================= */
+
+.cosmic-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: #010207;
+  background-image: 
+    /* The Milky Way Galactic Core (Warm golden star glow) */
+    radial-gradient(ellipse 55% 42% at 68% 48%, rgba(255, 230, 170, 0.16) 0%, rgba(200, 140, 255, 0.09) 35%, rgba(30, 60, 140, 0.05) 65%, transparent 80%),
+    /* The Galactic Dust River (Luminous stardust arching across cosmos) */
+    linear-gradient(128deg, transparent 15%, rgba(30, 45, 90, 0.12) 30%, rgba(255, 240, 200, 0.14) 48%, rgba(140, 100, 220, 0.10) 58%, rgba(10, 25, 60, 0.08) 75%, transparent 90%),
+    /* Dark Rift (Interstellar molecular dust lanes slicing the galactic plane) */
+    radial-gradient(ellipse 70% 30% at 62% 46%, transparent 0%, rgba(1, 2, 7, 0.45) 50%, transparent 85%),
+    /* Cygnus & Sagittarius Nebular Dust Veils */
+    radial-gradient(circle at 30% 75%, rgba(120, 70, 220, 0.08) 0%, transparent 60%),
+    radial-gradient(circle at 80% 20%, rgba(0, 180, 240, 0.08) 0%, transparent 55%),
+    radial-gradient(ellipse 90% 80% at 50% 50%, rgba(2, 4, 12, 0.3) 0%, rgba(1, 2, 7, 0.95) 100%),
+    /* Natural Astrophotography Stars (Organic, varying magnitude, non-grid) */
+    radial-gradient(1.2px 1.2px at 12% 18%, rgba(255, 255, 255, 0.9), transparent),
+    radial-gradient(1.5px 1.5px at 26% 45%, rgba(255, 250, 230, 0.95), transparent),
+    radial-gradient(0.8px 0.8px at 42% 12%, rgba(210, 230, 255, 0.85), transparent),
+    radial-gradient(2px 2px at 58% 34%, rgba(255, 255, 255, 1), transparent),
+    radial-gradient(1px 1px at 66% 22%, rgba(255, 225, 160, 0.9), transparent),
+    radial-gradient(1.4px 1.4px at 74% 42%, rgba(200, 230, 255, 0.9), transparent),
+    radial-gradient(0.9px 0.9px at 85% 15%, rgba(255, 255, 255, 0.8), transparent),
+    radial-gradient(1.8px 1.8px at 91% 38%, rgba(255, 245, 210, 0.9), transparent),
+    radial-gradient(1px 1px at 18% 80%, rgba(255, 255, 255, 0.75), transparent),
+    radial-gradient(1.5px 1.5px at 35% 68%, rgba(200, 220, 255, 0.85), transparent),
+    radial-gradient(0.8px 0.8px at 52% 82%, rgba(255, 255, 255, 0.7), transparent),
+    radial-gradient(1.6px 1.6px at 69% 72%, rgba(255, 255, 255, 0.85), transparent),
+    radial-gradient(1px 1px at 84% 88%, rgba(255, 230, 180, 0.8), transparent);
+  background-size: 
+    100% 100%, 100% 100%, 100% 100%,
+    100% 100%, 100% 100%, 100% 100%,
+    380px 380px, 520px 520px, 440px 440px, 600px 600px, 340px 340px,
+    460px 460px, 580px 580px, 490px 490px, 370px 370px, 510px 510px,
+    420px 420px, 550px 550px, 470px 470px;
+  background-repeat: 
+    no-repeat, no-repeat, no-repeat,
+    no-repeat, no-repeat, no-repeat,
+    repeat, repeat, repeat, repeat, repeat,
+    repeat, repeat, repeat, repeat, repeat,
+    repeat, repeat, repeat;
+  z-index: 1;
+}
+
+/* -------------------------------------------------------------------------
+   Ambient Earth with India Layer (Top-Left Cosmic Plane)
+   Directly from the Master Symposium Artwork
+   ------------------------------------------------------------------------- */
+.hero-earth-backdrop {
+  position: absolute;
+  top: -20px;
+  left: -20px;
+  width: clamp(520px, 52vw, 880px);
+  height: clamp(520px, 52vw, 880px);
+  background-image: url('/assets/earth_india_ambient.webp'), url('/assets/earth_india_ambient.png');
+  background-repeat: no-repeat;
+  background-position: top left;
+  background-size: contain;
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0.58;
+  mix-blend-mode: screen;
+  filter: contrast(1.06) brightness(0.95);
+  transform: translate3d(0, 0, 0);
+  transition: opacity 0.8s ease-out;
+}
+
+@media (max-width: 1024px) {
+  .hero-earth-backdrop {
+    width: clamp(420px, 60vw, 650px);
+    height: clamp(420px, 60vw, 650px);
+    opacity: 0.45;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-earth-backdrop {
+    width: clamp(340px, 85vw, 480px);
+    height: clamp(340px, 85vw, 480px);
+    top: 0;
+    left: -30px;
+    opacity: 0.35;
+  }
+}
+
+/* Disabled DotField grid (No artificial dot-matrix) */
+#dotFieldContainer {
+  display: none !important;
+}
+
+/* Attenuated Semiconductor Microchips & PCB Layer */
+.blurred-chips-layer {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 4;
+  filter: blur(8px) brightness(0.5);
+  opacity: 0.08;
+  transform: scale(1.05);
+  transition: transform 0.2s cubic-bezier(0.2, 0, 0.2, 1);
+}
+
+@media (max-width: 768px) {
+  .blurred-chips-layer {
+    opacity: 0.05;
+  }
+}
+
+/* -------------------------------------------------------------------------
+   Celestial Shooting Stars (Meteor Shower Engine)
+   Multiple slender meteors streaking diagonally across cosmic space
+   ------------------------------------------------------------------------- */
+.shooting-stars-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 3;
+  overflow: hidden;
+}
+
+.shooting-star {
+  position: absolute;
+  height: 1.4px;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(200, 240, 255, 0.2) 30%,
+    rgba(255, 255, 255, 0.85) 80%,
+    #FFFFFF 100%
+  );
+  border-radius: 999px;
+  filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.95));
+  opacity: 0;
+  transform-origin: right center;
+  will-change: transform, opacity;
+}
+
+/* Luminous Ionization Meteor Head Spark */
+.shooting-star::after {
+  content: '';
+  position: absolute;
+  right: -1px;
+  top: 50%;
+  width: 3.2px;
+  height: 3.2px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  transform: translateY(-50%);
+  box-shadow: 0 0 6px #FFFFFF, 0 0 12px rgba(0, 229, 255, 0.9);
+}
+
+@keyframes shootingStarStreak {
+  0% {
+    opacity: 0;
+    transform: rotate(var(--angle, 138deg)) translateX(0) scaleX(0.2);
+  }
+  15% {
+    opacity: 1;
+    transform: rotate(var(--angle, 138deg)) translateX(calc(var(--travel, 650px) * 0.15)) scaleX(1);
+  }
+  70% {
+    opacity: 0.95;
+    transform: rotate(var(--angle, 138deg)) translateX(calc(var(--travel, 650px) * 0.70)) scaleX(1);
+  }
+  100% {
+    opacity: 0;
+    transform: rotate(var(--angle, 138deg)) translateX(var(--travel, 650px)) scaleX(0.6);
+  }
+}
