@@ -100,25 +100,58 @@
 
         <!-- Right Quick Actions: Countdown Pills + Option A Staggered Trigger -->
         <div class="nav-actions">
-          <!-- Desktop Docked Countdown (Scroll-revealed when hero dock leaves view) -->
-          <div class="nav-countdown-desktop" id="navCountdownDesktop" aria-label="Countdown to Symposium">
-            <span class="countdown-pulse-dot" aria-hidden="true"></span>
-            <div class="countdown-digits">
-              <span class="countdown-unit"><strong class="c-days">00</strong><small>d</small></span>
-              <span class="countdown-colon">:</span>
-              <span class="countdown-unit"><strong class="c-hours">00</strong><small>h</small></span>
-              <span class="countdown-colon">:</span>
-              <span class="countdown-unit"><strong class="c-mins">00</strong><small>m</small></span>
-              <span class="countdown-colon">:</span>
-              <span class="countdown-unit"><strong class="c-secs">00</strong><small>s</small></span>
+          <!-- Desktop Docked Countdown: Quantum Telemetry HUD (Scroll-revealed) -->
+          <div class="nav-countdown-desktop chrono-telemetry-hud" id="navCountdownDesktop" aria-label="Countdown to 24 September 2026">
+            <div class="chrono-telemetry-node">
+              <div class="chrono-orbit-ring" aria-hidden="true">
+                <div class="chrono-orbit-core"></div>
+              </div>
+              <div class="chrono-status-stack">
+                <span class="chrono-status-top">T-MINUS</span>
+                <span class="chrono-status-sub">LIVE SYMPOSIUM</span>
+              </div>
             </div>
-            <span class="countdown-nav-tag">24 SEP</span>
+
+            <div class="chrono-hairline" aria-hidden="true"></div>
+
+            <div class="chrono-grid-tiles">
+              <div class="chrono-tile">
+                <span class="chrono-val c-days">00</span>
+                <span class="chrono-lbl">DAYS</span>
+              </div>
+              <div class="chrono-colon-pips" aria-hidden="true"><span class="chrono-pip"></span><span class="chrono-pip"></span></div>
+              <div class="chrono-tile">
+                <span class="chrono-val c-hours">00</span>
+                <span class="chrono-lbl">HRS</span>
+              </div>
+              <div class="chrono-colon-pips" aria-hidden="true"><span class="chrono-pip"></span><span class="chrono-pip"></span></div>
+              <div class="chrono-tile">
+                <span class="chrono-val c-mins">00</span>
+                <span class="chrono-lbl">MIN</span>
+              </div>
+              <div class="chrono-colon-pips" aria-hidden="true"><span class="chrono-pip"></span><span class="chrono-pip"></span></div>
+              <div class="chrono-tile">
+                <span class="chrono-val c-secs">00</span>
+                <span class="chrono-lbl">SEC</span>
+              </div>
+            </div>
+
+            <div class="chrono-hairline" aria-hidden="true"></div>
+
+            <div class="chrono-target-chip">
+              <span class="chrono-target-date">24 SEP</span>
+              <span class="chrono-target-sub">'26</span>
+            </div>
           </div>
 
-          <!-- Mobile Countdown (Compact, persistent before menu trigger) -->
-          <div class="nav-countdown-mobile" id="navCountdownMobile" aria-label="Countdown to Symposium">
-            <span class="countdown-pulse-dot" aria-hidden="true"></span>
-            <span class="c-mobile-text"><strong class="c-days">00</strong>d <strong class="c-hours">00</strong>h left</span>
+          <!-- Mobile Countdown (Compact Quantum Telemetry Pill) -->
+          <div class="nav-countdown-mobile chrono-mobile-hud" id="navCountdownMobile" aria-label="Countdown to Symposium">
+            <div class="chrono-orbit-core"></div>
+            <div class="chrono-mobile-val">
+              <strong class="c-days">00</strong><small>D</small>
+              <strong class="c-hours">00</strong><small>H</small>
+            </div>
+            <span class="chrono-mobile-tag">24 SEP</span>
           </div>
 
           <!-- Option A Modern Staggered 2-Bar with Quantum Dot Trigger -->
@@ -230,19 +263,48 @@
                 </span>
               </a>
 
-              <!-- Desktop Hero Countdown Capsule (Seamlessly docks to navbar on scroll) -->
-              <div class="hero-countdown-dock" id="heroCountdownDock" aria-label="Countdown to 24 September 2026">
-                <span class="countdown-pulse-dot" aria-hidden="true"></span>
-                <div class="countdown-digits">
-                  <span class="countdown-unit"><strong class="c-days">00</strong><small>d</small></span>
-                  <span class="countdown-colon">:</span>
-                  <span class="countdown-unit"><strong class="c-hours">00</strong><small>h</small></span>
-                  <span class="countdown-colon">:</span>
-                  <span class="countdown-unit"><strong class="c-mins">00</strong><small>m</small></span>
-                  <span class="countdown-colon">:</span>
-                  <span class="countdown-unit"><strong class="c-secs">00</strong><small>s</small></span>
+              <!-- Desktop Hero Countdown Capsule: Quantum Telemetry HUD (Seamlessly docks to navbar on scroll) -->
+              <div class="hero-countdown-dock chrono-telemetry-hud" id="heroCountdownDock" aria-label="Countdown to 24 September 2026">
+                <div class="chrono-telemetry-node">
+                  <div class="chrono-orbit-ring" aria-hidden="true">
+                    <div class="chrono-orbit-core"></div>
+                  </div>
+                  <div class="chrono-status-stack">
+                    <span class="chrono-status-top">T-MINUS</span>
+                    <span class="chrono-status-sub">LIVE SYMPOSIUM</span>
+                  </div>
                 </div>
-                <span class="countdown-hero-tag">24 SEP</span>
+
+                <div class="chrono-hairline" aria-hidden="true"></div>
+
+                <div class="chrono-grid-tiles">
+                  <div class="chrono-tile">
+                    <span class="chrono-val c-days">00</span>
+                    <span class="chrono-lbl">DAYS</span>
+                  </div>
+                  <div class="chrono-colon-pips" aria-hidden="true"><span class="chrono-pip"></span><span class="chrono-pip"></span></div>
+                  <div class="chrono-tile">
+                    <span class="chrono-val c-hours">00</span>
+                    <span class="chrono-lbl">HRS</span>
+                  </div>
+                  <div class="chrono-colon-pips" aria-hidden="true"><span class="chrono-pip"></span><span class="chrono-pip"></span></div>
+                  <div class="chrono-tile">
+                    <span class="chrono-val c-mins">00</span>
+                    <span class="chrono-lbl">MIN</span>
+                  </div>
+                  <div class="chrono-colon-pips" aria-hidden="true"><span class="chrono-pip"></span><span class="chrono-pip"></span></div>
+                  <div class="chrono-tile">
+                    <span class="chrono-val c-secs">00</span>
+                    <span class="chrono-lbl">SEC</span>
+                  </div>
+                </div>
+
+                <div class="chrono-hairline" aria-hidden="true"></div>
+
+                <div class="chrono-target-chip">
+                  <span class="chrono-target-date">24 SEP</span>
+                  <span class="chrono-target-sub">'26</span>
+                </div>
               </div>
             </div>
 

@@ -276,18 +276,9 @@
    DESKTOP DOCKED COUNTDOWN & MOBILE COUNTDOWN PILLS
    ========================================================================= */
 .nav-countdown-desktop {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  height: 38px;
-  padding: 0 16px 0 14px;
-  border-radius: 999px;
-  background: rgba(10, 16, 28, 0.82);
-  border: 1px solid rgba(245, 197, 24, 0.35);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
-  user-select: none;
+  height: 40px;
+  padding: 0 10px 0 8px;
+  border-radius: 9px;
   opacity: 0;
   transform: translateY(-8px) scale(0.96);
   pointer-events: none;
@@ -303,57 +294,72 @@
   pointer-events: auto;
 }
 
-.nav-countdown-desktop .countdown-digits {
-  font-size: 13px;
-  gap: 3px;
+.nav-countdown-desktop .chrono-tile {
+  min-width: 27px;
+  padding: 2px 5px;
 }
 
-.nav-countdown-desktop .countdown-unit strong {
-  font-size: 13.5px;
+.nav-countdown-desktop .chrono-val {
+  font-size: 12.5px;
 }
 
-.nav-countdown-desktop .countdown-unit small {
+.nav-countdown-desktop .chrono-lbl {
+  font-size: 6px;
+}
+
+.nav-countdown-desktop .chrono-target-chip {
+  padding: 3px 6px;
+}
+
+.nav-countdown-desktop .chrono-target-date {
   font-size: 10px;
 }
 
-.countdown-nav-tag {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: 0.8px;
-  color: #F5C518;
-  padding-left: 6px;
-  border-left: 1px solid rgba(255, 255, 255, 0.15);
-  text-transform: uppercase;
-}
-
-/* Mobile Countdown Badge in Top Navbar */
-.nav-countdown-mobile {
+/* Mobile Countdown Badge in Top Navbar: Chrono Micro-Pill */
+.nav-countdown-mobile.chrono-mobile-hud {
   display: none;
   align-items: center;
-  gap: 6px;
-  height: 32px;
+  gap: 7px;
+  height: 34px;
   padding: 0 10px 0 8px;
-  border-radius: 999px;
-  background: rgba(15, 23, 42, 0.75);
-  border: 1px solid rgba(245, 197, 24, 0.32);
+  border-radius: 8px;
+  background: linear-gradient(180deg, rgba(16, 26, 48, 0.92) 0%, rgba(7, 12, 24, 0.96) 100%);
+  border: 1px solid rgba(245, 197, 24, 0.3);
+  border-top: 1px solid rgba(255, 225, 120, 0.55);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   user-select: none;
 }
 
-.c-mobile-text {
-  font-family: 'Plus Jakarta Sans', sans-serif;
+.chrono-mobile-val {
+  display: flex;
+  align-items: baseline;
+  gap: 3px;
+  font-family: 'JetBrains Mono', monospace;
+  font-variant-numeric: tabular-nums;
   font-size: 11.5px;
-  font-weight: 600;
-  color: #E2E8F0;
-  letter-spacing: 0.2px;
-  white-space: nowrap;
+  color: #FFFFFF;
 }
 
-.c-mobile-text strong {
-  color: #F5C518;
+.chrono-mobile-val strong {
   font-weight: 800;
+}
+
+.chrono-mobile-val small {
+  font-size: 9px;
+  font-weight: 700;
+  color: #F5C518;
+}
+
+.chrono-mobile-tag {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 9.5px;
+  font-weight: 800;
+  color: #F5C518;
+  letter-spacing: 0.5px;
+  padding-left: 6px;
+  border-left: 1px solid rgba(255, 255, 255, 0.16);
 }
 
 /* =========================================================================
