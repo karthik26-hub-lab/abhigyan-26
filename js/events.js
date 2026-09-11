@@ -54,7 +54,9 @@ export const EVENTS_DATA = [
     teamSize: 'Team of 3',
     format: 'High-Stakes Digital Investigation',
     faculty: 'Dr. S Bestley Joe (+91 99946 05395)',
-    students: 'Devraj (ECE) [+91 6206 943 704], SriRam (ECE)',
+    students: 'Dev Raj (ECE) [+91 6206 943 704], Sriram [+91 80158 69435]',
+    poster: '/assets/posters/data_heist_poster.jpg',
+    regLink: 'https://forms.gle/Tj2R4j7XVV8E9e717',
     fullDesc: 'A high-stakes digital investigation where teams must uncover the truth hidden within a massive trail of IoT data, system logs, network traces, technical documents, device telemetry, and digital evidence. Nothing tells the whole story\u2014participants must connect fragmented clues, identify false leads, reconstruct the chain of events, and expose what really happened.'
   },
   {
@@ -66,7 +68,9 @@ export const EVENTS_DATA = [
     teamSize: 'Team of 2',
     format: 'Three-Round Technical Quiz',
     faculty: 'Dr. P Rathinakumar (94862 43234)',
-    students: 'Swetha Sankari (ECE DS) [+91 90929 20699], Swetha (ECE DS)',
+    students: 'Swethaasankari (ECE DS) [+91 99946 59486], Swetha S [+91 98404 44134]',
+    poster: '/assets/posters/quantum_bits_poster.jpg',
+    regLink: 'https://docs.google.com/forms/d/e/1FAIpQLScOFA59jcoiRNC1Q8I_o7Gszl7Rl1Pe93HlopUQA1SF_lVZHQ/viewform',
     fullDesc: 'Quantum Bits is a three-round technical quiz designed to challenge participants\u2019 technical knowledge, analytical thinking, and ability to connect concepts across quantum technology, electronics, communication, computing, and emerging technologies.'
   },
 
@@ -95,7 +99,9 @@ export const EVENTS_DATA = [
     teamSize: 'Team of 2',
     format: 'Time-Attack Electronic Pictionary',
     faculty: 'Mrs. V Bhuvaneswari (98419 50762)',
-    students: 'Aradhana (ECE DS) [+91 94458 18840], Namritha (ECE DS)',
+    students: 'Aradhana (ECE DS) [+91 94458 18840], P. S. Namritha (ECE DS) [+91 95660 22568]',
+    poster: '/assets/posters/electro_scribble_poster.jpg',
+    regLink: 'https://docs.google.com/forms/d/e/1FAIpQLSfQoUm-LLAYpP3sZZcXh0qR9WRzULmS5E5mfT4Q6rJ5Gkh2lQ/viewform',
     fullDesc: 'Participants compete in teams of two, where one player draws an electronic component without using words, letters while their teammate races against the clock to guess the component correctly under limited time.'
   },
   {
@@ -119,7 +125,9 @@ export const EVENTS_DATA = [
     teamSize: 'Team of 4',
     format: 'Battle Royale & Clash Royale Tournament',
     faculty: 'Mr. Dinesh Babu (98400 67763)',
-    students: 'Kaushik (ECE) [+91 99402 74512], Pranav (ECE DS)',
+    students: 'Kausik Venket (ECE) [+91 99402 74512], Soundarya [+91 63697 72927]',
+    poster: '/assets/posters/free_fire_poster.jpg',
+    regLink: 'https://docs.google.com/forms/d/e/1FAIpQLScRaPzIHIVGD_EjLbJvQSnVk3P6fgqqlbuDwTKGzioAJNcQuA/viewform',
     fullDesc: 'The Fire-Free Tournament is a 4-player team-based competition featuring Battle Royale (BR) followed by Clash Royale (CR). In the BR round, teams will compete for survival and points, with 5 points awarded for 1st place, 3 points for 2nd place, 2 points for 3rd place, and 1 point for every kill. Based on the BR results and eliminations, the qualifying teams will advance to the CR round, where they will compete under No Roof, Unlimited Ammo, Unlimited Walls, and Goal Wall rules. In the final CR stage, 1st place will receive 5 points, 2nd place 3 points, and 3rd place 2 points. The team with the strongest overall performance will be crowned the Fire-Free Tournament Champion. All participants must maintain fair play and sportsmanship throughout the tournament, and the use of cheats, hacks, glitches, exploits, or any unauthorized assistance will result in disqualification.'
   },
   {
@@ -144,7 +152,9 @@ export const EVENTS_DATA = [
     teamSize: 'Team of 3',
     format: 'Three-Round Movie Strategy Challenge',
     faculty: 'Dr. P Kabilamani (+91 97890 91674)',
-    students: 'Karthikeyan (ECE DS) [+91 6380 482 177], Pugal (ECE DS)',
+    students: 'Karthikeyan (ECE DS) [+91 6380 482 177], Pugal (ECE DS) [+91 91235 87828]',
+    poster: '/assets/posters/connections_poster.jpg',
+    regLink: 'https://docs.google.com/forms/d/1vJlQqH7PHbdq0SkJfF0N_xudXwJsrpTMFMHCod69K3Y/viewform',
     fullDesc: 'A three-round movie-based challenge where participants put their movie knowledge, quick thinking, deduction, and strategy to the test. Teams will identify movies through cast images and tricky plot clues before the top 4 teams advance to an intense actor-based bidding challenge, where they compete to name movies and maximize their scores.'
   }
 ];
@@ -260,11 +270,15 @@ export function createEventRow(event) {
     }
   });
 
-  // Flat gold register button click handler: opens modal and pre-selects event
+  // Flat gold register button click handler: opens Google Form link directly if available, else modal
   const regBtn = row.querySelector('.event-btn-register');
   if (regBtn) {
     regBtn.addEventListener('click', (e) => {
       e.stopPropagation();
+      if (event.regLink) {
+        window.open(event.regLink, '_blank', 'noopener,noreferrer');
+        return;
+      }
       if (window.openRegistrationModal) {
         window.openRegistrationModal();
         const selectEl = document.getElementById('regEvent');
@@ -363,9 +377,15 @@ export function openPosterLightbox(src, title, eventId) {
   if (titleEl) titleEl.textContent = title;
   if (fullLink) fullLink.href = src;
 
+  const event = EVENTS_DATA.find(e => e.id === eventId);
+
   if (regBtn) {
     regBtn.onclick = () => {
       closePosterLightbox();
+      if (event && event.regLink) {
+        window.open(event.regLink, '_blank', 'noopener,noreferrer');
+        return;
+      }
       if (window.openRegistrationModal) {
         window.openRegistrationModal();
         const selectEl = document.getElementById('regEvent');
