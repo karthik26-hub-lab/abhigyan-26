@@ -17,7 +17,9 @@ export const EVENTS_DATA = [
     teamSize: 'Team of 3',
     format: 'Paper Presentation',
     faculty: 'Dr. A Shirly Edward (95000 91541)',
-    students: 'Gokul E P (ECE) [+91 91 5028 712 0], Gokul K (EE VLSI)',
+    students: 'Gokul E P (ECE) [+91 91502 87120], Gokul K (EE VLSI) [+91 82483 03181]',
+    poster: '/assets/posters/research_quest_poster.png',
+    regLink: 'https://forms.gle/FrMT6Kmp58vneJDN6',
     fullDesc: 'This is a paper presentation event where participants can present their innovative works in Quantum Technologies, including areas such as quantum computing, quantum communication, quantum electronics, quantum-AI, and other emerging applications. The scope is not limited to Quantum Technologies. Participants are also welcome to present their novel research and innovative works in any other field. Participants will be asked to submit their abstract prior to the event on a notified date. The participants will be judged on their innovativeness, presentation skills and novelty.'
   },
   {
@@ -197,58 +199,83 @@ export function createEventRow(event) {
     <!-- Expanded Detail Drawer (Hardware-accelerated 0fr -> 1fr grid) -->
     <div class="event-detail-drawer" id="detail-${event.id}" role="region">
       <div class="event-detail-inner">
-        
-        <!-- Clean Horizontal Value Strip (Labels Removed, Values Preserved with Gold Dot Separators) -->
-        <div class="event-data-row">
-          <div class="event-data-item">
-            <span class="data-dot" aria-hidden="true"></span>
-            <span class="event-data-val">${event.fee}</span>
-          </div>
-          <div class="event-data-item">
-            <span class="data-dot" aria-hidden="true"></span>
-            <span class="event-data-val">${event.teamSize}</span>
-          </div>
-          <div class="event-data-item">
-            <span class="data-dot" aria-hidden="true"></span>
-            <span class="event-data-val">${event.format}</span>
-          </div>
-        </div>
-
-        <!-- Full Description Text -->
-        <p class="event-description">${event.fullDesc}</p>
-
-        <!-- Coordinators with tel: links -->
-        <div class="event-coordinators">
-          <div class="coord-entry">
-            <span class="coord-label">Faculty Coordinator:</span>
-            <span class="coord-val">${formatPhoneLinks(event.faculty)}</span>
-          </div>
-          <div class="coord-entry">
-            <span class="coord-label">Student Coordinators:</span>
-            <span class="coord-val">${formatPhoneLinks(event.students)}</span>
-          </div>
-        </div>
-
-        <!-- Uiverse.io Rotating Lattice Register CTA Button + Poster Button -->
-        <div class="event-action-wrap">
-          <button class="event-btn-register" type="button" data-event-id="${event.id}" data-event-title="${event.title}">
-            <span class="btn-reg-text">Register for ${event.title} \u2192</span>
-          </button>
+        <div class="event-detail-grid">
+          
           ${event.poster ? `
-            <button class="event-btn-poster" type="button" data-poster-url="${event.poster}" data-poster-title="${event.title}" data-event-id="${event.id}">
-              <span class="fill-container" aria-hidden="true"></span>
-              <span class="button-text">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                  <circle cx="8.5" cy="8.5" r="1.5"></circle>
-                  <polyline points="21 15 16 10 5 21"></polyline>
-                </svg>
-                <span>View Event Poster</span>
-              </span>
-            </button>
+            <!-- Integrated Official Poster Card (Directly Visible) -->
+            <div class="event-poster-pane">
+              <div class="event-poster-card" role="button" tabindex="0" title="Click to enlarge ${event.title} poster" data-poster-url="${event.poster}" data-poster-title="${event.title}" data-event-id="${event.id}">
+                <img src="${event.poster}" alt="${event.title} Official Poster" class="event-poster-preview" loading="lazy" />
+                <div class="poster-overlay-zoom">
+                  <span class="poster-zoom-btn">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <polyline points="15 3 21 3 21 9"></polyline>
+                      <polyline points="9 21 3 21 3 15"></polyline>
+                      <line x1="21" y1="3" x2="14" y2="10"></line>
+                      <line x1="3" y1="21" x2="10" y2="14"></line>
+                    </svg>
+                    <span>Click to Enlarge</span>
+                  </span>
+                </div>
+              </div>
+            </div>
           ` : ''}
-        </div>
 
+          <!-- Detailed Information & Action Column -->
+          <div class="event-info-pane">
+            <!-- Clean Horizontal Value Strip -->
+            <div class="event-data-row">
+              <div class="event-data-item">
+                <span class="data-dot" aria-hidden="true"></span>
+                <span class="event-data-val">${event.fee}</span>
+              </div>
+              <div class="event-data-item">
+                <span class="data-dot" aria-hidden="true"></span>
+                <span class="event-data-val">${event.teamSize}</span>
+              </div>
+              <div class="event-data-item">
+                <span class="data-dot" aria-hidden="true"></span>
+                <span class="event-data-val">${event.format}</span>
+              </div>
+            </div>
+
+            <!-- Full Description Text -->
+            <p class="event-description">${event.fullDesc}</p>
+
+            <!-- Coordinators with tel: links -->
+            <div class="event-coordinators">
+              <div class="coord-entry">
+                <span class="coord-label">Faculty Coordinator:</span>
+                <span class="coord-val">${formatPhoneLinks(event.faculty)}</span>
+              </div>
+              <div class="coord-entry">
+                <span class="coord-label">Student Coordinators:</span>
+                <span class="coord-val">${formatPhoneLinks(event.students)}</span>
+              </div>
+            </div>
+
+            <!-- Uiverse.io Rotating Lattice Register CTA Button + Enlarge Button -->
+            <div class="event-action-wrap">
+              <button class="event-btn-register" type="button" data-event-id="${event.id}" data-event-title="${event.title}">
+                <span class="btn-reg-text">Register for ${event.title} \u2192</span>
+              </button>
+              ${event.poster ? `
+                <button class="event-btn-poster" type="button" data-poster-url="${event.poster}" data-poster-title="${event.title}" data-event-id="${event.id}">
+                  <span class="fill-container" aria-hidden="true"></span>
+                  <span class="button-text">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                      <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                      <polyline points="21 15 16 10 5 21"></polyline>
+                    </svg>
+                    <span>Full-Screen Poster</span>
+                  </span>
+                </button>
+              ` : ''}
+            </div>
+          </div>
+
+        </div>
       </div>
     </div>
   `;
@@ -298,6 +325,22 @@ export function createEventRow(event) {
             }
           }
         }
+      }
+    });
+  }
+
+  // Poster card click & keyboard handlers: opens lightbox modal
+  const posterCard = row.querySelector('.event-poster-card');
+  if (posterCard) {
+    posterCard.addEventListener('click', (e) => {
+      e.stopPropagation();
+      openPosterLightbox(event.poster, event.title, event.id);
+    });
+    posterCard.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        e.stopPropagation();
+        openPosterLightbox(event.poster, event.title, event.id);
       }
     });
   }
