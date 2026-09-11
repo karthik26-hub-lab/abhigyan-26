@@ -276,90 +276,65 @@
    DESKTOP DOCKED COUNTDOWN & MOBILE COUNTDOWN PILLS
    ========================================================================= */
 .nav-countdown-desktop {
-  height: 40px;
-  padding: 0 10px 0 8px;
-  border-radius: 9px;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 3.5px;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0;
   opacity: 0;
-  transform: translateY(-8px) scale(0.96);
+  transform: translateY(-6px);
   pointer-events: none;
-  transition: opacity 0.32s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.32s cubic-bezier(0.16, 1, 0.3, 1),
-              border-color 0.25s ease;
+  transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 /* Docked State: Automatically triggered when Hero Dock scrolls past the top */
 .nav-countdown-desktop.docked {
   opacity: 1;
-  transform: translateY(0) scale(1);
+  transform: translateY(0);
   pointer-events: auto;
 }
 
-.nav-countdown-desktop .chrono-tile {
-  min-width: 27px;
-  padding: 2px 5px;
+.nav-countdown-desktop .c-unit strong {
+  font-size: 14px;
 }
 
-.nav-countdown-desktop .chrono-val {
-  font-size: 12.5px;
-}
-
-.nav-countdown-desktop .chrono-lbl {
-  font-size: 6px;
-}
-
-.nav-countdown-desktop .chrono-target-chip {
-  padding: 3px 6px;
-}
-
-.nav-countdown-desktop .chrono-target-date {
+.nav-countdown-desktop .c-unit small {
   font-size: 10px;
 }
 
-/* Mobile Countdown Badge in Top Navbar: Chrono Micro-Pill */
-.nav-countdown-mobile.chrono-mobile-hud {
-  display: none;
-  align-items: center;
-  gap: 7px;
-  height: 34px;
-  padding: 0 10px 0 8px;
-  border-radius: 8px;
-  background: linear-gradient(180deg, rgba(16, 26, 48, 0.92) 0%, rgba(7, 12, 24, 0.96) 100%);
-  border: 1px solid rgba(245, 197, 24, 0.3);
-  border-top: 1px solid rgba(255, 225, 120, 0.55);
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  user-select: none;
+.nav-countdown-desktop .c-colon {
+  font-size: 12px;
 }
 
-.chrono-mobile-val {
-  display: flex;
+/* Mobile Countdown in Top Navbar (Pure Floating Typography) */
+.nav-countdown-mobile {
+  display: none !important;
   align-items: baseline;
-  gap: 3px;
-  font-family: 'JetBrains Mono', monospace;
-  font-variant-numeric: tabular-nums;
+  gap: 2px;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0;
+  margin-right: 6px;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.nav-countdown-mobile .c-unit strong {
   font-size: 11.5px;
-  color: #FFFFFF;
 }
 
-.chrono-mobile-val strong {
-  font-weight: 800;
+.nav-countdown-mobile .c-unit small {
+  font-size: 8.5px;
 }
 
-.chrono-mobile-val small {
-  font-size: 9px;
-  font-weight: 700;
-  color: #F5C518;
-}
-
-.chrono-mobile-tag {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 9.5px;
-  font-weight: 800;
-  color: #F5C518;
-  letter-spacing: 0.5px;
-  padding-left: 6px;
-  border-left: 1px solid rgba(255, 255, 255, 0.16);
+.nav-countdown-mobile .c-colon {
+  font-size: 10px;
 }
 
 /* =========================================================================
@@ -694,6 +669,20 @@
 
   .nav-countdown-mobile {
     display: inline-flex !important;
+    gap: 2px;
+  }
+
+  .nav-countdown-mobile .c-unit strong {
+    font-size: 10px;
+  }
+
+  .nav-countdown-mobile .c-unit small {
+    font-size: 7.5px;
+  }
+
+  .nav-countdown-mobile .c-colon {
+    font-size: 9px;
+    margin: 0 0.5px;
   }
 
   .nav-hamburger-btn.option-a-trigger {
@@ -746,14 +735,12 @@
     font-size: 7.5px;
   }
 
-  .nav-countdown-mobile {
-    padding: 0 8px 0 6px;
-    height: 28px;
-    gap: 4px;
+  .nav-countdown-mobile .c-unit strong {
+    font-size: 10.5px;
   }
 
-  .c-mobile-text {
-    font-size: 10px;
+  .nav-countdown-mobile .c-unit small {
+    font-size: 8px;
   }
 
   .nav-hamburger-btn.option-a-trigger {

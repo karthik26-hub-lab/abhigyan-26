@@ -288,220 +288,81 @@
    HERO COUNTDOWN DOCK (Desktop: Beside Explore CTA, Docks to Navbar on Scroll)
    ========================================================================= */
 /* =========================================================================
-   QUANTUM TELEMETRY HUD CHRONOMETER
-   Bespoke aerospace & quantum instrumentation for live symposium countdown
+   CLEAN DIGITAL CHRONOMETER COUNTDOWN (Pure Floating Typography, No Background)
    ========================================================================= */
-.chrono-telemetry-hud {
+.countdown-clean-clock {
   display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  height: 48px;
-  padding: 0 14px 0 12px;
-  border-radius: 12px;
-  background: linear-gradient(180deg, rgba(16, 26, 48, 0.92) 0%, rgba(7, 12, 24, 0.96) 100%);
-  border: 1px solid rgba(245, 197, 24, 0.28);
-  border-top: 1px solid rgba(255, 225, 120, 0.65);
-  box-shadow: 
-    inset 0 1px 0 rgba(255, 255, 255, 0.14),
-    0 8px 24px rgba(0, 0, 0, 0.65),
-    0 0 16px rgba(245, 197, 24, 0.1);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  align-items: baseline;
+  gap: 5px;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0;
+  margin: 0;
   user-select: none;
-  transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+  -webkit-user-select: none;
 }
 
-.chrono-telemetry-hud:hover {
-  border-color: rgba(245, 197, 24, 0.6);
-  box-shadow: 
-    inset 0 1px 0 rgba(255, 255, 255, 0.22),
-    0 10px 28px rgba(0, 0, 0, 0.75),
-    0 0 20px rgba(245, 197, 24, 0.25);
-}
-
-/* Telemetry Orbital Node */
-.chrono-telemetry-node {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-shrink: 0;
-}
-
-.chrono-orbit-ring {
-  width: 15px;
-  height: 15px;
-  border-radius: 50%;
-  border: 1.5px dashed rgba(245, 197, 24, 0.65);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  animation: spinChronoOrbit 12s linear infinite;
-  flex-shrink: 0;
-}
-
-@keyframes spinChronoOrbit {
-  100% { transform: rotate(360deg); }
-}
-
-.chrono-orbit-core {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: #F5C518;
-  box-shadow: 0 0 8px #F5C518;
-  animation: pulseChronoCore 1.8s infinite ease-in-out;
-  flex-shrink: 0;
-}
-
-@keyframes pulseChronoCore {
-  0%, 100% { transform: scale(0.85); opacity: 0.8; }
-  50% { transform: scale(1.25); opacity: 1; box-shadow: 0 0 12px #FFD54F; }
-}
-
-.chrono-status-stack {
-  display: flex;
-  flex-direction: column;
+.countdown-clean-clock .c-unit {
+  display: inline-flex;
+  align-items: baseline;
   gap: 1.5px;
 }
 
-.chrono-status-top {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 8px;
-  font-weight: 800;
-  letter-spacing: 1.2px;
-  color: #F5C518;
-  line-height: 1;
-}
-
-.chrono-status-sub {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 7px;
-  font-weight: 700;
-  letter-spacing: 0.7px;
-  color: #94A3B8;
-  line-height: 1;
-  text-transform: uppercase;
-}
-
-.chrono-hairline {
-  width: 1px;
-  height: 22px;
-  background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.18), transparent);
-  flex-shrink: 0;
-}
-
-/* Precision Grid Tiles */
-.chrono-grid-tiles {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.chrono-tile {
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 6px;
-  padding: 3px 6px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-width: 30px;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
-}
-
-.chrono-val {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 13.5px;
+.countdown-clean-clock .c-unit strong {
+  font-family: 'JetBrains Mono', -apple-system, BlinkMacSystemFont, monospace;
+  font-size: 16px;
   font-weight: 800;
   color: #FFFFFF;
   line-height: 1;
   font-variant-numeric: tabular-nums;
-  text-shadow: 0 0 10px rgba(245, 197, 24, 0.25);
+  letter-spacing: -0.3px;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9), 0 0 12px rgba(245, 197, 24, 0.25);
 }
 
-.chrono-lbl {
+.countdown-clean-clock .c-unit small {
   font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 6.5px;
+  font-size: 11.5px;
   font-weight: 700;
-  letter-spacing: 0.6px;
-  color: #94A3B8;
-  text-transform: uppercase;
-  line-height: 1;
-  margin-top: 2.5px;
-}
-
-.chrono-colon-pips {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-  padding: 0 1px;
-}
-
-.chrono-pip {
-  width: 2.5px;
-  height: 2.5px;
-  border-radius: 50%;
-  background: #F5C518;
-  opacity: 0.75;
-}
-
-/* Target Chip */
-.chrono-target-chip {
-  display: flex;
-  align-items: baseline;
-  gap: 4px;
-  background: rgba(245, 197, 24, 0.08);
-  border: 1px solid rgba(245, 197, 24, 0.22);
-  border-radius: 6px;
-  padding: 4px 8px;
-  flex-shrink: 0;
-}
-
-.chrono-target-date {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.6px;
   color: #F5C518;
-  white-space: nowrap;
+  line-height: 1;
+  text-transform: lowercase;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.8);
 }
 
-.chrono-target-sub {
+.countdown-clean-clock .c-colon {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 8.5px;
+  font-size: 14px;
   font-weight: 700;
-  color: #94A3B8;
-  letter-spacing: 0.5px;
+  color: rgba(245, 197, 24, 0.75);
+  line-height: 1;
+  margin: 0 1px;
+  text-shadow: 0 0 8px rgba(245, 197, 24, 0.4);
+}
+
+/* Hero specific alignment beside Explore CTA */
+.hero-countdown-dock.countdown-clean-clock {
+  margin-left: 6px;
+  align-self: center;
 }
 
 @media (max-width: 600px) {
-  .hero-countdown-dock.chrono-telemetry-hud {
-    width: 100%;
-    max-width: 360px;
+  .hero-countdown-dock.countdown-clean-clock {
+    margin: 4px auto 0;
     justify-content: center;
-    gap: 6px;
-    padding: 0 8px;
-    height: 44px;
-    margin: 0 auto;
+    gap: 4px;
   }
 
-  .hero-countdown-dock .chrono-target-chip,
-  .hero-countdown-dock .chrono-hairline:last-of-type {
-    display: none;
+  .hero-countdown-dock.countdown-clean-clock .c-unit strong {
+    font-size: 14px;
   }
 
-  .hero-countdown-dock .chrono-tile {
-    min-width: 26px;
-    padding: 2px 4px;
+  .hero-countdown-dock.countdown-clean-clock .c-unit small {
+    font-size: 10.5px;
   }
 
-  .hero-countdown-dock .chrono-val {
-    font-size: 12px;
-  }
-
-  .hero-countdown-dock .chrono-lbl {
-    font-size: 5.5px;
+  .hero-countdown-dock.countdown-clean-clock .c-colon {
+    font-size: 12.5px;
   }
 }
 
