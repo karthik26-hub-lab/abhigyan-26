@@ -6,30 +6,26 @@
 export function toggleNavMobileMenu(open) {
   const overlay = document.getElementById('mobileNavOverlay');
   const backdrop = document.getElementById('curvedMenuBackdrop');
-  const curvePath = document.getElementById('curvedSvgPath');
+  const trigger = document.getElementById('navHamburgerBtn');
   if (!overlay) return;
 
-  const h = window.innerHeight || 800;
+  const shouldOpen = (typeof open === 'boolean') ? open : !overlay.classList.contains('active');
 
-  if (open) {
+  if (shouldOpen) {
     if (backdrop) backdrop.classList.add('active');
     overlay.classList.add('active');
+    if (trigger) {
+      trigger.classList.add('active');
+      trigger.setAttribute('aria-expanded', 'true');
+    }
     document.body.style.overflow = 'hidden';
-
-    // Morph curve: initial outward organic bulge -> settled curve
-    if (curvePath) {
-      curvePath.setAttribute('d', `M100 0 L100 ${h} Q -80 ${h / 2} 100 0`);
-      setTimeout(() => {
-        curvePath.setAttribute('d', `M100 0 L100 ${h} Q 100 ${h / 2} 100 0`);
-      }, 350);
-    }
   } else {
-    // Morph curve when pulling back
-    if (curvePath) {
-      curvePath.setAttribute('d', `M100 0 L100 ${h} Q -60 ${h / 2} 100 0`);
-    }
     if (backdrop) backdrop.classList.remove('active');
     overlay.classList.remove('active');
+    if (trigger) {
+      trigger.classList.remove('active');
+      trigger.setAttribute('aria-expanded', 'false');
+    }
     document.body.style.overflow = '';
   }
 }
@@ -56,16 +52,6 @@ const MOBILE_NAV_ITEMS = [
   { label: 'FAQ', href: '#faq' }
 ];
 
-function updateCurveHeight() {
-  const svg = document.querySelector('.curved-svg-edge');
-  const path = document.getElementById('curvedSvgPath');
-  if (!svg || !path) return;
-  const h = window.innerHeight || 800;
-  svg.setAttribute('viewBox', `0 0 100 ${h}`);
-  path.setAttribute('d', `M100 0 L100 ${h} Q 100 ${h / 2} 100 0`);
-}
-window.addEventListener('resize', updateCurveHeight);
-
 export function initNavbar() {
   const navbar = document.getElementById('globalNavbar');
   const navContainer = document.getElementById('mainNavLinks');
@@ -74,8 +60,6 @@ export function initNavbar() {
 
   let isProgrammaticScroll = false;
   let scrollTimeout = null;
-
-  updateCurveHeight();
 
   // Function to move the floating glider under a specific link element
   function moveGliderTo(link) {

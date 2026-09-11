@@ -272,59 +272,206 @@
   }
 }
 
-.nav-btn-reg:hover::before {
-  width: 8.5em;
+/* =========================================================================
+   DESKTOP DOCKED COUNTDOWN & MOBILE COUNTDOWN PILLS
+   ========================================================================= */
+.nav-countdown-desktop {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: 38px;
+  padding: 0 16px 0 14px;
+  border-radius: 999px;
+  background: rgba(10, 16, 28, 0.82);
+  border: 1px solid rgba(245, 197, 24, 0.35);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
+  user-select: none;
+  opacity: 0;
+  transform: translateY(-8px) scale(0.96);
+  pointer-events: none;
+  transition: opacity 0.32s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.32s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.25s ease;
 }
 
-.nav-btn-reg:active {
-  transform: translateY(1px);
+/* Docked State: Automatically triggered when Hero Dock scrolls past the top */
+.nav-countdown-desktop.docked {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
 }
 
-/* Mobile Hamburger Trigger Button */
-.nav-hamburger-btn {
+.nav-countdown-desktop .countdown-digits {
+  font-size: 13px;
+  gap: 3px;
+}
+
+.nav-countdown-desktop .countdown-unit strong {
+  font-size: 13.5px;
+}
+
+.nav-countdown-desktop .countdown-unit small {
+  font-size: 10px;
+}
+
+.countdown-nav-tag {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  color: #F5C518;
+  padding-left: 6px;
+  border-left: 1px solid rgba(255, 255, 255, 0.15);
+  text-transform: uppercase;
+}
+
+/* Mobile Countdown Badge in Top Navbar */
+.nav-countdown-mobile {
   display: none;
   align-items: center;
-  justify-content: center;
-  background: rgba(255, 255, 255, 0.07);
-  border: 1px solid rgba(255, 255, 255, 0.16);
+  gap: 6px;
+  height: 32px;
+  padding: 0 10px 0 8px;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.75);
+  border: 1px solid rgba(245, 197, 24, 0.32);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  user-select: none;
+}
+
+.c-mobile-text {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 11.5px;
+  font-weight: 600;
   color: #E2E8F0;
-  width: 40px;
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+}
+
+.c-mobile-text strong {
+  color: #F5C518;
+  font-weight: 800;
+}
+
+/* =========================================================================
+   OPTION A: MODERN STAGGERED 2-BAR WITH QUANTUM DOT TRIGGER
+   ========================================================================= */
+.nav-hamburger-btn.option-a-trigger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 5px;
+  background: rgba(15, 23, 42, 0.65);
+  border: 1px solid rgba(245, 197, 24, 0.32);
+  width: 42px;
   height: 38px;
-  border-radius: 8px;
+  border-radius: 10px;
+  padding: 0 10px;
   cursor: pointer;
-  padding: 0;
-  transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease;
+  position: relative;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   -webkit-tap-highlight-color: transparent;
 }
 
-.nav-hamburger-btn:hover,
-.nav-hamburger-btn:active {
-  background: rgba(0, 229, 255, 0.14);
-  border-color: rgba(0, 229, 255, 0.45);
-  color: #00E5FF;
+.nav-hamburger-btn.option-a-trigger:hover {
+  background: rgba(245, 197, 24, 0.12);
+  border-color: rgba(245, 197, 24, 0.7);
+  box-shadow: 0 4px 18px rgba(245, 197, 24, 0.25);
+}
+
+.bar-line {
+  display: block;
+  height: 2px;
+  background: #F8FAFC;
+  border-radius: 2px;
+  transition: all 0.26s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+
+.bar-top {
+  width: 21px;
+}
+
+.bar-lower-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  width: 21px;
+  pointer-events: none;
+}
+
+.bar-bottom {
+  width: 13px;
+}
+
+.nav-quantum-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #F5C518;
+  box-shadow: 0 0 8px #F5C518;
+  animation: pulseQuantumDot 2s infinite ease-in-out;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+@keyframes pulseQuantumDot {
+  0%, 100% {
+    opacity: 0.7;
+    transform: scale(0.9);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.3);
+    box-shadow: 0 0 10px #F5C518;
+  }
+}
+
+/* Active State (When drawer is open): Morphs into a crisp, minimalist X */
+.nav-hamburger-btn.option-a-trigger.active .bar-top {
+  transform: translateY(3.5px) rotate(45deg);
+  width: 20px;
+  background: #F5C518;
+}
+
+.nav-hamburger-btn.option-a-trigger.active .bar-lower-row {
+  gap: 0;
+}
+
+.nav-hamburger-btn.option-a-trigger.active .bar-bottom {
+  transform: translateY(-3.5px) rotate(-45deg);
+  width: 20px;
+  background: #F5C518;
+}
+
+.nav-hamburger-btn.option-a-trigger.active .nav-quantum-dot {
+  opacity: 0;
+  transform: scale(0);
 }
 
 /* =========================================================================
-/* =========================================================================
-   CURVED MOBILE NAVIGATION SHEET (Right-aligned, organic SVG curve)
-   Layout matching curved-menu specification with Quantum Bharat theme
+   MOBILE NAVIGATION DRAWER (~68% width, zero lag, luxury editorial)
    ========================================================================= */
 
-/* Dimmed backdrop overlay covering the rest of the screen */
+/* Dimmed backdrop overlay covering the remaining 32% of the screen */
 .curved-menu-backdrop {
   position: fixed;
   inset: 0;
   width: 100vw;
   height: 100vh;
   height: 100dvh;
-  background: rgba(2, 6, 16, 0.72);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background: rgba(2, 6, 16, 0.65);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
   z-index: 9998;
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  transition: opacity 0.45s ease, visibility 0.45s ease;
+  transition: opacity 0.26s ease, visibility 0.26s ease;
 }
 
 .curved-menu-backdrop.active {
@@ -333,26 +480,26 @@
   pointer-events: auto;
 }
 
-/* Sliding curved drawer anchored to the right */
+/* Sliding drawer anchored to the right: covers 68% of screen, max 300px */
 .curved-menu-drawer {
   position: fixed;
   top: 0;
   right: 0;
   bottom: 0;
-  width: min(86vw, 390px);
+  width: min(70vw, 300px);
   height: 100vh;
   height: 100dvh;
-  background: #050a18;
-  border-left: 1px solid rgba(245, 197, 24, 0.22);
+  background: #060B18;
+  border-left: 1px solid rgba(245, 197, 24, 0.25);
   z-index: 9999;
-  box-shadow: -16px 0 50px rgba(0, 0, 0, 0.85);
-  transform: translateX(calc(100% + 100px));
-  transition: transform 0.8s cubic-bezier(0.76, 0, 0.24, 1);
+  box-shadow: -14px 0 45px rgba(0, 0, 0, 0.85);
+  transform: translateX(100%);
+  transition: transform 0.26s cubic-bezier(0.16, 1, 0.3, 1);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  overflow: visible;
   box-sizing: border-box;
+  will-change: transform;
 }
 
 .curved-menu-drawer.active {
@@ -361,24 +508,8 @@
 
 @media (prefers-reduced-motion: reduce) {
   .curved-menu-drawer {
-    transition: transform 0.2s ease !important;
+    transition: transform 0.15s ease !important;
   }
-}
-
-/* Organic SVG Curve attached to drawer's left edge */
-.curved-svg-edge {
-  position: absolute;
-  top: 0;
-  left: -99px;
-  width: 100px;
-  height: 100%;
-  pointer-events: none;
-  fill: #050a18;
-  z-index: 1;
-}
-
-.curved-svg-edge path {
-  transition: d 0.8s cubic-bezier(0.76, 0, 0.24, 1);
 }
 
 /* Content Container */
@@ -387,7 +518,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 36px 32px max(32px, env(safe-area-inset-bottom, 32px));
+  padding: 32px 24px max(28px, env(safe-area-inset-bottom, 28px));
   position: relative;
   z-index: 2;
   box-sizing: border-box;
@@ -400,17 +531,25 @@
   align-items: center;
   justify-content: space-between;
   padding-bottom: 16px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
   margin-bottom: 12px;
 }
 
 .curved-nav-label {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11.5px;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 12px;
   font-weight: 700;
-  letter-spacing: 2.2px;
+  letter-spacing: 1.5px;
   text-transform: uppercase;
   color: #94A3B8;
+}
+
+.curved-menu-watermark {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  color: #64748B;
+  letter-spacing: 0.5px;
 }
 
 .curved-close-btn {
@@ -543,8 +682,16 @@
     display: none !important;
   }
 
-  .nav-hamburger-btn {
+  .nav-countdown-desktop {
+    display: none !important;
+  }
+
+  .nav-countdown-mobile {
     display: inline-flex !important;
+  }
+
+  .nav-hamburger-btn.option-a-trigger {
+    display: flex !important;
   }
 
   .global-navbar .nav-actions {
@@ -577,20 +724,6 @@
     font-size: 8px;
     letter-spacing: 0.8px;
   }
-
-  .nav-btn-reg {
-    font-size: 11.5px;
-    width: 7.6em;
-    height: 2.6em;
-  }
-
-  .nav-btn-reg::before {
-    height: 2.6em;
-  }
-
-  .nav-btn-reg:hover::before {
-    width: 7.6em;
-  }
 }
 
 @media (max-width: 380px) {
@@ -607,22 +740,19 @@
     font-size: 7.5px;
   }
 
-  .nav-btn-reg {
-    font-size: 11px;
-    width: 7.2em;
-    height: 2.5em;
+  .nav-countdown-mobile {
+    padding: 0 8px 0 6px;
+    height: 28px;
+    gap: 4px;
   }
 
-  .nav-btn-reg::before {
-    height: 2.5em;
+  .c-mobile-text {
+    font-size: 10px;
   }
 
-  .nav-btn-reg:hover::before {
-    width: 7.2em;
-  }
-
-  .nav-hamburger-btn {
-    width: 36px;
+  .nav-hamburger-btn.option-a-trigger {
+    width: 38px;
     height: 34px;
+    padding: 0 8px;
   }
 }

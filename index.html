@@ -98,15 +98,36 @@
           <span class="nav-active-glider" id="navActiveGlider" aria-hidden="true"></span>
         </nav>
 
-        <!-- Right Quick Actions: Hamburger (Mobile) + Replay (Desktop) + Register -->
+        <!-- Right Quick Actions: Countdown Pills + Option A Staggered Trigger -->
         <div class="nav-actions">
-          <!-- Mobile Hamburger Toggle (Positioned between Logo and Register on Mobile) -->
-          <button class="nav-hamburger-btn" id="navHamburgerBtn" type="button" aria-label="Open Navigation Menu" onclick="toggleNavMobileMenu(true)">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="3" y1="6" x2="21" y2="6"></line>
-              <line x1="3" y1="12" x2="21" y2="12"></line>
-              <line x1="3" y1="18" x2="21" y2="18"></line>
-            </svg>
+          <!-- Desktop Docked Countdown (Scroll-revealed when hero dock leaves view) -->
+          <div class="nav-countdown-desktop" id="navCountdownDesktop" aria-label="Countdown to Symposium">
+            <span class="countdown-pulse-dot" aria-hidden="true"></span>
+            <div class="countdown-digits">
+              <span class="countdown-unit"><strong class="c-days">00</strong><small>d</small></span>
+              <span class="countdown-colon">:</span>
+              <span class="countdown-unit"><strong class="c-hours">00</strong><small>h</small></span>
+              <span class="countdown-colon">:</span>
+              <span class="countdown-unit"><strong class="c-mins">00</strong><small>m</small></span>
+              <span class="countdown-colon">:</span>
+              <span class="countdown-unit"><strong class="c-secs">00</strong><small>s</small></span>
+            </div>
+            <span class="countdown-nav-tag">24 SEP</span>
+          </div>
+
+          <!-- Mobile Countdown (Compact, persistent before menu trigger) -->
+          <div class="nav-countdown-mobile" id="navCountdownMobile" aria-label="Countdown to Symposium">
+            <span class="countdown-pulse-dot" aria-hidden="true"></span>
+            <span class="c-mobile-text"><strong class="c-days">00</strong>d <strong class="c-hours">00</strong>h left</span>
+          </div>
+
+          <!-- Option A Modern Staggered 2-Bar with Quantum Dot Trigger -->
+          <button class="nav-hamburger-btn option-a-trigger" id="navHamburgerBtn" type="button" aria-label="Toggle Navigation Menu" onclick="toggleNavMobileMenu(true)">
+            <span class="bar-line bar-top" aria-hidden="true"></span>
+            <span class="bar-lower-row" aria-hidden="true">
+              <span class="bar-line bar-bottom"></span>
+              <span class="nav-quantum-dot"></span>
+            </span>
           </button>
         </div>
       </div>
@@ -115,19 +136,13 @@
     <!-- Dimmed Backdrop Overlay (Closes menu on tap) -->
     <div class="curved-menu-backdrop" id="curvedMenuBackdrop" onclick="toggleNavMobileMenu(false)" aria-hidden="true"></div>
 
-    <!-- Curved Mobile Navigation Drawer (Right-aligned, organic SVG curve, High-Fashion Editorial) -->
+    <!-- Mobile Navigation Drawer (~68% width, zero lag, luxury editorial) -->
     <aside class="curved-menu-drawer" id="mobileNavOverlay" role="dialog" aria-modal="true" aria-label="Mobile Navigation Menu">
-      
-      <!-- Organic SVG Curve Attached to Drawer Left Edge -->
-      <svg class="curved-svg-edge" viewBox="0 0 100 800" preserveAspectRatio="none" aria-hidden="true">
-        <path id="curvedSvgPath" d="M100 0 L100 800 Q 100 400 100 0" fill="#050a18"></path>
-      </svg>
-
       <div class="curved-menu-content">
         
         <!-- Header: Navigation label + Close button -->
         <div class="curved-menu-header">
-          <span class="curved-nav-label">Navigation</span>
+          <span class="curved-nav-label">Menu</span>
           <button class="curved-close-btn" id="mobileNavCloseBtn" type="button" aria-label="Close navigation" onclick="toggleNavMobileMenu(false)">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
               <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -160,11 +175,9 @@
           </a>
         </nav>
 
-        <!-- Footer Action: Register Button + Replay Intro -->
+        <!-- Footer: Symposium metadata watermark -->
         <div class="curved-menu-footer">
-          <button class="curved-reg-btn" type="button" onclick="toggleNavMobileMenu(false); openRegistrationModal();">
-            Register
-          </button>
+          <span class="curved-menu-watermark">Abhigyan '26 · 24 Sep</span>
         </div>
 
       </div>
@@ -206,20 +219,31 @@
               </div>
             </div>
 
-            <!-- Action CTAs with Distinct Hierarchy: Explore, Register, and Team -->
+            <!-- Action CTAs: Streamlined Explore Arenas + Live Countdown Dock -->
             <div class="hero-action-cluster">
-              <a href="#events" class="btn-primary-explore" id="btnExploreArenas" role="button" aria-label="Explore 11 Arenas">
-                <span>Explore 11 Arenas</span>
+              <a href="#events" class="btn-primary-explore" id="btnExploreArenas" role="button" aria-label="Explore 11 Arenas and Register">
+                <span>Explore 11 Arenas &amp; Register</span>
                 <span class="btn-arrow-disk" aria-hidden="true">
                   <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
-                    <path d="M1.5 12.5L12.5 1.5M12.5 1.5H3.5M12.5 1.5V10.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M7 1v12M1 7l6 6 6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
                   </svg>
                 </span>
               </a>
 
-              <button class="btn-secondary-reg" id="btnRegisterTeam" type="button" onclick="openRegistrationModal()">
-                Register Team
-              </button>
+              <!-- Desktop Hero Countdown Capsule (Seamlessly docks to navbar on scroll) -->
+              <div class="hero-countdown-dock" id="heroCountdownDock" aria-label="Countdown to 24 September 2026">
+                <span class="countdown-pulse-dot" aria-hidden="true"></span>
+                <div class="countdown-digits">
+                  <span class="countdown-unit"><strong class="c-days">00</strong><small>d</small></span>
+                  <span class="countdown-colon">:</span>
+                  <span class="countdown-unit"><strong class="c-hours">00</strong><small>h</small></span>
+                  <span class="countdown-colon">:</span>
+                  <span class="countdown-unit"><strong class="c-mins">00</strong><small>m</small></span>
+                  <span class="countdown-colon">:</span>
+                  <span class="countdown-unit"><strong class="c-secs">00</strong><small>s</small></span>
+                </div>
+                <span class="countdown-hero-tag">24 SEP</span>
+              </div>
             </div>
 
 
@@ -449,7 +473,7 @@
                 <div class="venue-fact-value">
                   <div class="venue-val-primary">SRM Institute of Science and Technology, Vadapalani Campus</div>
                   <div class="venue-val-secondary">No. 1, Jawaharlal Nehru Salai (100 Feet Road), Vadapalani, Chennai, Tamil Nadu — 600026</div>
-                  <div class="venue-val-stage">Main Auditorium &amp; Department of ECE (4th Floor)</div>
+                  <div class="venue-val-stage">Main Auditorium &amp; Department of ECE (3rd Floor)</div>
                 </div>
               </div>
 
@@ -867,7 +891,6 @@
         <button class="poster-lightbox-close" onclick="closePosterLightbox()" aria-label="Close poster" type="button">✕</button>
         
         <div class="poster-lightbox-header">
-          <span class="poster-lightbox-tag">OFFICIAL ARENA POSTER</span>
           <h3 class="poster-lightbox-title" id="posterLightboxTitle">Event Name</h3>
         </div>
 

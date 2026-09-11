@@ -284,29 +284,100 @@
   transform: translate(2px, -2px);
 }
 
-/* Secondary CTA: Architectural Outline / Ghost Button */
-.btn-secondary-reg {
+/* =========================================================================
+   HERO COUNTDOWN DOCK (Desktop: Beside Explore CTA, Docks to Navbar on Scroll)
+   ========================================================================= */
+.hero-countdown-dock {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  background: transparent;
-  color: #F8FAFC;
-  border: 1px solid rgba(255, 255, 255, 0.24);
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 14px;
-  font-weight: 600;
-  letter-spacing: 0.2px;
+  gap: 12px;
   height: 48px;
-  padding: 0 24px;
+  padding: 0 18px 0 16px;
   border-radius: 999px;
-  cursor: pointer;
-  transition: border-color 0.2s ease, background-color 0.2s ease, transform 0.2s ease;
+  background: rgba(10, 16, 28, 0.72);
+  border: 1px solid rgba(245, 197, 24, 0.35);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  user-select: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.btn-secondary-reg:hover {
-  border-color: rgba(255, 255, 255, 0.55);
-  background: rgba(255, 255, 255, 0.08);
-  transform: translateY(-1px);
+.hero-countdown-dock:hover {
+  border-color: rgba(245, 197, 24, 0.75);
+  box-shadow: 0 6px 24px rgba(245, 197, 24, 0.18), 0 4px 14px rgba(0, 0, 0, 0.5);
+}
+
+.countdown-pulse-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #F5C518;
+  box-shadow: 0 0 10px #F5C518;
+  animation: pulseGoldGlow 2s infinite ease-in-out;
+  flex-shrink: 0;
+}
+
+@keyframes pulseGoldGlow {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.85;
+    box-shadow: 0 0 6px rgba(245, 197, 24, 0.6);
+  }
+  50% {
+    transform: scale(1.35);
+    opacity: 1;
+    box-shadow: 0 0 14px rgba(245, 197, 24, 1);
+  }
+}
+
+.countdown-digits {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: #F8FAFC;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+
+.countdown-unit {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 1px;
+}
+
+.countdown-unit strong {
+  font-size: 15px;
+  font-weight: 800;
+  color: #FFFFFF;
+  letter-spacing: -0.2px;
+}
+
+.countdown-unit small {
+  font-size: 11px;
+  font-weight: 600;
+  color: #F5C518;
+  text-transform: lowercase;
+}
+
+.countdown-colon {
+  color: rgba(245, 197, 24, 0.6);
+  font-weight: 600;
+  font-size: 13px;
+  margin: 0 1px;
+}
+
+.countdown-hero-tag {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #94A3B8;
+  padding-left: 8px;
+  border-left: 1px solid rgba(255, 255, 255, 0.15);
+  text-transform: uppercase;
 }
 
 

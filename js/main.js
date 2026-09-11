@@ -12,6 +12,7 @@ import { initFAQ } from './faq.js';
 import { initVenue } from './venue.js';
 import { initShootingStars } from './shootingstars.js';
 import { initChakraStarfield } from './chakra-stars.js';
+import { initCountdown } from './countdown.js';
 
 function initApp() {
   initNavbar();
@@ -21,6 +22,7 @@ function initApp() {
   initFAQ();
   initShootingStars();
   initChakraStarfield();
+  initCountdown();
   initParallax();
   applySettledOrIntro();
   initBannerCoverageGuard();
