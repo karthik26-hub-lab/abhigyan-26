@@ -311,31 +311,6 @@
   font-size: 12px;
 }
 
-/* Mobile Countdown in Top Navbar (Pure Floating Typography) */
-.nav-countdown-mobile {
-  display: none !important;
-  align-items: baseline;
-  gap: 2px;
-  background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
-  padding: 0;
-  margin-right: 6px;
-  user-select: none;
-  -webkit-user-select: none;
-}
-
-.nav-countdown-mobile .c-unit strong {
-  font-size: 11.5px;
-}
-
-.nav-countdown-mobile .c-unit small {
-  font-size: 8.5px;
-}
-
-.nav-countdown-mobile .c-colon {
-  font-size: 10px;
-}
 
 /* =========================================================================
    OPTION A: MODERN STAGGERED 2-BAR WITH QUANTUM DOT TRIGGER
@@ -667,24 +642,6 @@
     display: none !important;
   }
 
-  .nav-countdown-mobile {
-    display: inline-flex !important;
-    gap: 2px;
-  }
-
-  .nav-countdown-mobile .c-unit strong {
-    font-size: 10px;
-  }
-
-  .nav-countdown-mobile .c-unit small {
-    font-size: 7.5px;
-  }
-
-  .nav-countdown-mobile .c-colon {
-    font-size: 9px;
-    margin: 0 0.5px;
-  }
-
   .nav-hamburger-btn.option-a-trigger {
     display: flex !important;
   }
@@ -735,13 +692,6 @@
     font-size: 7.5px;
   }
 
-  .nav-countdown-mobile .c-unit strong {
-    font-size: 10.5px;
-  }
-
-  .nav-countdown-mobile .c-unit small {
-    font-size: 8px;
-  }
 
   .nav-hamburger-btn.option-a-trigger {
     width: 38px;
