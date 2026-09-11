@@ -28,9 +28,10 @@ export const EVENTS_DATA = [
     fee: 'Rs. 140 per team',
     teamSize: 'Team of 2',
     format: 'Creative Poster Making Challenge',
-    faculty: 'Dr. T Jayachitra (+91 99719 28312)',
+    faculty: 'Dr. T.S. Balaji (+91 97107 69781)',
     students: 'Harini S (ECE) [+91 88386 11051], Jaffrine Refina R (ECE DS) [+91 78456 07087]',
     poster: '/assets/posters/quantum_imprint_poster.jpg',
+    regLink: 'https://forms.gle/D1d5Zjf1rsMUjkQo9',
     fullDesc: 'This event is a creative poster-making challenge where participants will be given a specific theme or technical concept and asked to visually represent it through an original poster. The activity will test their creativity, design skills, conceptual understanding, and ability to communicate an idea effectively through visual elements. Participants will work within a given time limit, and the entries will be evaluated based on creativity, relevance to the theme, visual appeal, originality, and clarity of presentation.'
   },
   {
@@ -41,8 +42,9 @@ export const EVENTS_DATA = [
     fee: 'Rs. 150 per team',
     teamSize: 'Team of 3',
     format: 'Bit & Brain 2-Round Technical Game',
-    faculty: 'Dr. P Glaret Subin (94453 81372)',
-    students: 'Bhavana (ECE) [+91 81229 99413], Anju (ECE)',
+    faculty: 'Dr. Glaret Subin (+91 94453 81372)',
+    students: 'Bhavana (ECE) [+91 81229 99413], Anju Elizabeth (ECE) [+91 73053 18781]',
+    poster: '/assets/posters/binary_bingo_poster.jpg',
     fullDesc: 'Bit & Brain is a two-round technical game designed to test participants\u2019 number-system skills, speed, teamwork, and creativity. In Round 1 \u2013 Number System Bingo, participants convert numbers announced in binary, octal, or hexadecimal into decimal and mark the corresponding numbers on their Bingo sheet to complete the required pattern. In Round 2 \u2013 ECE Draw & Guess, participants work in teams where one member draws a whispered ECE-related word without speaking or writing, while the teammates try to guess it within 30 seconds. The team with the highest score in Round 2 wins, making the event a fun combination of technical knowledge, quick thinking, communication, and teamwork.'
   },
   {
@@ -70,7 +72,7 @@ export const EVENTS_DATA = [
     faculty: 'Dr. P Rathinakumar (94862 43234)',
     students: 'Swethaasankari (ECE DS) [+91 99946 59486], Swetha S [+91 98404 44134]',
     poster: '/assets/posters/quantum_bits_poster.jpg',
-    regLink: 'https://docs.google.com/forms/d/e/1FAIpQLScOFA59jcoiRNC1Q8I_o7Gszl7Rl1Pe93HlopUQA1SF_lVZHQ/viewform',
+    regLink: 'https://q.me-qr.com/qh403zow',
     fullDesc: 'Quantum Bits is a three-round technical quiz designed to challenge participants\u2019 technical knowledge, analytical thinking, and ability to connect concepts across quantum technology, electronics, communication, computing, and emerging technologies.'
   },
 
@@ -85,9 +87,10 @@ export const EVENTS_DATA = [
     fee: 'Rs. 155 per team',
     teamSize: 'Team of 3',
     format: 'Campus-Wide Cryptic Treasure Hunt',
-    faculty: 'Dr. Manikandan Devaraj (+91 93457 99777)',
-    students: 'Nethra [+91 94456 64419], Sagana [+91 94455 41207]',
+    faculty: 'Dr. S Daphin Lilda (+91 74015 63458)',
+    students: 'Sagana [+91 94455 41207], Nithilam [+91 94447 02609]',
     poster: '/assets/posters/byte_hunt_poster.jpg',
+    regLink: 'https://docs.google.com/forms/d/e/1FAIpQLSfHb62IaO3Tp2NPZGXmpD9ycHaHur3KopJO-5z_4tlLKMd2xw/viewform',
     fullDesc: 'Clues will be hidden all over the campus and it is upto you to find the clues and crack them. Hints will be provided. Only quick thinking, communication and speed can lead your team to the ultimate treasure!'
   },
   {
@@ -113,7 +116,9 @@ export const EVENTS_DATA = [
     teamSize: 'Team of 4',
     format: 'Live Strategic Budget Bidding',
     faculty: 'Dr. Sanjay Kumar (94574 78916)',
-    students: 'Varun Raj (ECE) [+91 97785 43734], Tharunika (ECE)',
+    students: 'Varun Raj (ECE) [+91 97785 43734], Tharunika (ECE) [+91 78240 21263]',
+    poster: '/assets/posters/ipl_auction_poster.jpg',
+    regLink: 'https://docs.google.com/forms/d/e/1FAIpQLSdKuvzUbCUPtkqLX8cHtc891UDMvr9DYiMp1ut7cp0qdP3wPQ/viewform',
     fullDesc: 'An IPL-based quiz will be conducted to shortlist the top 10 participants for the main event. The shortlisted participants will then take part in a live IPL auction, where they build their own teams using a fixed virtual budget. The event combines cricket knowledge, strategy, bidding, decision-making, and budget management, making it competitive, interactive, and entertaining.'
   },
   {
@@ -141,6 +146,7 @@ export const EVENTS_DATA = [
     faculty: 'Dr. Manikandan Devaraj (+91 93457 99777)',
     students: 'Lathika [+91 80728 52523], Lakshmi [+91 63851 22276]',
     poster: '/assets/posters/muted_mayhem_poster.jpg',
+    regLink: 'https://forms.gle/Rs2yrtPdUZd7kE95A',
     fullDesc: 'Get ready for a chaotic battle of lip-reading, guessing, and hilarious misunderstandings! In Muted Mayhem, one teammate wears headphones with loud music while the others mouth out words or phrases for them to guess within a limited time. With communication completely muted, only teamwork, expressions, and quick thinking can lead your team to victory!'
   },
   {
