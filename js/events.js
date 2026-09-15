@@ -86,7 +86,7 @@ export const EVENTS_DATA = [
     title: 'Byte Hunt',
     category: 'non-technical',
     seq: '01',
-    fee: 'Rs. 155 per team',
+    fee: 'Rs. 180 per team',
     teamSize: 'Team of 3',
     format: 'Campus-Wide Cryptic Treasure Hunt',
     faculty: 'Dr. S Daphin Lilda (+91 74015 63458)',

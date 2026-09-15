@@ -31,15 +31,17 @@ export function toggleNavMobileMenu(open) {
 }
 
 export function handleMobileNavClick(e, targetHref) {
+  if (e) e.preventDefault();
   toggleNavMobileMenu(false);
   if (targetHref && targetHref.startsWith('#')) {
     const targetEl = document.querySelector(targetHref);
     if (targetEl) {
-      e.preventDefault();
       if (window.setActiveNavLink) {
         window.setActiveNavLink(targetHref);
       }
-      targetEl.scrollIntoView({ behavior: 'smooth' });
+      setTimeout(() => {
+        targetEl.scrollIntoView({ behavior: 'smooth' });
+      }, 60);
     }
   }
 }
@@ -84,11 +86,11 @@ export function initNavbar() {
       }
     });
 
-    const mobileIdx = MOBILE_NAV_ITEMS.findIndex(item => item.href === targetHref);
-    if (mobileIdx !== -1) {
-      activeSidebarIndex = mobileIdx;
-      startLoop();
-    }
+    const mobileLinks = document.querySelectorAll('.curved-nav-link');
+    mobileLinks.forEach(link => {
+      const match = link.getAttribute('href') === targetHref;
+      link.classList.toggle('active', match);
+    });
   }
 
   window.setActiveNavLink = setActiveNavLink;

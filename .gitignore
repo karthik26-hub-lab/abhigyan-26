@@ -1,4 +1,4 @@
-﻿# Dependencies
+# Dependencies
 node_modules/
 
 # OS / System
@@ -9,3 +9,6 @@ Thumbs.db
 # Temporary test captures
 mobile_test*.png
 mobile_390_settled.png
+
+# User drop folder (files mirrored to assets/posters/)
+final posters/
