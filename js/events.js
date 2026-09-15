@@ -47,6 +47,7 @@ export const EVENTS_DATA = [
     faculty: 'Dr. Glaret Subin (+91 94453 81372)',
     students: 'Bhavana (ECE) [+91 81229 99413], Anju Elizabeth (ECE) [+91 73053 18781]',
     poster: '/assets/posters/binary_bingo_poster.jpg',
+    regLink: 'https://forms.gle/BjXyijCJuctk7rRB8',
     fullDesc: 'Bit & Brain is a two-round technical game designed to test participants\u2019 number-system skills, speed, teamwork, and creativity. In Round 1 \u2013 Number System Bingo, participants convert numbers announced in binary, octal, or hexadecimal into decimal and mark the corresponding numbers on their Bingo sheet to complete the required pattern. In Round 2 \u2013 ECE Draw & Guess, participants work in teams where one member draws a whispered ECE-related word without speaking or writing, while the teammates try to guess it within 30 seconds. The team with the highest score in Round 2 wins, making the event a fun combination of technical knowledge, quick thinking, communication, and teamwork.'
   },
   {
@@ -74,7 +75,7 @@ export const EVENTS_DATA = [
     faculty: 'Dr. P Rathinakumar (94862 43234)',
     students: 'Swethaasankari (ECE DS) [+91 99946 59486], Swetha S [+91 98404 44134]',
     poster: '/assets/posters/quantum_bits_poster.jpg',
-    regLink: 'https://q.me-qr.com/qh403zow',
+    regLink: 'https://docs.google.com/forms/d/e/1FAIpQLScOFA59jcoiRNC1Q8I_o7Gszl7Rl1Pe93HlopUQA1SF_lVZHQ/viewform?pli=1&authuser=0',
     fullDesc: 'Quantum Bits is a three-round technical quiz designed to challenge participants\u2019 technical knowledge, analytical thinking, and ability to connect concepts across quantum technology, electronics, communication, computing, and emerging technologies.'
   },
 
